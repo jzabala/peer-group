@@ -1,4 +1,8 @@
 import React, { PropTypes } from 'react';
+import R from 'ramda';
+import * as utilFunc from '../utils/functions';
+
+const formatTitle = R.compose(utilFunc.addDotsAtEnd, utilFunc.conditionalsubstringFromCero(26, 29));
 
 const Path = ({ categories, title, description}) => (
   <div className="card" onClick={() => console.log('click')}>
@@ -6,7 +10,7 @@ const Path = ({ categories, title, description}) => (
       { categories }
     </div>
     <div className="card-block">
-      <h3 className="card-title">{ title }</h3>
+      <h3 className="card-title">{ title.length }</h3>
       <p className="card-text">{ description }</p>
       <a href="#" className="card-link">Go to path</a>
     </div>
