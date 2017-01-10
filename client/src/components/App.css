@@ -1,0 +1,17 @@
+@media (min-width: 576px) {
+  .App_card-colums {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 768px) {
+  .App_card-colums {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 992px) {
+  .App_card-colums {
+    column-count: 4;
+  }
+}
