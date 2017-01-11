@@ -1,7 +1,9 @@
 import R from 'ramda';
 
-const conditionalsubstring = R.curry((from, to, greaterThan, str) => str && str.length > greaterThan ? str.substring(from, to) : str);
+const greateSubstring = R.curry((from, to, n, str) =>
+  str && str.length > n ? str.substring(from, to) : str);
 
-export const conditionalsubstringFromCero = conditionalsubstring(0);
+export const greateSubstringStart = greateSubstring(0);
 
-export const addDotsAtEnd = (str) => str + '...';
+export const addDots = R.curry((n, str) =>
+  str && str.length === n ? str + '...' : str);
