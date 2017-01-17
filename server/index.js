@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import jwt from 'jsonwebtoken';
 import morgan from 'morgan';
 import api from './routes';
 import './configdb';

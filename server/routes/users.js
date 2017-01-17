@@ -1,17 +1,16 @@
 import express from 'express';
-import validate from 'validate.js';
 import bcrypt from 'bcryptjs';
-import { newUser } from '../validations/user';
+import { validateNewUser } from '../validations';
 import User from '../models/user';
 
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  validate.async(req.body, newUser).then(
+  validateNewUser(req.body).then(
     () => {
       const password = bcrypt.hashSync(req.body.password);
       new User({ ...req.body, password }).save().then(
-        () => res.json({ success: true }),
+        () => res.end(),
         err => res.statue(500).json(err),
       );
     },

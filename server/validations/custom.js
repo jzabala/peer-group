@@ -3,11 +3,11 @@ import User from '../models/user';
 
 validate.validators.userExists = (value, options) => {
   if (options) {
-    return new validate.Promise((resolve, reject) => {
+    return new validate.Promise((resolve) => {
       User.findOne({ email: value }).then(
         (user) => {
           if (user) {
-            resolve('already exists.');
+            resolve('exists.');
           }
           resolve();
         },
@@ -15,19 +15,4 @@ validate.validators.userExists = (value, options) => {
     });
   }
   return null;
-};
-
-export const newUser = {
-  email: {
-    presence: true,
-    email: true,
-    userExists: true,
-  },
-  password: {
-    presence: true,
-  },
-  confirmPassword: {
-    presence: true,
-    equality: 'password',
-  },
 };
