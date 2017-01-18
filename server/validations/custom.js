@@ -1,10 +1,10 @@
 import validate from 'validate.js';
-import User from '../models/user';
+import Users from '../models/users';
 
 validate.validators.userExists = (value, options) => {
   if (options) {
     return new validate.Promise((resolve) => {
-      User.findOne({ email: value }).then(
+      Users.findOne({ email: value }).then(
         (user) => {
           if (user) {
             resolve('exists.');

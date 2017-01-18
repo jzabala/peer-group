@@ -1,7 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import { validateNewUser } from '../validations';
-import User from '../models/user';
+import User from '../models/users';
+import { serverError } from '../utils/errorHandler';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.post('/', (req, res) => {
       const password = bcrypt.hashSync(req.body.password);
       new User({ ...req.body, password }).save().then(
         () => res.end(),
-        err => res.statue(500).json(err),
+        err => serverError(res, err),
       );
     },
     (errors) => {

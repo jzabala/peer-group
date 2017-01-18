@@ -1,8 +1,9 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
+import User from '../models/users';
 import config from '../config.json';
+import { serverError } from '../utils/errorHandler';
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.post('/', (req, res) => {
         res.status(401).json({ errors: { general: 'Invalid Credentials' } });
       }
     },
-    err => res.status(500).json(err),
+    err => serverError(res, err),
   );
 });
 

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
+import User from '../models/users';
 import config from '../config.json';
+import { serverError } from '../utils/errorHandler';
 
 export default (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -10,7 +11,7 @@ export default (req, res, next) => {
       if (err) {
         res.status(401).json({ errors: { general: 'Faild to authenticate' } });
       } else {
-        User.findOne({ email: decoded.email }, 'email').then(
+        User.findOne({ email: decoded.email }, '_id email').then(
           (user) => {
             if (user) {
               // eslint-disable-next-line no-param-reassign
@@ -20,6 +21,7 @@ export default (req, res, next) => {
               res.status(404).json({ errors: { general: 'No such user' } });
             }
           },
+          error => serverError(res, error),
         );
       }
     });
