@@ -13,18 +13,17 @@ class App extends Component {
           <div className="row justify-content-center">
             <Path
               categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
+              title="You Don't Know JS: Up & Going asdfadsfads"
               description="First in a book series on JavaScript by Kyle Simpson"
             />
             <Path
               categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
-              description="First in a book series on JavaScript by Kyle Simpson"
+              title="CS50"
+              description="A Edx course."
             />
             <Path
               categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
-              description="First in a book series on JavaScript by Kyle Simpson"
+              title="You Don't Know JS: Up & Going"              
             />
             <Path
               categories={["Book"]}

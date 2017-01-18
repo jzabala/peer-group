@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-export const truncate = (x, str) => R.when(
-  R.propSatisfies(R.gt(R.__, R.__), 'length'),
-  R.pipe(R.take(R.__), R.append('…'), R.join(''))
-);
+export const truncate = R.uncurryN(2, (x) => R.when(
+  R.propSatisfies(R.gt(R.__, x), 'length'),
+  R.pipe(R.take(x-3), R.append('…'), R.join(''))
+));

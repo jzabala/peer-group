@@ -3,7 +3,7 @@ import validate from 'validate.js';
 import { newUserValidataions } from './users';
 import './custom';
 
-const validator = R.curry((constraints, data) => validate.async(data, constraints));
+const validator = R.curryN(2, R.flip(validate.async));
 
 export const validateNewUser = validator(
   {
