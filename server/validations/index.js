@@ -1,33 +1,23 @@
 import R from 'ramda';
-import validate from 'validate.js';
-import { newUserValidataions } from './users';
-import { newPathValidations, newRouteValidations } from './paths';
-import './custom';
+import { newUserConstrains } from './users';
+import { newPathConstrains } from './paths';
+import { promiseInvoker, validatorAsync } from '../utils/functions';
 
-const validatorAsync = R.curryN(2, R.flip(validate.async));
-// const validator = R.curryN(2, R.flip(validate));
+export const validateNewUser = validatorAsync(newUserConstrains);
 
-export const validateNewUser = validatorAsync(
-  {
-    ...newUserValidataions,
-    email: { ...newUserValidataions.email, userExists: true },
-  },
+export const validateNewPath = validatorAsync(newPathConstrains);
+/*const validateNewPathAsync = validatorAsync(newPathConstrains);
+
+const validateNewRouteAsync = R.compose(
+  Promise.all,
+  trace('good'),
+  R.map(newRouteValidations),
+  R.prop('route'),
 );
 
-const promiseInvoker = R.invoker(2, 'then');
-
-/* R.map(threeArgsCall(R.__, null, R.identity)), R.map(validateNewRouteAsync) */
-// const validateNewRouteAsync = validatorAsync(newRouteValidations);
-const validateNewPathAsync = validatorAsync(newPathValidations);
-
-// export const validateNewPath = validateNewPathAsync;
 export const validateNewPath = R.compose(
-  promiseInvoker(R.prop('route'), x => Promise.reject(x)), // Just passing Promise.reject doesn't work.
-  promiseInvoker(R.prop('route'), x => Promise.reject(x)), // Just passing Promise.reject doesn't work.
+  // promiseInvoker(trace('promise value'), x => Promise.reject(x)), // Just passing Promise.reject doesn't work.
+  promiseInvoker(validateNewRouteAsync, trace('bad')),
   validateNewPathAsync,
 );
-
-/* R.compose(promise => promise.then(
-  validateNewRouteAsync,
-  Promise.reject,
-), validateNewPathAsync); */
+*/
