@@ -7,7 +7,8 @@ import { serverError } from '../utils/errorHandler';
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  validateNewUser(req.body).then(
+  const user = { ...req.body };
+  validateNewUser(user).then(
     () => {
       const password = bcrypt.hashSync(req.body.password);
       new User({ ...req.body, password }).save().then(
