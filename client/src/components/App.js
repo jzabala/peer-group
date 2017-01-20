@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Path from './Path';
+import { Match } from 'react-router';
+import PathsPage from './PathsPage';
+import SignupPage from './SignupPage';
 import Header from './Header';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -8,45 +10,8 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <section className="container">
-          <hr />
-          <div className="row justify-content-center">
-            <Path
-              categories={["Book"]}
-              title="You Don't Know JS: Up & Going asdfadsfads"
-              description="First in a book series on JavaScript by Kyle Simpson"
-            />
-            <Path
-              categories={["Book"]}
-              title="CS50"
-              description="A Edx course."
-            />
-            <Path
-              categories={["Book"]}
-              title="You Don't Know JS: Up & Going"              
-            />
-            <Path
-              categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
-              description="First in a book series on JavaScript by Kyle Simpson"
-            />
-            <Path
-              categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
-              description="First in a book series on JavaScript by Kyle Simpson"
-            />
-            <Path
-              categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
-              description="First in a book series on JavaScript by Kyle Simpson"
-            />
-            <Path
-              categories={["Book"]}
-              title="You Don't Know JS: Up & Going"
-              description="First in a book series on JavaScript by Kyle Simpson"
-            />
-          </div>
-        </section>
+        <Match exactly pattern="/" component={ PathsPage } />
+        <Match pattern="/signup" component={SignupPage} />
       </div>
     );
   }

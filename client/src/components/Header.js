@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Header = (props) => (
   <nav className="navbar navbar-toggleable-xl navbar-light bg-faded">
-    <a className="navbar-brand" href="#">Peer Group</a>
+    <Link className="navbar-brand" to="/">Peer Group</Link>
 
     <ul className="navbar-nav mr-auto">
       <li className="nav-item">
@@ -11,7 +12,7 @@ const Header = (props) => (
     </ul>
     <ul className="navbar-nav navbar-right">
       <li className="nav-item">
-        <a href="#" className="nav-link">Sign up</a>
+        <Link className="nav-link" to="/signup">Sign up</Link>
       </li>
     </ul>
   </nav>

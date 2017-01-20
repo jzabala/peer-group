@@ -9,5 +9,7 @@ export const trace = R.curry((tag, x) => {
 export const promiseInvoker = R.invoker(2, 'then');
 
 export const validatorAsync = R.curry(
-  (constrains, attributes) => validate.async(attributes, constrains)
+  (constrains, attributes) => validate.async(attributes, constrains),
 );
+
+export const isNotEmpty = x => !R.isEmpty(x);

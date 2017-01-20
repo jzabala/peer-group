@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/users';
 import config from '../config.json';
-import { serverError } from '../utils/errorHandler';
+import { serverError } from '../utils/handlers';
 
 export default (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];

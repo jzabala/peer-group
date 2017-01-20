@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import { validateNewUser } from '../validations';
 import User from '../models/users';
-import { serverError } from '../utils/errorHandler';
+import { serverError } from '../utils/handlers';
 
 const router = express.Router();
 

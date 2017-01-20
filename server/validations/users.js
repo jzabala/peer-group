@@ -8,8 +8,9 @@ validate.validators.userExists = (value, options) => {
         (user) => {
           if (user) {
             resolve('exists.');
+          } else {
+            resolve();
           }
-          resolve();
         },
       );
     });
