@@ -1,6 +1,8 @@
 import R from 'ramda';
 
-export const truncate = R.uncurryN(2, (x) => R.when(
+const dots = (s) => `${s}...`;
+
+export const truncate = (x) => R.when(
   R.propSatisfies(R.gt(R.__, x), 'length'),
-  R.pipe(R.take(x-3), R.append('…'), R.join(''))
-));
+  R.compose(dots, R.take(x-3))
+);

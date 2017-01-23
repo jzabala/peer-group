@@ -22,7 +22,7 @@ const PathsPage = (props) => (
       <Path
         categories={["Book"]}
         title="You Don't Know JS: Up & Going"
-        description="First in a book series on JavaScript by Kyle Simpson"
+        description="First in a book series on JavaScript by Kyle Simpson. First in a book series on JavaScript by Kyle Simpson"
       />
       <Path
         categories={["Book"]}

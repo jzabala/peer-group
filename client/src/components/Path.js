@@ -5,7 +5,7 @@ import './Path.css';
 const MAX_TITLE = 31;
 const truncateTitle = utilFunc.truncate(MAX_TITLE);
 
-const MAX_DESC = 52;
+const MAX_DESC = 51;
 const truncateDesc = utilFunc.truncate(MAX_DESC);
 
 const Path = ({ categories, title, description}) => (
