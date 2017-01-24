@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import './SignupForm.css';
 
-const SigupForm = (props) => (
+const SignupForm = (props) => (
   <form className="SignupForm_form">
     <div className="form-group SignupForm_form-group">
       <input type="email" className="form-control"
@@ -11,8 +11,12 @@ const SigupForm = (props) => (
       <input type="password" className="form-control"
         placeholder="Password" />
     </div>
+    <div className="form-group SignupForm_form-group">
+      <input type="password" className="form-control"
+        placeholder="Confirm Password" />
+    </div>
     <button type="submit" className="btn btn-primary">Submit</button>
   </form>
 );
 
-export default SigupForm;
+export default SignupForm;

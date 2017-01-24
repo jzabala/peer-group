@@ -1,6 +1,6 @@
 .SignupForm_form {
-  width: 366px;
-  height: 280px;
+  width: 340px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,16 +8,12 @@
   margin-top: -20px;
   margin-left: auto;
   margin-right: auto;
+  background-color: #f7f7f7;
+  margin-top: 20px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 }
 
 .SignupForm_form-group {
   margin-bottom: 2rem;
-}
-
-@media (min-width: 576px) {
-  .SignupForm_form {
-    background-color: #f7f7f7;
-    margin-top: 20px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-  }
 }

@@ -4,7 +4,7 @@ import './SignupPage.css';
 
 const SignupPage = (props) => (
   <section className="container SignupPage_container text-center">
-    <h4>Login</h4>
+    <h4>Signup</h4>
     <SignupForm />
   </section>
 );
