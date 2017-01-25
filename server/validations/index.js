@@ -1,7 +1,7 @@
 import { newUserConstrains } from './users';
 import { newPathConstrains } from './paths';
-import { validatorAsync } from '../utils/functions';
+import { validateAsync } from '../utils/functions';
 
-export const validateNewUser = validatorAsync(newUserConstrains);
+export const validateNewUser = validateAsync(newUserConstrains);
 
-export const validateNewPath = validatorAsync(newPathConstrains);
+export const validateNewPath = validateAsync(newPathConstrains);

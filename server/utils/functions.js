@@ -6,10 +6,8 @@ export const trace = R.curry((tag, x) => {
   return x;
 });
 
-export const promiseInvoker = R.invoker(2, 'then');
-
-export const validatorAsync = R.curry(
-  (constrains, attributes) => validate.async(attributes, constrains),
+export const validateAsync = R.curry(
+  (constrains, data) => validate.async(data, constrains),
 );
 
 export const isNotEmpty = x => !R.isEmpty(x);

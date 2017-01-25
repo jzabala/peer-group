@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import { Match } from 'react-router';
-import PathsPage from './PathsPage';
+import PathsPage from './paths/PathsPage';
 import LoginPage from './login/LoginPage';
 import SignupPage from './signup/SignupPage';
 import Header from './Header';

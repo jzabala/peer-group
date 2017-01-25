@@ -1,6 +1,7 @@
 import validate from 'validate.js';
 import R from 'ramda';
-import * as func from '../utils/functions';
+import { then } from '../utils/promise';
+import { validateAsync, isNotEmpty } from '../utils/functions';
 
 const newRouteConstrains = {
   name: {
@@ -10,11 +11,16 @@ const newRouteConstrains = {
 
 validate.validators.hasRoute = (value, options) => {
   if (options && value) {
-    const promises = R.compose(func.promiseInvoker(() => ({}), R.identity),
-    func.validatorAsync(newRouteConstrains));
+    const promises = R.compose(
+      then(
+        () => ({}),
+        R.identity
+      ),
+      validateAsync(newRouteConstrains)
+    );
 
     const validateRoute = R.map(promises);
-    const empty = R.compose(R.isEmpty, R.filter(func.isNotEmpty));
+    const empty = R.compose(R.isEmpty, R.filter(isNotEmpty));
     return Promise.all(validateRoute(value)).then(
       R.when(empty, () => []),
     );

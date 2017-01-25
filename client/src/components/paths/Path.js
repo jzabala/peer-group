@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import * as utilFunc from '../utils/functions';
+import * as utilFunc from '../../utils/functions';
 import './Path.css';
 
 const MAX_TITLE = 31;
