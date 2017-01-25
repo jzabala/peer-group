@@ -1,3 +1,3 @@
 import { api } from '../api';
 
-export const signup = (user) => api.posrt('users', user);
+export const signup = (user) => api.post('users', user);
