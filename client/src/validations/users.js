@@ -14,4 +14,10 @@ export const validateSignup = validateAsync({
     presence: true,
     equality: 'password',
   },
+  country:{
+    presence: true
+  },
+  city:{
+    presence: true
+  }
 });
