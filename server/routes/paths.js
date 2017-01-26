@@ -2,7 +2,7 @@ import express from 'express';
 import authenticate from '../middlewares/authenticate';
 import Path from '../models/path';
 import * as handlers from '../utils/handlers';
-import { validateNewPath } from '../validations';
+import { validateNewPath } from '../validations/paths';
 
 const router = express.Router();
 

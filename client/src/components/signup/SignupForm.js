@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import TextFieldGroup from '../commons/TextFieldGroup';
-import RequestButton from '../commons/RequestButton';
+import TextFieldGroup from '../common/TextFieldGroup';
+import RequestButton from '../common/RequestButton';
 import { signup } from '../../actions/users';
+import { addFlashMessage } from '../../actions/flashMessages';
 import { validateSignup } from '../../validations/users';
 import './SignupForm.css';
 
@@ -34,14 +35,26 @@ class SignupForm extends Component {
     this.setState({ errors: {} });
     this.setState({ isSignup: true });
 
+    const submitError = errors => this.setState({ errors, isSignup: false });
     const validation = validateSignup(this.state.form);
-    const request = validation.then(
-      (data) => this.props.signup(data),
-      (errors) => Promise.reject({ data: errors }),
-    );
-    request.then(
-      () => this.setState({ redirect: true }),
-      (err) => console.log(err) /*this.setState({ errors: err.data/*, isSignup: false })*/,
+    validation.then(
+      (data) => {
+        var request = signup(data);
+        request.then(
+          () => {
+            this.setState({ redirect: true });
+            this.props.addFlashMessage({
+              type: "success",
+              strong: "Successful Signup!",
+              text: "You can login now.",
+              duration: 5000,
+              timeout: false,
+            });
+          },
+          (err) => submitError(err.response.data.errors)
+        )
+      },
+      (errors) => submitError(errors),
     );
   }
   render() {
@@ -87,4 +100,4 @@ class SignupForm extends Component {
   }
 }
 
-export default connect(null, { signup })(SignupForm);
+export default connect(null, { addFlashMessage })(SignupForm);

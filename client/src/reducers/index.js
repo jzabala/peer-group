@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import isRequest from './isRequest';
+import flashMessages from './flashMessages';
 
 const root = combineReducers({
-  isRequest
+  flashMessages
 });
 
 export default root;

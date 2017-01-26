@@ -3,22 +3,21 @@ import R from 'ramda';
 import { then } from '../utils/promise';
 import { validateAsync, isNotEmpty } from '../utils/functions';
 
-const newRouteConstrains = {
+const newItemsConstrains = {
   name: {
     presence: true,
   },
 };
 
-validate.validators.hasRoute = (value, options) => {
+validate.validators.itemsConstrains = (value, options) => {
   if (options && value) {
     const promises = R.compose(
       then(
         () => ({}),
-        R.identity
+        R.identity,
       ),
-      validateAsync(newRouteConstrains)
+      validateAsync(newItemsConstrains),
     );
-
     const validateRoute = R.map(promises);
     const empty = R.compose(R.isEmpty, R.filter(isNotEmpty));
     return Promise.all(validateRoute(value)).then(
@@ -28,7 +27,7 @@ validate.validators.hasRoute = (value, options) => {
   return null;
 };
 
-export const newPathConstrains = {
+export const validateNewPath = validateAsync({
   name: {
     presence: true,
   },
@@ -39,8 +38,8 @@ export const newPathConstrains = {
       message: 'can only contain a-z, 0-9 and -',
     },
   },
-  route: {
+  items: {
     presence: true,
-    hasRoute: true,
+    itemsConstrains: true,
   },
-};
+});

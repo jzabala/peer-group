@@ -1,6 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import { validateNewUser } from '../validations';
+import { validateNewUser } from '../validations/users';
 import User from '../models/user';
 import { serverError } from '../utils/handlers';
 

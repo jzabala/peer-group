@@ -13,3 +13,7 @@
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
 }
+
+.SignupForm_submit {
+  margin: 0 auto;
+}

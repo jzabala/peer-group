@@ -1,5 +1,6 @@
 import validate from 'validate.js';
 import User from '../models/user';
+import { validateAsync } from '../utils/functions';
 
 validate.validators.userExists = (value, options) => {
   if (options) {
@@ -19,7 +20,7 @@ validate.validators.userExists = (value, options) => {
 };
 
 
-export const newUserConstrains = {
+export const validateNewUser = validateAsync({
   email: {
     presence: true,
     email: true,
@@ -32,4 +33,4 @@ export const newUserConstrains = {
     presence: true,
     equality: 'password',
   },
-};
+});

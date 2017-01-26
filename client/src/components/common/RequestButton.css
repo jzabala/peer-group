@@ -17,7 +17,6 @@
   -webkit-animation-delay: 0.2s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
-  margin: 0 auto;
 }
 
 @keyframes rotateAnimation {
