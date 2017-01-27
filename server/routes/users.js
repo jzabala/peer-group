@@ -1,78 +1,75 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import {validateNewUser} from '../validations/users';
+import {
+  validateNewUser
+} from '../validations/users';
 import User from '../models/user';
-import {serverError} from '../utils/handlers';
-import https from 'https';
+import {
+  serverError
+} from '../utils/handlers';
+import axios from 'axios';
 
 const router = express.Router();
 
 router.post('/', (req, res) => {
+  var done = false;
+  const user = { ...req.body
+  };
+  validateNewUser(user).then(
+    (user) => {
+      const password = bcrypt.hashSync(req.body.password);
+      var regexWhiteSpace = /\s/g;
+      var address = "address=" + req.body.city.replace(regexWhiteSpace, "+") + "+" + req.body.country.replace(regexWhiteSpace, "+");
+      var apiKey = "&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E";
+      var geodecodificacionUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + address + apiKey;
 
-    const user = {...req.body};
-    validateNewUser(user).then(
-        () => {
-            const password = bcrypt.hashSync(req.body.password);
-            var regexWhiteSpace = /\s/g;
-            var address = "address="+ req.body.city.replace(regexWhiteSpace, "+") + "+" + req.body.country.replace(regexWhiteSpace, "+");
-            var apiKey = "&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E";
-            var geodecodificacionUrl = "https://maps.googleapis.com/maps/api/geocode/json?"+address+apiKey;
-
-            https.get(geodecodificacionUrl, function(res) {
-                const statusCode = res.statusCode;
-                const contentType = res.headers['content-type'];
-
-                let error;
-                if (statusCode !== 200) {
-                    error = new Error(`Request Failed.\n` +
-                        `Status Code: ${statusCode}`);
-                } else if (!/^application\/json/.test(contentType)) {
-                    error = new Error(`Invalid content-type.\n` +
-                        `Expected application/json but received ${contentType}`);
-                }
-                if (error) {
-                    console.log(error.message);
-                    // consume response data to free up memory
-                    res.resume();
-                    return;
-                }
-
-                res.setEncoding('utf8');
-                let rawData = '';
-                res.on('data', (chunk) => rawData += chunk);
-                res.on('end', () => {
-                  try {
-                    let parsedData = JSON.parse(rawData);
-
-                     console.log(typeof parseData);
-                     console.log(parsedDta.results);
-                    //console.log(rawData.geometry.location);
-
-
-                    //req.body.lat = rawData.geometry.location.lat;
-                    //req.body.lng = rawData.geometry.location.lng;
-                  } catch (e) {
-                    console.log(e.message);
-                  }
+      axios.get(geodecodificacionUrl)
+        .then(function(response) {
+          let data = response.data;
+          if (data.status == 'OK') {
+            var lat = data.results[0].geometry.location.lat;
+            var lng = data.results[0].geometry.location.lng;
+            //var timestamp = new Date().toMinute/1000;
+            var timeZoneAPI = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=14.27111111111111${apiKey}`;
+            axios.get(timeZoneAPI)
+              .then(function(responseTimeZone) {
+                console.log(responseTimeZone)
+              })
+              .catch(function() {
+                return res.status(500).json({
+                  "error": "server out"
                 });
-              }).on('error', (e) => {
-                console.log(`Got error: ${e.message}`);
-
-            });
-console.log(req.body);
-            new User({...req.body,
-                password
-            }).save().then(
-                () => res.end(),
+              });
+            //Save user to dataBase
+            /*  new User({ ...user,
+                password,
+                lat,
+                lng
+              }).save().then(
+                () => {
+                  console.log("entro");
+                  console.log(user);
+                  res.end();
+                },
+                () => {},
                 err => serverError(res, err),
-            );
-        },
-        (errors) => {
-            res.status(400).json({
-                errors
+              );*/
+            res.end();
+          } else {
+            return res.status(500).json({
+              "error": "server out"
             });
-        },
-    );
+          }
+        }).catch(() => {
+          console.log(`Got error: ${e}`);
+        });
+    },
+    (errors) => {
+      res.status(400).json({
+        errors
+      });
+    },
+  );
 });
 
 export default router;
