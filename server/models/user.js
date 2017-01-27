@@ -6,7 +6,9 @@ const User = mongoose.model('User', new Schema({
   notationTime: {type: String, uppercase:true, default:"UTC"},
   timeZone: Number,
   city: {type:String, uppercase: true},
-  country: {type:String, uppercase: true}
+  country: {type:String, uppercase: true},
+  lat: String,
+  lng: String
 }, {
   timestamps: true,
 }));
