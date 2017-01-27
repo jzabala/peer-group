@@ -6,7 +6,9 @@ const initialState = {
 }
 
 const auth = (state = initialState, action) => {
-  switch(action.type) {
+  console.log(action.users);
+  return state;
+  /*switch(action.type) {
     case 'SET_LOGGED_USER': {
       return {
         isAuthenticated: !R.isEmpty(action.user),
@@ -14,7 +16,7 @@ const auth = (state = initialState, action) => {
       };
     }
     default: return state;
-  }
+  }*/
 }
 
 export const isAuthenticated = (state) => state.isAuthenticated;

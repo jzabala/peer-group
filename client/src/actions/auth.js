@@ -1,22 +1,26 @@
-import jwtDecode from 'jwt-decode';
 import { api } from '../api';
-import { storeAuthToken, setAuthTokenRequest } from '../utils/authTokenHandler';
+import * as fromAuth from '../utils/authTokenHandler';
+import { normalizeUser } from '../normalizers';
 
-export const signup = (user) => api.post('/users', user);
+export const signup = user => api.post('/users', user);
 
-const setAuthenticatedUser = (user) => ({
+export const setAuthenticatedUser = (user) => ({
   type: 'SET_LOGGED_USER',
-  user,
+  users: normalizeUser(user),
 });
 
-export const login = (user) => (dispath) => {
+export const login = user => dispatch => {
   return api.post('/authenticate', user).then(
     ({ data }) => {
-      storeAuthToken(data.token);
-      setAuthTokenRequest(data.token);
-      const decoded = jwtDecode(data.token);
-      dispath(setAuthenticatedUser(decoded.user));
+      fromAuth.storeAuthToken(data.token);
+      fromAuth.authenticateUser(dispatch, data.token);
     },
     ({ response }) => Promise.reject(response.data.errors),
   );
+}
+
+export const logout = () => dispatch => {
+  fromAuth.removeAuthToken();
+  fromAuth.deleteAuthTokenRequest();
+  dispatch(setAuthenticatedUser({}));
 }

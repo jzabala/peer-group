@@ -2,8 +2,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import { Match } from 'react-router';
 import PathsPage from './paths/PathsPage';
-import LoginPage from './login/LoginPage';
-import SignupPage from './signup/SignupPage';
+import LoginPage from './auth/LoginPage';
+import SignupPage from './auth/SignupPage';
+import Logout from './auth/Logout';
 import FlashMessageList from './common/FlashMessageList';
 import Header from './Header';
 import './App.css';
@@ -19,6 +20,7 @@ class App extends Component {
           <Match exactly pattern="/" component={ PathsPage } />
           <Match pattern="/login" component={LoginPage} />
           <Match pattern="/signup" component={SignupPage} />
+          <Match pattern="/logout" component={Logout} />
         </main>
       </div>
     );

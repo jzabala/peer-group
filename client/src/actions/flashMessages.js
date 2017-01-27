@@ -1,9 +1,9 @@
-export const addFlashMessage = (message) => ({
+export const addFlashMessage = message => ({
   type: 'ADD_FLASH_MESSAGE',
   message,
 });
 
-export const removeFlashMessage = (index) => ({
+export const removeFlashMessage = index => ({
   type: 'REMOVE_FLASH_MESSAGE',
   index,
 });

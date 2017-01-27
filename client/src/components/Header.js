@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Authenticated from './Authenticated';
+import Display from './Display';
 import './Header.css'
 
 const Header = (props) => (
@@ -15,23 +15,27 @@ const Header = (props) => (
       </li>
     </ul>
     <ul className="navbar-nav navbar-right">
-      <li>
-        <Link className="nav-link" activeClassName="active" to="/login">
-          Login
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" activeClassName="active" to="/signup">
-          Sign up
-        </Link>
-      </li>
-      <Authenticated>
+      <Display unAuthenticated={true}>
+        <li>
+          <Link className="nav-link" activeClassName="active" to="/login">
+            Login
+          </Link>
+        </li>
+      </Display>
+      <Display unAuthenticated={true}>
+        <li className="nav-item">
+          <Link className="nav-link" activeClassName="active" to="/signup">
+            Sign up
+          </Link>
+        </li>
+      </Display>
+      <Display authenticated={true}>
         <li className="nav-item">
           <Link className="nav-link" activeClassName="active" to="/logout">
             Logout
           </Link>
         </li>
-      </Authenticated>
+      </Display>
     </ul>
   </nav>
 );

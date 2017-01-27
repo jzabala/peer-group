@@ -11,3 +11,8 @@ export const truncate = (x) => R.when(
 export const validateAsync = R.curry(
   (constrains, data) => validate.async(data, constrains),
 );
+
+export const trace = R.curry((tag, x) => {
+  console.log(tag, x);
+  return x;
+});
