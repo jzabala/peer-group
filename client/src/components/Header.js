@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Authenticated from './Authenticated';
 import './Header.css'
 
 const Header = (props) => (
@@ -24,6 +25,13 @@ const Header = (props) => (
           Sign up
         </Link>
       </li>
+      <Authenticated>
+        <li className="nav-item">
+          <Link className="nav-link" activeClassName="active" to="/logout">
+            Logout
+          </Link>
+        </li>
+      </Authenticated>
     </ul>
   </nav>
 );

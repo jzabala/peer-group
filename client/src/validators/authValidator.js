@@ -15,3 +15,12 @@ export const validateSignup = validateAsync({
     equality: 'password',
   },
 });
+
+export const validateLogin = validateAsync({
+  email: {
+    presence: true,
+  },
+  password: {
+    presence: true,
+  },
+});
