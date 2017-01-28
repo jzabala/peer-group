@@ -7,6 +7,7 @@ import SignupPage from './auth/SignupPage';
 import Logout from './auth/Logout';
 import FlashMessageList from './common/FlashMessageList';
 import Header from './Header';
+import requireAuth from '../utils/requireAuth.js'
 import './App.css';
 
 
@@ -20,7 +21,7 @@ class App extends Component {
           <Match exactly pattern="/" component={ PathsPage } />
           <Match pattern="/login" component={LoginPage} />
           <Match pattern="/signup" component={SignupPage} />
-          <Match pattern="/logout" component={Logout} />
+          <Match pattern="/logout" component={requireAuth(Logout)} />
         </main>
       </div>
     );

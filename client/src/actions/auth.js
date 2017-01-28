@@ -1,12 +1,17 @@
 import { api } from '../api';
 import * as fromAuth from '../utils/authTokenHandler';
 import { normalizeUser } from '../normalizers';
+import { removeUser } from './users';
 
 export const signup = user => api.post('/users', user);
 
-export const setAuthenticatedUser = (user) => ({
-  type: 'SET_LOGGED_USER',
+export const loginUser = (user) => ({
+  type: 'LOGIN_USER',
   users: normalizeUser(user),
+});
+
+const logoutUser = () => ({
+  type: 'LOGOUT_USER',
 });
 
 export const login = user => dispatch => {
@@ -19,8 +24,9 @@ export const login = user => dispatch => {
   );
 }
 
-export const logout = () => dispatch => {
+export const logout = (id) => dispatch => {
   fromAuth.removeAuthToken();
   fromAuth.deleteAuthTokenRequest();
-  dispatch(setAuthenticatedUser({}));
+  dispatch(logoutUser());
+  dispatch(removeUser(id));
 }

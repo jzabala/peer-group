@@ -10,9 +10,13 @@ const Header = (props) => (
     </Link>
 
     <ul className="navbar-nav mr-auto">
-      <li className="nav-item">
-        <a className="nav-link" href="#">New Path</a>
-      </li>
+      <Display authenticated={true}>
+        <li className="nav-item">
+          <Link className="nav-link" activeClassName="active" to="/new-path">
+            New Path
+          </Link>
+        </li>
+      </Display>
     </ul>
     <ul className="navbar-nav navbar-right">
       <Display unAuthenticated={true}>
