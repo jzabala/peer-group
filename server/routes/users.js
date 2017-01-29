@@ -1,67 +1,67 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import {
-  validateNewUser
-} from '../validations/users';
+import { validateNewUser } from '../validations/users';
 import User from '../models/user';
-import {
-  serverError
-} from '../utils/handlers';
+import { serverError } from '../utils/handlers';
 import axios from 'axios';
 
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  var done = false;
+  let done = false;
   const user = { ...req.body
   };
   validateNewUser(user).then(
     (user) => {
       const password = bcrypt.hashSync(req.body.password);
-      var regexWhiteSpace = /\s/g;
-      var address = "address=" + req.body.city.replace(regexWhiteSpace, "+") + "+" + req.body.country.replace(regexWhiteSpace, "+");
-      var apiKey = "&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E";
-      var geodecodificacionUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + address + apiKey;
+      let regexWhiteSpace = /\s/g;
+      let address = "address=" + req.body.city.replace(regexWhiteSpace, "+") + "+" + req.body.country.replace(regexWhiteSpace, "+");
+      const apiKey = "&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E";
+      const geodecodificacionUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + address + apiKey;
 
       axios.get(geodecodificacionUrl)
-        .then(function(response) {
-          let data = response.data;
-          if (data.status == 'OK') {
-            var lat = data.results[0].geometry.location.lat;
-            var lng = data.results[0].geometry.location.lng;
-            //var timestamp = new Date().toMinute/1000;
-            var timeZoneAPI = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=14.27111111111111${apiKey}`;
+        .then(function (response) {
+          const data = response.data;
+          if (data.status === 'OK') {
+            const lat = data.results[0].geometry.location.lat;
+            const lng = data.results[0].geometry.location.lng;
+            const date = new Date();
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            const secound = date.getSeconds();
+            const totalSecound = (((hour / 60) * 60) + (minute * 60) + secound);
+            const timeZoneAPI = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${totalSecound}${apiKey}`;
+// Get time zone using the API of googleTimeZoneAPI
             axios.get(timeZoneAPI)
               .then(function(responseTimeZone) {
-                console.log(responseTimeZone)
+                const timeZone = responseTimeZone.data.timeZoneName;
+                // Save user to dataBase
+                  new User({ ...user,
+                    password,
+                    lat,
+                    lng,
+                    timeZone
+                  }).save().then(
+                    () => {
+                      res.end();
+                    },
+                    err => serverError(res, err)
+                  );
               })
               .catch(function() {
                 return res.status(500).json({
-                  "error": "server out"
+                  error: 'server for time zone thow a error or the is a bad request'
                 });
               });
-            //Save user to dataBase
-            /*  new User({ ...user,
-                password,
-                lat,
-                lng
-              }).save().then(
-                () => {
-                  console.log("entro");
-                  console.log(user);
-                  res.end();
-                },
-                () => {},
-                err => serverError(res, err),
-              );*/
-            res.end();
           } else {
             return res.status(500).json({
-              "error": "server out"
+              error: `server geodecodification: ${data.status}`
             });
           }
         }).catch(() => {
-          console.log(`Got error: ${e}`);
+          return res.status(500).json({
+            error: 'Error happen in the promise of geodecodification'
+          });
         });
     },
     (errors) => {
