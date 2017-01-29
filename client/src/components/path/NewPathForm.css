@@ -1,0 +1,17 @@
+.NewPathForm-form {
+  border: solid #f7f7f9;
+  padding: 34px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.NewPathForm-items {
+  background-color: #f7f7f7;
+  padding: 16px 20px;
+}
+
+.NewPathForm-item-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

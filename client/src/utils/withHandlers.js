@@ -7,11 +7,11 @@ function handleChange(e) {
 }
 
 function handleSubmitError(errors) {
-  this.setState({ errors, isRequest: false });
+  this.setState({ errors, isSubmit: false });
 }
 
 function resetErrorsRequest() {
-  this.setState({ errors: {}, isRequest: true });
+  this.setState({ errors: {}, isSubmit: true });
 }
 
 const withHandlers = (WrappedComponent) => {

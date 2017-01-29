@@ -4,7 +4,7 @@ const FlashMessage = (props) => {
   const { type, strong, text, onClose } = props;
   return (
     <div className={`alert alert-${ type }`} role="alert">
-      <button className="close" onClick={ onClose }>
+      <button type="button" className="close" onClick={ onClose }>
         <span>&times;</span>
       </button>
       <strong>{ strong }</strong> { text }

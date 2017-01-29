@@ -3,7 +3,9 @@ import * as fromAuth from '../utils/authTokenHandler';
 import { normalizeUser } from '../normalizers';
 import { removeUser } from './users';
 
-export const signup = user => api.post('/users', user);
+export const signup = user => api.post('/users', user).then(null,
+  ({ response }) => Promise.reject(response.data.errors),
+);
 
 export const loginUser = (user) => ({
   type: 'LOGIN_USER',

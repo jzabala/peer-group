@@ -5,31 +5,22 @@ import { isAuthenticated } from '../reducers';
 
 const requireAuth = (WrappedComponent) =>
 {
-  class RequireAuth extends React.Component {
-    render() {
-      return (
-        <div>
-          { this.props.isAuthenticated ?
-              <WrappedComponent { ...this.props } /> :
-              <Redirect to={ this.props.redirectTo } />
-          }
-        </div>
-      );
-    }
-  }
+  const RequireAuth = props => {
+    const component = props.isAuthenticated ?
+    <WrappedComponent { ...props } /> :
+    <Redirect to={ props.redirectTo } />;
 
+    return component    
+  }
   RequireAuth.propTypes = {
     redirectTo: PropTypes.string,
   }
-
   RequireAuth.defaultProps = {
     redirectTo: '/login',
   }
-
   const mapStateToProps = (state) => ({
     isAuthenticated: isAuthenticated(state)
   });
-
   return connect(mapStateToProps)(RequireAuth);
 }
 

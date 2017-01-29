@@ -20,7 +20,7 @@ class SignupForm extends Component {
         confirmPassword: '',
       },
       errors: {},
-      isRequest: false,
+      isSubmit: false,
       redirectTo: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,10 +46,10 @@ class SignupForm extends Component {
               timeout: false,
             });
           },
-          ({ response }) => this.handleSubmitError(response.data.errors),
+          this.handleSubmitError,
         )
       },
-      (errors) => this.handleSubmitError(errors),
+      this.handleSubmitError,
     );
   }
   render() {
@@ -84,9 +84,8 @@ class SignupForm extends Component {
             />
 
             <RequestButton
-              type="submit"
               className="btn btn-primary SignupForm_submit"
-              request={ this.state.isRequest }
+              request={ this.state.isSubmit }
             >
               Submit
             </RequestButton>

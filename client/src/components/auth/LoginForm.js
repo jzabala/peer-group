@@ -18,7 +18,7 @@ class LoginForm extends Component {
         email: '',
         password: '',
       },
-      isRequest: false,
+      isSubmit: false,
       errors: {},
       redirectTo: '',
     }
@@ -74,9 +74,8 @@ class LoginForm extends Component {
               errors={ this.state.errors.password }
             />
             <RequestButton
-              type="submit"
               className="btn btn-primary LoginForm_submit"
-              request={ this.state.isRequest }
+              request={ this.state.isSubmit }
             >
               Submit
             </RequestButton>
