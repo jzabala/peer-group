@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import R from 'ramda';
 import { getAllPaths } from '../../reducers';
-import { fetchPaths } from '../../actions/paths';
+import { fetchPaths } from '../../actions';
 import Path from './Path';
 
 export class PathList extends React.Component {

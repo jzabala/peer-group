@@ -8,7 +8,7 @@ import PathItem from './PathItem';
 import { kebabCase } from '../../utils/functions';
 import { validateNewPath } from '../../validators/pathValidator.js'
 import withHandlers from '../../utils/withHandlers';
-import { createPath } from '../../actions/paths';
+import { createPath } from '../../actions';
 import { addFlashMessage } from '../../actions/flashMessages';
 import './NewPathForm.css';
 
