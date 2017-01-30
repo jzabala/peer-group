@@ -5,6 +5,11 @@
     ],
     "rules": {
       "no-console": "off",
-      "import/prefer-default-export": "off"
+      "import/prefer-default-export": "off",
+      "no-unused-vars": 1,
+      "arrow-parens": 0,
+      "no-trailing-spaces": 0,
+      "no-confusing-arrow": 0,
+      "no-underscore-dangle": 0
     }
 }

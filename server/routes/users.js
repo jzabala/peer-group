@@ -1,6 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import { validateNewUser } from '../validations/users';
+import { validateNewUser } from '../validators/userValidator';
 import User from '../models/user';
 import { serverError } from '../utils/handlers';
 import axios from 'axios';
@@ -8,7 +8,6 @@ import axios from 'axios';
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  let done = false;
   const user = { ...req.body
   };
   validateNewUser(user).then(
@@ -68,7 +67,7 @@ router.post('/', (req, res) => {
       res.status(400).json({
         errors
       });
-    },
+    }
   );
 });
 

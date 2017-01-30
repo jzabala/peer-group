@@ -4,8 +4,10 @@ import { BrowserRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import configStore from './configStore';
+import configAuthToken from './configAuthToken';
 
 const store = configStore();
+configAuthToken(store.dispatch);
 
 render(
   <Provider store={store}>

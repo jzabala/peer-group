@@ -1,3 +1,4 @@
-import { api } from '../api';
-
-export const signup = (user) => api.post('users', user);
+export const removeUser = (userId) => ({
+  type: 'REMOVE_USER',
+  userId,
+});

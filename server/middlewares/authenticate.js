@@ -11,7 +11,7 @@ export default (req, res, next) => {
       if (err) {
         res.status(401).json({ errors: { general: 'Faild to authenticate' } });
       } else {
-        User.findOne({ email: decoded.email }, '_id email').then(
+        User.findOne({ email: decoded.user.email }, '_id email').then(
           (user) => {
             if (user) {
               // eslint-disable-next-line no-param-reassign
