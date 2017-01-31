@@ -11,3 +11,12 @@ export const truncate = (x) => R.when(
 export const validateAsync = R.curry(
   (constrains, data) => validate.async(data, constrains),
 );
+
+export const trace = R.curry((tag, x) => {
+  console.log(tag, x);
+  return x;
+});
+
+export const kebabCase = R.compose(R.replace(/\s+/ig, '-'), R.toLower, R.trim);
+
+export const isNotEmpty = x => !R.isEmpty(x);

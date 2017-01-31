@@ -21,3 +21,12 @@ export const validateSignup = validateAsync({
     presence: true
   }
 });
+
+export const validateLogin = validateAsync({
+  email: {
+    presence: true,
+  },
+  password: {
+    presence: true,
+  },
+});

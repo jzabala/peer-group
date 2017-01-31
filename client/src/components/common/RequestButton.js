@@ -13,6 +13,11 @@ const RequestButton = (props) => {
 RequestButton.propTypes = {
   children: PropTypes.string.isRequired,
   request: PropTypes.bool.isRequired,
+  type: PropTypes.string,
+}
+
+RequestButton.defaultProps = {
+  type: 'submit',
 }
 
 export default RequestButton;

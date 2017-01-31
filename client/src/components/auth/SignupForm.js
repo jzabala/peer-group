@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import TextFieldGroup from '../common/TextFieldGroup';
 import RequestButton from '../common/RequestButton';
-import { signup } from '../../actions/users';
+import { signup } from '../../actions/auth';
 import { addFlashMessage } from '../../actions/flashMessages';
-import { validateSignup } from '../../validations/users';
+import { validateSignup } from '../../validators/authValidator';
+import withHandlers from '../../utils/withHandlers';
 import './SignupForm.css';
 
 class SignupForm extends Component {
@@ -21,30 +22,24 @@ class SignupForm extends Component {
         city: '',
       },
       errors: {},
-      isSignup: false,
-      redirect: false,
+      isSubmit: false,
+      redirectTo: '',
     };
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(e) {
-    this.setState({
-      form: { ...this.state.form, [e.target.name]: e.target.value } }
-    );
+    this.handleChange = props.handleChange.bind(this);
+    this.handleSubmitError = props.handleSubmitError.bind(this);
+    this.resetErrorsRequest = props.resetErrorsRequest.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ errors: {} });
-    this.setState({ isSignup: true });
+    this.resetErrorsRequest();
 
-    const submitError = errors => this.setState({ errors, isSignup: false });
     const validation = validateSignup(this.state.form);
     validation.then(
       (data) => {
-        var request = signup(data);
-        request.then(
+        signup(data).then(
           () => {
-            this.setState({ redirect: true });
+            this.setState({ redirectTo: '/login' });
             this.props.addFlashMessage({
               type: "success",
               strong: "Successful Signup!",
@@ -53,16 +48,16 @@ class SignupForm extends Component {
               timeout: false,
             });
           },
-          (err) => submitError(err.response.data.errors)
+          this.handleSubmitError,
         )
       },
-      (errors) => submitError(errors),
+      this.handleSubmitError,
     );
   }
   render() {
     return (
       <div>
-        {this.state.redirect ? <Redirect to="/login" /> :
+        {this.state.redirectTo ? <Redirect to={ this.state.redirectTo } /> :
           <form onSubmit={ this.handleSubmit } className="SignupForm_form">
             <TextFieldGroup
               name="email"
@@ -71,6 +66,7 @@ class SignupForm extends Component {
               errors={ this.state.errors.email }
               onChange={ this.handleChange }
             />
+
             <TextFieldGroup
               name="password"
               type="password"
@@ -79,6 +75,7 @@ class SignupForm extends Component {
               errors={ this.state.errors.password }
               value={ this.state.form.password }
             />
+
             <TextFieldGroup
               name="confirmPassword"
               type="password"
@@ -103,9 +100,8 @@ class SignupForm extends Component {
               value={ this.state.form.city }
             />
             <RequestButton
-              type="submit"
               className="btn btn-primary SignupForm_submit"
-              request={ this.state.isSignup }
+              request={ this.state.isSubmit }
             >
               Submit
             </RequestButton>
@@ -116,4 +112,7 @@ class SignupForm extends Component {
   }
 }
 
-export default connect(null, { addFlashMessage })(SignupForm);
+export default connect(
+  null,
+  { addFlashMessage }
+)(withHandlers(SignupForm));

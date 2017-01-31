@@ -4,19 +4,13 @@ import {
   validateAsync
 } from '../utils/functions';
 
-validate.validators.userExists = (value, options) => {
+validate.validators.emailExists = (value, options) => {
   if (options) {
     return new validate.Promise((resolve) => {
       User.findOne({
         email: value
       }).then(
-        (user) => {
-          if (user) {
-            resolve('exists.');
-          } else {
-            resolve();
-          }
-        },
+        (user) => user ? resolve('exists.') : resolve(),
       );
     });
   }
@@ -28,7 +22,7 @@ export const validateNewUser = validateAsync({
   email: {
     presence: true,
     email: true,
-    userExists: true,
+    emailExists: true,
   },
   password: {
     presence: true,

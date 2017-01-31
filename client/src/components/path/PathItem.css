@@ -1,0 +1,7 @@
+.PathItem-controls {
+  display: flex;
+}
+
+.PathItem-controls-close {
+  margin-left: 15px;
+}

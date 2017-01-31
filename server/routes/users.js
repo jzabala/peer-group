@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import {
   validateNewUser
-} from '../validations/users';
+} from '../validators/userValidator';
 import User from '../models/user';
 import {
   serverError
@@ -12,6 +12,7 @@ import axios from 'axios';
 const router = express.Router();
 
 router.post('/', (req, res) => {
+
   var done = false;
   const user = { ...req.body
   };
@@ -63,6 +64,7 @@ router.post('/', (req, res) => {
         }).catch(() => {
           console.log(`Got error: ${e}`);
         });
+
     },
     (errors) => {
       res.status(400).json({
