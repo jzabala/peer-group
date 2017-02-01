@@ -18,6 +18,8 @@ class SignupForm extends Component {
         email: '',
         password: '',
         confirmPassword: '',
+        country: '',
+        city: '',
       },
       errors: {},
       isSubmit: false,
@@ -82,7 +84,21 @@ class SignupForm extends Component {
               errors={ this.state.errors.confirmPassword }
               value={ this.state.form.confirmPassword }
             />
-
+            <TextFieldGroup
+              name="country"
+              placeholder="Enter country"
+              onChange={ this.handleChange }
+              errors={ this.state.errors.country }
+              value={ this.state.form.country }
+            />
+            <TextFieldGroup
+              name="city"
+              placeholder="Enter city"
+              type="text"
+              onChange={ this.handleChange }
+              errors={ this.state.errors.city }
+              value={ this.state.form.city }
+            />
             <RequestButton
               className="btn btn-primary SignupForm_submit"
               request={ this.state.isSubmit }
