@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import './PathItem.css';
+import './Milestone.css';
 
-const PathItem = (props) => {
+const Milestone = (props) => {
   const { errors } = props;
   return (
     <div className={ classnames('form-group', { 'has-danger': errors }) }>
-      <div className="PathItem-controls">
+      <div className="Milestone-controls">
         <input
           data-index={ props.index }
           type={ props.type }
@@ -16,7 +16,7 @@ const PathItem = (props) => {
             classnames('form-control', { 'form-control-danger': errors })
           }
         />
-        <button type="button" className="close PathItem-controls-close" onClick={ props.onDelete }>
+        <button type="button" className="close Milestone-controls-close" onClick={ props.onDelete }>
           <span>&times;</span>
         </button>
       </div>
@@ -28,7 +28,7 @@ const PathItem = (props) => {
   );
 }
 
-PathItem.propTypes = {
+Milestone.propTypes = {
   index: PropTypes.number.isRequired,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
@@ -37,8 +37,8 @@ PathItem.propTypes = {
   errors: PropTypes.array,
 }
 
-PathItem.defaultProps = {
+Milestone.defaultProps = {
   type: 'text',
 }
 
-export default PathItem;
+export default Milestone;

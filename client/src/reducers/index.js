@@ -3,14 +3,12 @@ import flashMessages from './flashMessages';
 import authenticate, * as fromAuthenticate from './authenticate';
 import users from './users';
 import paths, * as fromPaths from './paths';
-import pathItems from './pathItems';
 
 const root = combineReducers({
   flashMessages,
   authenticate,
   users,
   paths,
-  pathItems,
 });
 
 export const isAuthenticated = state =>

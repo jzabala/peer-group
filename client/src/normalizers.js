@@ -5,10 +5,10 @@ const normalizer = R.curry((schema, data) => normalize(data, schema));
 
 const user = new schema.Entity('users');
 
-const pathItem = new schema.Entity('pathItems');
+const milestone = new schema.Entity('milestones');
 
 const path = new schema.Entity('paths', {
-  items: [pathItem],
+  milestones: [milestone],
 })
 
 const paths = [path];

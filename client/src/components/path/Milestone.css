@@ -1,0 +1,7 @@
+.Milestone-controls {
+  display: flex;
+}
+
+.Milestone-controls-close {
+  margin-left: 15px;
+}
