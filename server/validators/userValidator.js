@@ -7,10 +7,8 @@ import {
 validate.validators.emailExists = (value, options) => {
   if (options) {
     return new validate.Promise((resolve) => {
-      User.findOne({
-        email: value
-      }).then(
-        (user) => user ? resolve('exists.') : resolve(),
+      User.findOne({ email: value }).then(
+        (user) => user ? resolve('exists.') : resolve()
       );
     });
   }
