@@ -4,13 +4,18 @@ import { isAuthenticated } from '../reducers';
 
 export class Display extends React.Component {
   render() {
-    const { isAuthenticated, children } = this.props;
+    const {
+      authenticated,
+      unAuthenticated,
+      isAuthenticated,
+      children,
+    } = this.props;
 
-    if(this.props.authenticated && isAuthenticated) {
+    if(authenticated && isAuthenticated) {
       return children;
     }
 
-    if(this.props.unAuthenticated && !isAuthenticated) {
+    if(unAuthenticated && !isAuthenticated) {
       return children;
     }
 

@@ -8,6 +8,7 @@ import Logout from './auth/Logout';
 import NewPathPage from './path/NewPathPage';
 import FlashMessageList from './common/FlashMessageList';
 import Header from './Header';
+import AuthRedirect from './AuthRedirect';
 import requireAuth from '../utils/requireAuth.js'
 import './App.css';
 
@@ -20,10 +21,18 @@ class App extends Component {
         <main className="container App_container">
           <FlashMessageList />
           <Match exactly pattern="/" component={ PathPage } />
-          <Match pattern="/login" component={LoginPage} />
-          <Match pattern="/signup" component={SignupPage} />
-          <Match pattern="/logout" component={requireAuth(Logout)} />
-          <Match pattern="/new-path" component={requireAuth(NewPathPage)} />
+          <AuthRedirect onAuthenticate={ true } to="/">
+            <Match pattern="/login" component={LoginPage} />
+          </AuthRedirect>
+          <AuthRedirect onAuthenticate={ true } to="/">
+            <Match pattern="/signup" component={SignupPage} />
+          </AuthRedirect>
+          <AuthRedirect onUnauthenticate={ true } to="/">
+            <Match pattern="/logout" component={requireAuth(Logout)} />
+          </AuthRedirect>
+          <AuthRedirect onUnauthenticate={ true } to="/">
+            <Match pattern="/new-path" component={requireAuth(NewPathPage)} />
+          </AuthRedirect>
         </main>
       </div>
     );

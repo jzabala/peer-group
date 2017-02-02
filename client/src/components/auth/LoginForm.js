@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { login } from '../../actions/auth';
 import { addFlashMessage } from '../../actions/flashMessages';
 import TextFieldGroup from '../common/TextFieldGroup';
@@ -20,7 +19,6 @@ class LoginForm extends Component {
       },
       isSubmit: false,
       errors: {},
-      redirectTo: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = props.handleChange.bind(this);
@@ -33,8 +31,7 @@ class LoginForm extends Component {
 
     validateLogin(this.state.form).then(
       data => {
-        this.props.login(data).then(
-          () => this.setState({ redirectTo: '/' }),
+        this.props.login(data).then(null,
           errors => {
             this.handleSubmitError(errors);
             if(errors.general) {
@@ -54,34 +51,30 @@ class LoginForm extends Component {
   }
   render() {
     return (
-      <div>
-        { this.state.redirectTo ? <Redirect to={ this.state.redirectTo } /> :
-          <form onSubmit={ this.handleSubmit } className="LoginForm_form">
-            <TextFieldGroup
-              name="email"
-              placeholder="Enter email"
-              value={ this.state.form.email }
-              onChange={ this.handleChange }
-              errors={ this.state.errors.email }
-            />
+      <form onSubmit={ this.handleSubmit } className="LoginForm_form">
+        <TextFieldGroup
+          name="email"
+          placeholder="Enter email"
+          value={ this.state.form.email }
+          onChange={ this.handleChange }
+          errors={ this.state.errors.email }
+        />
 
-            <TextFieldGroup
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={ this.handleChange }
-              value={ this.state.form.password }
-              errors={ this.state.errors.password }
-            />
-            <RequestButton
-              className="btn btn-primary LoginForm_submit"
-              request={ this.state.isSubmit }
-            >
-              Submit
-            </RequestButton>
-          </form>
-        }
-      </div>
+        <TextFieldGroup
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={ this.handleChange }
+          value={ this.state.form.password }
+          errors={ this.state.errors.password }
+        />
+        <RequestButton
+          className="btn btn-primary LoginForm_submit"
+          request={ this.state.isSubmit }
+        >
+          Submit
+        </RequestButton>
+      </form>
     );
   }
 }

@@ -54,44 +54,41 @@ class SignupForm extends Component {
   }
   render() {
     return (
-      <div>
-        {this.state.redirectTo ? <Redirect to={ this.state.redirectTo } /> :
-          <form onSubmit={ this.handleSubmit } className="SignupForm_form">
-            <TextFieldGroup
-              name="email"
-              placeholder="Enter email"
-              value={ this.state.form.email }
-              errors={ this.state.errors.email }
-              onChange={ this.handleChange }
-            />
+      this.state.redirectTo ? <Redirect to={ this.state.redirectTo } /> :
+        <form onSubmit={ this.handleSubmit } className="SignupForm_form">
+          <TextFieldGroup
+            name="email"
+            placeholder="Enter email"
+            value={ this.state.form.email }
+            errors={ this.state.errors.email }
+            onChange={ this.handleChange }
+          />
 
-            <TextFieldGroup
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={ this.handleChange }
-              errors={ this.state.errors.password }
-              value={ this.state.form.password }
-            />
+          <TextFieldGroup
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={ this.handleChange }
+            errors={ this.state.errors.password }
+            value={ this.state.form.password }
+          />
 
-            <TextFieldGroup
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm Password"
-              onChange={ this.handleChange }
-              errors={ this.state.errors.confirmPassword }
-              value={ this.state.form.confirmPassword }
-            />
+          <TextFieldGroup
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            onChange={ this.handleChange }
+            errors={ this.state.errors.confirmPassword }
+            value={ this.state.form.confirmPassword }
+          />
 
-            <RequestButton
-              className="btn btn-primary SignupForm_submit"
-              request={ this.state.isSubmit }
-            >
-              Submit
-            </RequestButton>
-          </form>
-        }
-      </div>
+          <RequestButton
+            className="btn btn-primary SignupForm_submit"
+            request={ this.state.isSubmit }
+          >
+            Submit
+          </RequestButton>
+        </form>
     );
   }
 }
