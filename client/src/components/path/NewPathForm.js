@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import R from 'ramda';
+import classnames from 'classnames';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaGroup from '../common/TextAreaGroup';
 import RequestButton from '../common/RequestButton';
@@ -89,7 +90,7 @@ export class NewPathForm extends React.Component {
     );
     this.setState({ form: { ...form,  milestones } });
   }
-  handleSubmit(e) {    
+  handleSubmit(e) {
     e.preventDefault();
     this.resetErrorsRequest();
 
@@ -125,13 +126,30 @@ export class NewPathForm extends React.Component {
           onChange={ this.handleNameChange }
         />
 
-        <TextFieldGroup
-          name="url"
-          placeholder="Url"
-          value={ form.url }
-          errors={ errors.url }
-          onChange={ this.handleUrlChagne }
-        />
+        <div className={ classnames('form-group GeneralField-form-field', { 'has-danger': errors.url }) }>
+          <div className="NewPathForm-url">
+            <span className="NewPathForm-url-pathname">
+              { location.origin + "/paths/" }
+            </span>
+            <input
+              name="url"
+              type="text"
+              placeholder="Url"
+              value={ form.url }
+              onChange={ this.handleUrlChagne }
+              className={
+                classnames('form-control NewPathForm-url-input',
+                  { 'form-control-danger': errors.url }
+                )
+              }
+            />
+          </div>
+
+          { errors.url && errors.url.map(
+              (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
+            )
+          }
+        </div>
 
         <TextAreaGroup
           name="description"
