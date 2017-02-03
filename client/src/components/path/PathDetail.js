@@ -1,31 +1,50 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPath } from '../../actions';
-import { getPath, getMilestones } from '../../reducers';
+import { fetchCurrentPath } from '../../actions';
+import * as fromReducers from '../../reducers';
 
 export class PathDetail extends React.Component {
   componentDidMount() {
-    const { fetchPath, match } = this.props;
-    fetchPath(match.params.id);
+    const { fetchCurrentPath, match } = this.props;
+    fetchCurrentPath(match.params.id);
   }
   render() {
-    const { path } = this.props;
+    const { isFeching, currentPathId, milestones } = this.props;
+    if(isFeching) {
+      return <p>Loading...</p>
+    }
+
+    if(!currentPathId) {
+      return <p>Path not available</p>
+    }
+
     return (
-      <section>
-        <h3>{ path.name }</h3>
-        <p>{ path.description }</p>
-      </section>
+      <ul>
+      {
+        milestones.map(
+          milestone => <li key={ milestone.id }>{ milestone.name }</li>
+        )
+      }
+      </ul>
     );
   }
 }
 
 const mapStateToProps = (state, { match }) => {
-  const path = getPath(state, match.params.id);
-  // const milestones = getMilestones(state, path.milestones);
+  const isFeching = fromReducers.getCurrentPathIsFeching(state);
+  const currentPathId = fromReducers.getCurrentPathId(state);
+  let path;
+  let milestones;
+  if(currentPathId) {
+    path = fromReducers.getPath(state, currentPathId);
+    milestones = fromReducers.getMilestones(state, path.milestones);
+  }
   return {
+    isFeching,
+    currentPathId,
     path,
-    // milestones,
+    milestones,
   }
 };
 
-export default connect(null, { fetchPath } )(PathDetail);
+export default connect(mapStateToProps, { fetchCurrentPath } )(PathDetail);

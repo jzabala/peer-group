@@ -23,18 +23,18 @@ export const fetchPaths = api => () => dispatch => {
   )
 };
 
-export const fetchPath = api => pathUrl => dispatch => {
+export const fetchCurrentPath = api => pathUrl => dispatch => {
   dispatch({
-    type: 'FETCH_PATH_REQUEST'
+    type: 'FETCH_CURRENT_PATH_REQUEST'
   });
 
   return api.get(`/paths/${pathUrl}`).then(
     ({ data }) => dispatch({
-      type: 'FETCH_PATH_SUCCESS',
+      type: 'FETCH_CURRENT_PATH_SUCCESS',
       response: normalizePath(data),
     }),
     ({ response }) => {
-      dispatch({ type: 'FETCH_PATH_FAILURE' });
+      dispatch({ type: 'FETCH_CURRENT_PATH_FAILURE' });
       return Promise.reject(response.data.errors);
     }
   );

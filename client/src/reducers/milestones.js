@@ -13,3 +13,6 @@ const milestones = combineReducers({
 });
 
 export default milestones;
+
+export const getMilestones = (state, ids) =>
+  ids.reduce((an, ac) => an.concat([state.byIds[ac]]), []);
