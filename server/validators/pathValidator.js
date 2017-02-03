@@ -28,11 +28,11 @@ validate.validators.milestoneConstrains = (value, options) => {
   return null;
 };
 
-validate.validators.urlExits = (value, options) => {
+validate.validators.idExits = (value, options) => {
   if (options) {
     return new validate.Promise((resolve) => {
-      Path.findOne({ url: value }).then(
-        path => path ? resolve('exists.') : resolve(),
+      Path.findOne({ id: value }).then(
+        path => path ? resolve('^Url exists.') : resolve(),
       );
     });
   }
@@ -43,13 +43,15 @@ export const validateNewPath = validateAsync({
   name: {
     presence: true,
   },
-  url: {
-    presence: true,
+  id: {
+    presence: {
+      message: "^Url can't be blank",
+    },
     format: {
       pattern: /[a-z0-9-]+/,
-      message: 'can only contain a-z, 0-9 and -',
+      message: '^Url can only contain a-z, 0-9 and -',
     },
-    urlExits: true,
+    idExits: true,
   },
   description: {
     presence: true,

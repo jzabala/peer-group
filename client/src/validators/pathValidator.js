@@ -31,11 +31,11 @@ export const validateNewPath = validateAsync({
   name: {
     presence: true,
   },
-  url: {
+  id: {
     presence: true,
     format: {
       pattern: /[a-z0-9-]+/,
-      message: 'can only contain a-z, 0-9, - and _',
+      message: '^Url can only contain a-z, 0-9 and -',
     },
   },
   milestones: {

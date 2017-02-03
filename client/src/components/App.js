@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PathPage from './path/PathPage';
+import PathDetail from './path/PathDetail';
 import LoginPage from './auth/LoginPage';
 import SignupPage from './auth/SignupPage';
 import Logout from './auth/Logout';
@@ -14,21 +15,21 @@ import './App.css';
 
 class App extends Component {
   render() {
-    const homeRedirect = <Redirect to="/" />;
     return (
       <div>
         <Header />
         <main className="container App_container">
           <FlashMessageList />
           <Route exact path="/" component={ PathPage } />
+          <Route exact path="/paths/:id" component={ PathDetail } />
           <Route path="/login" render={
             () => <Auth render={
-              ({ isAuth }) => !isAuth ? <LoginPage /> : homeRedirect
+              ({ isAuth }) => !isAuth ? <LoginPage /> : <Redirect to="/" />
             }/>
           }/>
           <Route path="/signup" render={
             () => <Auth render={
-              ({ isAuth }) => !isAuth ? <SignupPage /> : homeRedirect
+              ({ isAuth }) => !isAuth ? <SignupPage /> : <Redirect to="/" />
             }/>
           }/>
           <Route path="/new-path" render={
@@ -38,7 +39,7 @@ class App extends Component {
           }/>
           <Route path="/logout" render={
             () => <Auth render={
-              ({ isAuth }) => isAuth ? <Logout /> : homeRedirect
+              ({ isAuth }) => isAuth ? <Logout /> : <Redirect to="/" />
             }/>
           }/>
         </main>

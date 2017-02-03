@@ -15,6 +15,7 @@ export class PathList extends React.Component {
       this.props.paths.map(
         path => <Path key={ path.id }
           name={ path.name }
+          id={ path.id }
           description={ path.description }
         />
       );

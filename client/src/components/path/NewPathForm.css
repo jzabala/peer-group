@@ -16,21 +16,21 @@
   align-items: center;
 }
 
-.NewPathForm-url {
+.NewPathForm-id {
   display: flex;
   align-items: center;
 }
 
-.NewPathForm-url-input {
+.NewPathForm-id-input {
   padding-left: 2px;
 }
 
-.NewPathForm-url-pathname {
+.NewPathForm-id-pathname {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .NewPathForm-url-pathname {
+  .NewPathForm-id-pathname {
     display: block;
   }
 }

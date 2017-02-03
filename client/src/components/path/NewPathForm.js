@@ -18,7 +18,7 @@ const url = R.compose(kebabCase, R.replace(/[^a-zA-Z0-9-\s_]/g, ''));
 const initialStaet = {
   form: {
     name: '',
-    url: '',
+    id: '',
     description: '',
     milestones: [
       {
@@ -48,14 +48,14 @@ export class NewPathForm extends React.Component {
   handleNameChange(e) {
     const form = { ...this.state.form, name: e.target.value };
     if(this.state.changeUrl) {
-      form.url = url(e.target.value);
+      form.id = url(e.target.value);
     }
     this.setState({ form });
   }
   handleUrlChagne(e) {
     this.setState({
       changeUrl: false,
-      form: { ...this.state.form, url: url(e.target.value) }
+      form: { ...this.state.form, id: url(e.target.value) }
     });
   }
   handleAddMilestone() {
@@ -126,26 +126,26 @@ export class NewPathForm extends React.Component {
           onChange={ this.handleNameChange }
         />
 
-        <div className={ classnames('form-group GeneralField-form-field', { 'has-danger': errors.url }) }>
-          <div className="NewPathForm-url">
-            <span className="NewPathForm-url-pathname">
+        <div className={ classnames('form-group GeneralField-form-field', { 'has-danger': errors.id }) }>
+          <div className="NewPathForm-id">
+            <span className="NewPathForm-id-pathname">
               { location.origin + "/paths/" }
             </span>
             <input
-              name="url"
+              name="id"
               type="text"
               placeholder="Url"
-              value={ form.url }
+              value={ form.id }
               onChange={ this.handleUrlChagne }
               className={
-                classnames('form-control NewPathForm-url-input',
-                  { 'form-control-danger': errors.url }
+                classnames('form-control NewPathForm-id-input',
+                  { 'form-control-danger': errors.id }
                 )
               }
             />
           </div>
 
-          { errors.url && errors.url.map(
+          { errors.id && errors.id.map(
               (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
             )
           }

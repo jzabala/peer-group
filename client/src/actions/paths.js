@@ -4,17 +4,38 @@ export const createPath = api => path => dispatch => (
   api.post('/paths', path).then(
     ({ data }) => dispatch({
       type: 'ADD_PATH',
-      paths: normalizePath(data),
+      response: normalizePath(data),
     }),
     ({ response }) => Promise.reject(response.data.errors),
   )
 );
 
-export const fetchPaths = api => () => dispatch => (
-  api.get('/paths').then(
+export const fetchPaths = api => () => dispatch => {
+  dispatch({
+    type: 'FETCH_PATHS_REQUEST'
+  });
+
+  return api.get('/paths').then(
     ({ data }) => dispatch({
-      type: 'FETCH_PATHS',
-      paths: normalizePaths(data),
+      type: 'FETCH_PATHS_SUCCESS',
+      response: normalizePaths(data),
     })
   )
-);
+};
+
+export const fetchPath = api => pathUrl => dispatch => {
+  dispatch({
+    type: 'FETCH_PATH_REQUEST'
+  });
+
+  return api.get(`/paths/${pathUrl}`).then(
+    ({ data }) => dispatch({
+      type: 'FETCH_PATH_SUCCESS',
+      response: normalizePath(data),
+    }),
+    ({ response }) => {
+      dispatch({ type: 'FETCH_PATH_FAILURE' });
+      return Promise.reject(response.data.errors);
+    }
+  );
+}

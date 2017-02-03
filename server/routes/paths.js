@@ -9,18 +9,27 @@ const router = express.Router();
 router.post('/', authenticate, (req, res) => {
   const path = { ...req.body, user: req.user.id };
   validateNewPath(path).then(
-    validPath => {
-      console.log(validPath);
-      handlers.defaultReturn(res, new Path(validPath).save());
-    },
+    validPath => handlers.return200(res, new Path(validPath).save()),
     errors => handlers.validationError(res, errors),
   );
 });
 
 router.get('/', (req, res) =>
-  handlers.defaultReturn(
+  handlers.return200(
     res,
-    Path.find({}, 'name description url'),
+    Path.find({}, 'id name description'),
   ));
+
+router.get('/:id', (req, res) =>
+  Path.findOne({ id: req.params.id }).then(
+    (path) => path ? res.json(path) :
+        res.status(404).json(
+          { errors: { general: 'Path not found' } },
+        ),
+    () => res.status(500).json(
+      { errors: { general: 'Something went wrong' } },
+    ),
+  ),
+);
 
 export default router;
