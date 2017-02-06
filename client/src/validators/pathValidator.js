@@ -35,7 +35,7 @@ export const validateNewPath = validateAsync({
     presence: true,
     format: {
       pattern: /[a-z0-9-]+/,
-      message: '^Url can only contain a-z, 0-9 and -',
+      message: '^Url may only contain alphanumeric characters or hyphens',
     },
   },
   milestones: {

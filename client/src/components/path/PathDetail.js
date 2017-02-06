@@ -1,50 +1,77 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCurrentPath } from '../../actions';
+import { fetchPath, saveUserPathStatus } from '../../actions';
 import * as fromReducers from '../../reducers';
+import Milestone from './Milestone';
+import './PathDetail.css';
 
 export class PathDetail extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleStatusChange = this.handleStatusChange.bind(this);
+  }
   componentDidMount() {
-    const { fetchCurrentPath, match } = this.props;
-    fetchCurrentPath(match.params.id);
+    const { fetchPath, id } = this.props;
+    fetchPath(id);
+  }
+  handleStatusChange(milestone) {
+    const { id, saveUserPathStatus } = this.props;
+    const userPath = { path: id, milestone };
+    saveUserPathStatus(userPath);
   }
   render() {
-    const { isFeching, currentPathId, milestones } = this.props;
-    if(isFeching) {
-      return <p>Loading...</p>
-    }
+    const { path, milestones, userMilestones } = this.props;
 
-    if(!currentPathId) {
+    if(!path) {
       return <p>Path not available</p>
     }
 
+    const { name, description } = path;
     return (
-      <ul>
-      {
-        milestones.map(
-          milestone => <li key={ milestone.id }>{ milestone.name }</li>
-        )
-      }
-      </ul>
+      <section>
+        <div className="text-center">
+          <h3>{ name }</h3>
+          <p>{ description }</p>
+        </div>
+        <div className="PathDetail-milestones">
+          {
+            milestones.map(
+              ({ id, name }) => (
+                <Milestone
+                  key={ id }
+                  name={ name }
+                  id={ id }
+                  status={ userMilestones[id] ? userMilestones[id].status : '' }
+                  onStatusChange={ this.handleStatusChange }
+                />
+              )
+            )
+          }
+        </div>
+      </section>
     );
   }
 }
 
 const mapStateToProps = (state, { match }) => {
-  const isFeching = fromReducers.getCurrentPathIsFeching(state);
-  const currentPathId = fromReducers.getCurrentPathId(state);
-  let path;
-  let milestones;
-  if(currentPathId) {
-    path = fromReducers.getPath(state, currentPathId);
+  const id = match.params.id;
+  let path = fromReducers.getPath(state, id);
+  let milestones = [];
+  let userMilestones = [];
+  if(path && path.milestones) {
     milestones = fromReducers.getMilestones(state, path.milestones);
+    userMilestones = fromReducers.getUserMilestones(state, path.milestones);
   }
   return {
-    isFeching,
-    currentPathId,
+    id,
     path,
     milestones,
+    userMilestones
   }
 };
 
-export default connect(mapStateToProps, { fetchCurrentPath } )(PathDetail);
+export default connect(
+  mapStateToProps,
+  { fetchPath, saveUserPathStatus }
+)(PathDetail);

@@ -1,8 +1,11 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import { validateNewUser } from '../validators/userValidator';
+import { validateNewUser, validateUserPath } from '../validators/userValidator';
 import User from '../models/user';
-import { serverError } from '../utils/handlers';
+import UserPath from '../models/userPath';
+import * as handlers from '../utils/handlers';
+import { parseToUserPath } from '../utils/functions';
+import authenticate from '../middlewares/authenticate';
 
 const router = express.Router();
 
@@ -12,12 +15,43 @@ router.post('/', (req, res) => {
       const password = bcrypt.hashSync(user.password);
       new User({ ...user, password }).save().then(
         () => res.end(),
-        err => serverError(res, err),
+        err => handlers.serverError(res, err),
       );
     },
-    (errors) => {
-      res.status(400).json({ errors });
+    (errors) => handlers.validationError(res, errors),
+  );
+});
+
+router.post('/paths', authenticate, (req, res) => {
+  const user = req.user;
+  const requestBody = { ...req.body };
+  requestBody.user = user.id;
+  validateUserPath(requestBody).then(
+    (requestData) => {
+      const result = UserPath.findOne({ user: user.id, path: requestData.path });
+
+      result.then(
+        (dbUserPath) => {
+          let userPath = dbUserPath;
+          if (userPath) {
+            const milestones = userPath.milestones.filter(
+              // eslint-disable-next-line eqeqeq
+              m => m.milestoneId != requestData.milestone.milestoneId,
+            );
+            userPath.milestones = [...milestones, requestData.milestone];
+            userPath.history.push(requestData.milestone);
+          } else {
+            userPath = new UserPath(parseToUserPath(requestData, user));
+          }
+          handlers.return200(
+            res,
+            userPath.save(),
+          );
+        },
+        (error) => handlers.serverError(res, error),
+      );
     },
+    errors => handlers.validationError(res, errors),
   );
 });
 

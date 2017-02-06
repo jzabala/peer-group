@@ -4,7 +4,7 @@ import PathList from './PathList';
 const PathPage = (props) => (
   <section>
     <hr />
-      <PathList />  
+    <PathList />
   </section>
 );
 

@@ -10,7 +10,7 @@ export const signup = user => api.post('/users', user).then(null,
 
 const loginUser = (user) => ({
   type: 'LOGIN_USER',
-  users: normalizeUser(user),
+  response: normalizeUser(user),
 });
 
 export const authenticateUser = dispatch => R.compose(

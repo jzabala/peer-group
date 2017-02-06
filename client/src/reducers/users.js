@@ -1,6 +1,7 @@
 const users = (state = {}, action) => {
-  if (action.users) {
-    return { ...state, ...action.users.entities.users };
+  const response = action.response;
+  if (response && response.entities.users) {
+    return { ...state, ...response.entities.users };
   }
   switch(action.type) {
     case 'REMOVE_USER': {

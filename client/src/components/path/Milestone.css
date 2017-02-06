@@ -1,7 +1,4 @@
-.Milestone-controls {
-  display: flex;
-}
-
-.Milestone-controls-close {
-  margin-left: 15px;
+.Milestone-name {
+  margin-left: 10px;
+  font-weight: bold;
 }

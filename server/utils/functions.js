@@ -11,3 +11,21 @@ export const validateAsync = R.curry(
 );
 
 export const isNotEmpty = x => !R.isEmpty(x);
+
+export const parseToUserPath = (data, user) => ({
+  path: data.path,
+  user: user.id,
+  status: 'stated',
+  milestones: [
+    {
+      milestoneId: data.milestone.milestoneId,
+      status: data.milestone.status,
+    },
+  ],
+  history: [
+    {
+      milestoneId: data.milestone.milestoneId,
+      status: data.milestone.status,
+    },
+  ],
+});

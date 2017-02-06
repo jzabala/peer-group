@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaGroup from '../common/TextAreaGroup';
 import RequestButton from '../common/RequestButton';
-import Milestone from './Milestone';
+import Milestone from './NewMilestone';
 import { kebabCase } from '../../utils/functions';
 import { validateNewPath } from '../../validators/pathValidator.js'
 import withHandlers from '../../utils/withHandlers';

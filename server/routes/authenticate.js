@@ -10,13 +10,13 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   validateAuth(req.body).then(
-    ({ email, password }) => {
-      User.findOne({ email }).then(
+    ({ id, password }) => {
+      User.findOne({ id }).then(
         (user) => {
           if (user) {
             if (bcrypt.compareSync(password, user.password)) {
               const token = jwt.sign(
-                { user: { id: user.id, email: user.email } },
+                { user: { id: user.id } },
                 config.jwtSecret,
               );
               res.json({ token });

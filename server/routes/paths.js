@@ -22,14 +22,13 @@ router.get('/', (req, res) =>
 
 router.get('/:id', (req, res) =>
   Path.findOne({ id: req.params.id }).then(
-    (path) => path ? res.json(path) :
-        res.status(404).json(
-          { errors: { general: 'Path not found' } },
-        ),
-    () => res.status(500).json(
-      { errors: { general: 'Something went wrong' } },
+    (path) => path ?
+      res.json(path) :
+      res.status(404).json(
+        { errors: { general: 'Path not found' } },
+      ),
+    (error) => handlers.serverError(res, error),
     ),
-  ),
-);
+  );
 
 export default router;

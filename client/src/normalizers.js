@@ -13,6 +13,11 @@ const path = new schema.Entity('paths', {
 
 const paths = [path];
 
+const userMilestone = new schema.Entity(
+  'userMilestones', {}, { idAttribute: 'milestoneId' }
+)
+
 export const normalizeUser = normalizer(user);
 export const normalizePath = normalizer(path);
 export const normalizePaths = normalizer(paths);
+export const normalizeUserMilestone = normalizer(userMilestone);

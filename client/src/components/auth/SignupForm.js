@@ -15,6 +15,7 @@ class SignupForm extends Component {
 
     this.state = {
       form: {
+        id: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -57,8 +58,16 @@ class SignupForm extends Component {
       this.state.redirectTo ? <Redirect to={ this.state.redirectTo } /> :
         <form onSubmit={ this.handleSubmit } className="SignupForm_form">
           <TextFieldGroup
+            name="id"
+            placeholder="Username"
+            value={ this.state.form.id }
+            errors={ this.state.errors.id }
+            onChange={ this.handleChange }
+          />
+
+          <TextFieldGroup
             name="email"
-            placeholder="Enter email"
+            placeholder="Email"
             value={ this.state.form.email }
             errors={ this.state.errors.email }
             onChange={ this.handleChange }

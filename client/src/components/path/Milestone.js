@@ -1,44 +1,39 @@
 import React, { PropTypes } from 'react';
-import classnames from 'classnames';
+import Auth from '../auth/Auth';
 import './Milestone.css';
 
-const Milestone = (props) => {
-  const { errors } = props;
+const Milestone = ({ id, name, status, onStatusChange }) => {
   return (
-    <div className={ classnames('form-group', { 'has-danger': errors }) }>
-      <div className="Milestone-controls">
-        <input
-          data-index={ props.index }
-          type={ props.type }
-          value={ props.value }
-          placeholder={ props.placeholder }
-          className={
-            classnames('form-control', { 'form-control-danger': errors })
-          }
-        />
-        <button type="button" className="close Milestone-controls-close" onClick={ props.onDelete }>
-          <span>&times;</span>
-        </button>
+    <div>
+      <div>
+        <Auth render={
+          ({ isAuth }) => (isAuth ?
+            <select value={ status } className="custom-select" onChange={
+              (e) => onStatusChange({
+                status: e.target.value,
+                milestoneId: id,
+              })
+            }>
+              <option value="">Unstarted</option>
+              <option value="stated">Started</option>
+              <option value="finished">Finished</option>
+            </select> : null
+          )
+        }/>
+
+        <span className="Milestone-name">
+          { name }
+        </span>
+        <hr />
       </div>
-      { errors && errors.map(
-          (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
-        )
-      }
     </div>
-  );
+  )
 }
 
 Milestone.propTypes = {
-  index: PropTypes.number.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  errors: PropTypes.array,
-}
-
-Milestone.defaultProps = {
-  type: 'text',
-}
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+};
 
 export default Milestone;

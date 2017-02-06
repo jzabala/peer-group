@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const milestoneSchema = new Schema({
   name: String,
-  reference: { type: Schema.Types.ObjectId, ref: 'Path' },
+  reference: { type: String, ref: 'Path' },
 });
 
 if (!milestoneSchema.options.toJSON) milestoneSchema.options.toJSON = {};
@@ -16,7 +16,7 @@ const pathSchema = new Schema({
   name: String,
   description: String,
   milestones: [milestoneSchema],
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  user: { type: String, ref: 'User' },
 }, {
   timestamps: true,
 });

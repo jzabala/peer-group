@@ -23,7 +23,7 @@ export const fetchPaths = api => () => dispatch => {
   )
 };
 
-export const fetchCurrentPath = api => pathUrl => dispatch => {
+export const fetchPath = api => pathUrl => dispatch => {
   dispatch({
     type: 'FETCH_CURRENT_PATH_REQUEST'
   });
