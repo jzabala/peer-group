@@ -14,8 +14,8 @@ const root = combineReducers({
 export const isAuthenticated = state =>
   fromAuth.isAuthenticated(state.auth);
 
-export const getAuthenticatedUserId = state =>
-  fromAuth.getAuthenticatedUserId(state.auth);
+export const getAuthenticatedUsername = state =>
+  fromAuth.getAuthenticatedUsername(state.auth);
 
 export const getAllPaths = state =>
   fromPaths.getAllPaths(state.paths);

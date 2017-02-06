@@ -13,7 +13,7 @@ const isUserAuthenticated = (state = false, action) => {
   }
 }
 
-const userId = (state = '', action) => {
+const username = (state = '', action) => {
   switch(action.type) {
     case 'LOGIN_USER': {
       return action.response.result;
@@ -42,7 +42,7 @@ const userMilestones = (state = {}, action) => {
 
 const auth = combineReducers({
   isUserAuthenticated,
-  userId,
+  username,
   userPaths,
   userMilestones,
 });
@@ -50,7 +50,7 @@ const auth = combineReducers({
 export default auth;
 
 export const isAuthenticated = (state) => state.isUserAuthenticated;
-export const getAuthenticatedUserId = (state) => state.userId;
+export const getAuthenticatedUsername = (state) => state.username;
 export const getUserMilestones = (state, ids) =>
   ids.reduce((an, ac) => {
     const userMilestone = state.userMilestones[ac];

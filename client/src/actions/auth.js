@@ -31,12 +31,12 @@ export const login = user => dispatch => {
   );
 }
 
-export const logout = (id) => dispatch => {
+export const logout = (username) => dispatch => {
   fromAuthHandler.removeAuthToken();
   fromAuthHandler.deleteAuthTokenRequest();
   dispatch({ type: 'LOGOUT_USER' });
   dispatch({
     type: 'REMOVE_USER',
-    userId: id
+    userId: username
   });
 }

@@ -1,7 +1,7 @@
 import { validateAsync } from '../utils/functions';
 
 export const validateSignup = validateAsync({
-  id: {
+  username: {
     presence: {
       message: "^Username can't be black",
     },
@@ -26,7 +26,7 @@ export const validateSignup = validateAsync({
 });
 
 export const validateLogin = validateAsync({
-  id: {
+  username: {
     presence: {
       message: "^Username can't be black",
     },

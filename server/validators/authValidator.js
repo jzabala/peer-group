@@ -1,7 +1,7 @@
 import { validateAsync } from '../utils/functions';
 
 export const validateAuth = validateAsync({
-  id: {
+  username: {
     presence: {
       message: "^Username can't be black",
     },

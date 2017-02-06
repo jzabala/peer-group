@@ -3,7 +3,7 @@ import { normalize, schema } from 'normalizr';
 
 const normalizer = R.curry((schema, data) => normalize(data, schema));
 
-const user = new schema.Entity('users');
+const user = new schema.Entity('users', {}, { idAttribute: 'username' });
 
 const milestone = new schema.Entity('milestones');
 

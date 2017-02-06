@@ -14,7 +14,7 @@ export const isNotEmpty = x => !R.isEmpty(x);
 
 export const parseToUserPath = (data, user) => ({
   path: data.path,
-  user: user.id,
+  username: user.username,
   status: 'stated',
   milestones: [
     {

@@ -56,11 +56,11 @@ export const milestoneStatusExists = (value, options, key, attributes) => {
   if (options) {
     const message = options.message || 'for status exists or already finished';
     const path = attributes.path;
-    const user = attributes.user;
+    const username = attributes.username;
     return new validate.Promise((resolve) => {
       UserPath.findOne({
         path,
-        user,
+        username,
         'milestones.milestoneId': new Types.ObjectId(value.milestoneId),
         $and: [{
           $or: [

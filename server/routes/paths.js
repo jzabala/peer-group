@@ -7,7 +7,7 @@ import { validateNewPath } from '../validators/pathValidator';
 const router = express.Router();
 
 router.post('/', authenticate, (req, res) => {
-  const path = { ...req.body, user: req.user.id };
+  const path = { ...req.body, username: req.user.username };
   validateNewPath(path).then(
     validPath => handlers.return200(res, new Path(validPath).save()),
     errors => handlers.validationError(res, errors),

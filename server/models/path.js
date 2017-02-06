@@ -16,7 +16,7 @@ const pathSchema = new Schema({
   name: String,
   description: String,
   milestones: [milestoneSchema],
-  user: { type: String, ref: 'User' },
+  username: { type: String, ref: 'User' },
 }, {
   timestamps: true,
 });

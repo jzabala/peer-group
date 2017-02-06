@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
-import { getAuthenticatedUserId } from '../../reducers';
+import { getAuthenticatedUsername } from '../../reducers';
 
 class Logout extends Component {
-  componentWillMount() {
-    const { logout, userId } = this.props;
-    logout(userId);
+  componentDidMount() {
+    const { logout, username } = this.props;
+    logout(username);
   }
   render() {
     return null;
@@ -14,7 +14,7 @@ class Logout extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userId: getAuthenticatedUserId(state),
+  username: getAuthenticatedUsername(state),
 });
 
 export default connect(mapStateToProps, { logout })(Logout);

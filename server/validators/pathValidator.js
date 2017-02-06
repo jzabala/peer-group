@@ -54,7 +54,7 @@ export const validateNewPath = validateAsync({
     presence: true,
     milestoneConstrains: true,
   },
-  user: {
+  username: {
     presence: true,
   },
 });

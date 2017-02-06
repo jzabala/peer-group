@@ -14,7 +14,7 @@ class LoginForm extends Component {
 
     this.state = {
       form: {
-        id: '',
+        username: '',
         password: '',
       },
       isSubmit: false,
@@ -53,11 +53,11 @@ class LoginForm extends Component {
     return (
       <form onSubmit={ this.handleSubmit } className="LoginForm_form">
         <TextFieldGroup
-          name="id"
+          name="username"
           placeholder="Username"
-          value={ this.state.form.id }
+          value={ this.state.form.username }
           onChange={ this.handleChange }
-          errors={ this.state.errors.id }
+          errors={ this.state.errors.username }
         />
 
         <TextFieldGroup

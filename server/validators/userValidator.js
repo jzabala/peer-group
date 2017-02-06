@@ -30,7 +30,7 @@ validate.validators.idExists = (value, options) => {
 };
 
 export const validateNewUser = validateAsync({
-  id: {
+  username: {
     presence: {
       message: "^Username can't be black",
     },
@@ -61,7 +61,7 @@ export const validateUserPath = validateAsync({
       message: '^Path not exists',
     },
   },
-  user: {
+  username: {
     presence: true,
   },
   milestone: {
