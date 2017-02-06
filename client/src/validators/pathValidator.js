@@ -1,6 +1,5 @@
 import validate from 'validate.js';
 import R from 'ramda';
-import { then } from '../utils/promise';
 import { validateAsync, isNotEmpty } from '../utils/functions';
 
 const newMilestoneConstrains = {
@@ -12,7 +11,7 @@ const newMilestoneConstrains = {
 validate.validators.milestoneConstrains = (value, options) => {
   if (options && value) {
     const promises = R.compose(
-      then(
+      promise => promise.then(
         () => ({}),
         R.identity,
       ),
@@ -31,11 +30,11 @@ export const validateNewPath = validateAsync({
   name: {
     presence: true,
   },
-  id: {
+  url: {
     presence: true,
     format: {
       pattern: /[a-z0-9-]+/,
-      message: '^Url may only contain alphanumeric characters or hyphens',
+      message: 'may only contain alphanumeric characters or hyphens',
     },
   },
   milestones: {

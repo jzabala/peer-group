@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import merge from 'lodash.merge';
 import milestones, * as fromMilestones from './milestones';
 
-const byIds = (state = {}, action) => {
+const byUrls = (state = {}, action) => {
   const response = action.response;
   if (response && response.entities.paths) {
     return merge({}, state, response.entities.paths);
@@ -25,14 +25,14 @@ const isFeching = (state = false, action) => {
 }
 
 const paths = combineReducers({
-  byIds,
+  byUrls,
   isFeching,
   milestones,
 });
 
 export default paths;
 
-export const getAllPaths = ({ byIds }) => Object.keys(byIds).map(id => byIds[id]);
-export const getPath = (state, id) => state.byIds[id];
+export const getAllPaths = ({ byUrls }) => Object.keys(byUrls).map(url => byUrls[url]);
+export const getPath = (state, url) => state.byUrls[url];
 export const getMilestones = (state, ids) =>
   fromMilestones.getMilestones(state.milestones, ids);

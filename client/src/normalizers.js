@@ -9,7 +9,7 @@ const milestone = new schema.Entity('milestones');
 
 const path = new schema.Entity('paths', {
   milestones: [milestone],
-})
+}, { idAttribute: 'url' })
 
 const paths = [path];
 

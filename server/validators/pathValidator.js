@@ -35,17 +35,13 @@ export const validateNewPath = validateAsync({
   name: {
     presence: true,
   },
-  id: {
-    presence: {
-      message: "^Url can't be blank",
-    },
+  url: {
+    presence: true,
     format: {
       pattern: /[a-z0-9-]+/,
-      message: '^Url may only contain alphanumeric characters or hyphens',
+      message: 'may only contain alphanumeric characters or hyphens',
     },
-    idExists: {
-      message: '^Url exists',
-    },
+    idExists: true,
   },
   description: {
     presence: true,

@@ -20,8 +20,8 @@ export const getAuthenticatedUsername = state =>
 export const getAllPaths = state =>
   fromPaths.getAllPaths(state.paths);
 
-export const getPath = (state, id) =>
-  fromPaths.getPath(state.paths, id);
+export const getPath = (state, url) =>
+  fromPaths.getPath(state.paths, url);
 
 export const getMilestones = (state, ids) =>
   fromPaths.getMilestones(state.paths, ids);

@@ -17,11 +17,11 @@ router.post('/', authenticate, (req, res) => {
 router.get('/', (req, res) =>
   handlers.return200(
     res,
-    Path.find({}, 'id name description'),
+    Path.find({}, 'url name description'),
   ));
 
-router.get('/:id', (req, res) =>
-  Path.findOne({ id: req.params.id }).then(
+router.get('/:url', (req, res) =>
+  Path.findOne({ url: req.params.url }).then(
     (path) => path ?
       res.json(path) :
       res.status(404).json(

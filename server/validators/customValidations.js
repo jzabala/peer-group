@@ -7,7 +7,7 @@ export const pathExits = (value, options) => {
   if (options) {
     const message = options.message ? options.message : 'exists';
     return new validate.Promise((resolve) => {
-      Path.findOne({ id: value }).then(
+      Path.findOne({ url: value }).then(
         path => path ? resolve(message) : resolve(),
       );
     });
@@ -17,9 +17,9 @@ export const pathExits = (value, options) => {
 
 export const pathNotExists = (value, options) => {
   if (options) {
-    const message = options.message ? options.message : 'not exists';
+    const message = options.message || 'not exists';
     return new validate.Promise((resolve) => {
-      Path.findOne({ id: value }).then(
+      Path.findOne({ url: value }).then(
         path => path ? resolve() : resolve(message),
       );
     });
@@ -30,9 +30,9 @@ export const pathNotExists = (value, options) => {
 export const milestoneNotExists = (value, options, key, attributes) => {
   if (options) {
     const message = options.message ? options.message : 'not exists';
-    const id = attributes.path;
+    const pathUrl = attributes.pathUrl;
     return new validate.Promise((resolve) => {
-      Path.findOne({ id, 'milestones._id': new Types.ObjectId(value.milestoneId) }).then(
+      Path.findOne({ pathUrl, 'milestones._id': new Types.ObjectId(value.milestoneId) }).then(
         path => path ? resolve() : resolve(message),
       );
     });
@@ -55,11 +55,11 @@ export const validStatus = (value, options) => {
 export const milestoneStatusExists = (value, options, key, attributes) => {
   if (options) {
     const message = options.message || 'for status exists or already finished';
-    const path = attributes.path;
+    const pathUrl = attributes.pathUrl;
     const username = attributes.username;
     return new validate.Promise((resolve) => {
       UserPath.findOne({
-        path,
+        pathUrl,
         username,
         'milestones.milestoneId': new Types.ObjectId(value.milestoneId),
         $and: [{

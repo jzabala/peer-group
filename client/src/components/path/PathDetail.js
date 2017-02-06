@@ -12,12 +12,12 @@ export class PathDetail extends React.Component {
     this.handleStatusChange = this.handleStatusChange.bind(this);
   }
   componentDidMount() {
-    const { fetchPath, id } = this.props;
-    fetchPath(id);
+    const { fetchPath, url } = this.props;
+    fetchPath(url);
   }
   handleStatusChange(milestone) {
-    const { id, saveUserPathStatus } = this.props;
-    const userPath = { path: id, milestone };
+    const { url, saveUserPathStatus } = this.props;
+    const userPath = { pathUrl: url, milestone };
     saveUserPathStatus(userPath);
   }
   render() {
@@ -55,8 +55,8 @@ export class PathDetail extends React.Component {
 }
 
 const mapStateToProps = (state, { match }) => {
-  const id = match.params.id;
-  let path = fromReducers.getPath(state, id);
+  const url = match.params.url;
+  let path = fromReducers.getPath(state, url);
   let milestones = [];
   let userMilestones = [];
   if(path && path.milestones) {
@@ -64,7 +64,7 @@ const mapStateToProps = (state, { match }) => {
     userMilestones = fromReducers.getUserMilestones(state, path.milestones);
   }
   return {
-    id,
+    url,
     path,
     milestones,
     userMilestones

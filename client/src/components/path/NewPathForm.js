@@ -18,7 +18,7 @@ const url = R.compose(kebabCase, R.replace(/[^a-zA-Z0-9-\s_]/g, ''));
 const initialStaet = {
   form: {
     name: '',
-    id: '',
+    url: '',
     description: '',
     milestones: [
       {
@@ -48,14 +48,14 @@ export class NewPathForm extends React.Component {
   handleNameChange(e) {
     const form = { ...this.state.form, name: e.target.value };
     if(this.state.changeUrl) {
-      form.id = url(e.target.value);
+      form.url = url(e.target.value);
     }
     this.setState({ form });
   }
   handleUrlChagne(e) {
     this.setState({
       changeUrl: false,
-      form: { ...this.state.form, id: url(e.target.value) }
+      form: { ...this.state.form, url: url(e.target.value) }
     });
   }
   handleAddMilestone() {
@@ -103,7 +103,7 @@ export class NewPathForm extends React.Component {
             this.props.addFlashMessage({
               type: "success",
               strong: "Path added successfully!",
-              text: "You can add another.",
+              text: "You can add another one.",
               duration: 5000,
               timeout: false,
             });
@@ -126,26 +126,26 @@ export class NewPathForm extends React.Component {
           onChange={ this.handleNameChange }
         />
 
-        <div className={ classnames('form-group GeneralField-form-field', { 'has-danger': errors.id }) }>
-          <div className="NewPathForm-id">
-            <span className="NewPathForm-id-pathname">
+        <div className={ classnames('form-group GeneralField-form-field', { 'has-danger': errors.url }) }>
+          <div className="NewPathForm-url">
+            <span className="NewPathForm-url-pathname">
               { location.origin + "/paths/" }
             </span>
             <input
-              name="id"
+              name="url"
               type="text"
               placeholder="Url"
-              value={ form.id }
+              value={ form.url }
               onChange={ this.handleUrlChagne }
               className={
-                classnames('form-control NewPathForm-id-input',
-                  { 'form-control-danger': errors.id }
+                classnames('form-control NewPathForm-url-input',
+                  { 'form-control-danger': errors.url }
                 )
               }
             />
           </div>
 
-          { errors.id && errors.id.map(
+          { errors.url && errors.url.map(
               (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
             )
           }

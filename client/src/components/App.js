@@ -21,7 +21,7 @@ class App extends Component {
         <main className="container App_container">
           <FlashMessageList />
           <Route exact path="/" component={ PathPage } />
-          <Route exact path="/paths/:id" component={ PathDetail } />
+          <Route exact path="/paths/:url" component={ PathDetail } />
           <Route path="/login" render={
             () => <Auth render={
               ({ isAuth }) => !isAuth ? <LoginPage /> : <Redirect to="/" />

@@ -18,11 +18,11 @@ validate.validators.emailExists = (value, options) => {
   return null;
 };
 
-validate.validators.idExists = (value, options) => {
+validate.validators.usernameExists = (value, options) => {
   if (options) {
     return new validate.Promise((resolve) => {
-      User.findOne({ id: value }).then(
-        (user) => user ? resolve('^Username exists.') : resolve(),
+      User.findOne({ username: value }).then(
+        (user) => user ? resolve('exists.') : resolve(),
       );
     });
   }
@@ -31,13 +31,11 @@ validate.validators.idExists = (value, options) => {
 
 export const validateNewUser = validateAsync({
   username: {
-    presence: {
-      message: "^Username can't be black",
-    },
-    idExists: true,
+    presence: true,
+    usernameExists: true,
     format: {
       pattern: /^[a-z0-9]+[a-z0-9-]*/,
-      message: '^Username may only contain alphanumeric characters or single hyphens, and cannot begin with a hyphen',
+      message: 'may only contain alphanumeric characters or single hyphens, and cannot begin with a hyphen',
     },
   },
   email: {
@@ -55,7 +53,7 @@ export const validateNewUser = validateAsync({
 });
 
 export const validateUserPath = validateAsync({
-  path: {
+  pathUrl: {
     presence: true,
     pathNotExists: {
       message: '^Path not exists',

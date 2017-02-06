@@ -9,7 +9,7 @@ const truncateTitle = utilFunc.truncate(MAX_TITLE);
 const MAX_DESC = 51;
 const truncateDesc = utilFunc.truncate(MAX_DESC);
 
-const Path = ({ name, description, id }) => (
+const Path = ({ name, description, url }) => (
   <div className="card Path_card">
     <div className="card-block Path_card-block">
       <h3 title={ name } className="card-title text-center">
@@ -18,14 +18,14 @@ const Path = ({ name, description, id }) => (
       <p title={ description } className="card-text">
         { description && description.trim() &&  truncateDesc(description) }
       </p>
-      <Link to={ `/paths/${id}` } className="card-link">Go to path</Link>
+      <Link to={ `/paths/${url}` } className="card-link">Go to path</Link>
     </div>
 </div>
 );
 
 Path.propTypes = {
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   description: PropTypes.string,
 }
 

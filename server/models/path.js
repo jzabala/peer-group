@@ -12,7 +12,7 @@ milestoneSchema.options.toJSON.transform = (doc, ret) => ({
 });
 
 const pathSchema = new Schema({
-  id: { type: String, unique: true },
+  url: { type: String, unique: true },
   name: String,
   description: String,
   milestones: [milestoneSchema],
@@ -23,7 +23,7 @@ const pathSchema = new Schema({
 
 if (!pathSchema.options.toJSON) pathSchema.options.toJSON = {};
 pathSchema.options.toJSON.transform = (doc, ret) => ({
-  id: ret.id,
+  url: ret.url,
   name: ret.name,
   description: ret.description,
   user: ret.user,

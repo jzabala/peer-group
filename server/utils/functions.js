@@ -13,7 +13,7 @@ export const validateAsync = R.curry(
 export const isNotEmpty = x => !R.isEmpty(x);
 
 export const parseToUserPath = (data, user) => ({
-  path: data.path,
+  pathUrl: data.pathUrl,
   username: user.username,
   status: 'stated',
   milestones: [

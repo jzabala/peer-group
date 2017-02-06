@@ -8,7 +8,7 @@ const userMilestone = new Schema({
 if (!userMilestone.options.toJSON) userMilestone.options.toJSON = {};
 userMilestone.options.toJSON.transform = (doc, ret) => ({
   milestoneId: ret.milestoneId,
-  status: ret.status,  
+  status: ret.status,
 });
 
 const history = new Schema({
@@ -25,8 +25,8 @@ history.pre('save', function createAt(next) {
 });
 
 const userPath = new Schema({
-  user: { type: String, ref: 'User' },
-  path: { type: String, ref: 'Path' },
+  username: { type: String, ref: 'User' },
+  pathUrl: { type: String, ref: 'Path' },
   status: String,
   milestones: [userMilestone],
   history: [history],
@@ -36,8 +36,8 @@ const userPath = new Schema({
 
 if (!userPath.options.toJSON) userPath.options.toJSON = {};
 userPath.options.toJSON.transform = (doc, ret) => ({
-  user: ret.user,
-  path: ret.path,
+  username: ret.user,
+  pathUrl: ret.path,
   status: ret.status,
   milestones: ret.milestones,
 });

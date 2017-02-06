@@ -28,7 +28,7 @@ router.post('/paths', authenticate, (req, res) => {
   requestBody.username = user.username;
   validateUserPath(requestBody).then(
     (requestData) => {
-      const result = UserPath.findOne({ username: user.username, path: requestData.path });
+      const result = UserPath.findOne({ username: user.username, pathUrl: requestData.pathUrl });
 
       result.then(
         (dbUserPath) => {
