@@ -42,8 +42,8 @@ export class PathDetail extends React.Component {
                   key={ id }
                   name={ name }
                   id={ id }
-                  status={ userMilestones[id] ? userMilestones[id].status : '' }
-                  onStatusChange={ this.handleStatusChange }
+                  status={ userMilestones[id] ? userMilestones[id].status : '' }                                    
+                  percentage={ 100 }
                 />
               )
             )
