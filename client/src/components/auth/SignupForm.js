@@ -7,6 +7,7 @@ import  {signup, countryList} from '../../actions/auth';
 import {  addFlashMessage} from '../../actions/flashMessages';
 import {  validateSignup} from '../../validators/authValidator';
 import withHandlers from '../../utils/withHandlers';
+import AutoCompleteList from '../common/AutoCompleteList';
 import './SignupForm.css';
 
 class SignupForm extends Component {
@@ -58,13 +59,14 @@ class SignupForm extends Component {
     );
   }
   handleGetPlace(e){
-      const places = countryList(e.target.value);
+      /*const places = countryList();
       this.setState({
-                     form:{...this.state.form, countryList : e.target.value, country : e.target.value}
-                   });
+                     form:{...this.state.form, countryList : places}
+                   });*/
   }
   render() {
-    const place = this.state.form.countryList;
+    const placesList = countryList();
+
     return ( < div > { this.state.redirectTo ? < Redirect to = { this.state.redirectTo } /> : < form onSubmit = { this.handleSubmit } className = "SignupForm_form" >
        < TextFieldGroup
         name = "email"
@@ -79,8 +81,7 @@ class SignupForm extends Component {
         }
         />
 
-        <
-        TextFieldGroup
+        < TextFieldGroup
         name = "password"
         type = "password"
         placeholder = "Password"
@@ -106,18 +107,17 @@ class SignupForm extends Component {
         <TextFieldGroup
         name = "country"
         placeholder = "Enter country"
-        onChange = {this.handleGetPlace}
+        onChange={this.handleGetPlace}
         errors = {this.state.errors.country}
         value = {this.state.form.country}
         />
-      
+
+      <AutoCompleteList world={placesList}/>
          <TextFieldGroup
         name = "city"
         placeholder = "Enter city"
         type = "text"
-        onChange = {
-          this.handleChange
-        }
+        onChange = {this.handleChange}
         errors = {
           this.state.errors.city
         }

@@ -62,10 +62,7 @@ router.post('/', (req, res) => {
             error: 'Error happen in the promise of geodecodification'
           });
         });
-<<<<<<< HEAD
 
-=======
->>>>>>> 799f1a80bfb57a3fdc6d1265b8a2664ad40606f4
     },
     (errors) => {
       res.status(400).json({
