@@ -1,9 +1,10 @@
-import { getAuthToken, authenticateUser } from './utils/authTokenHandler';
+import { getAuthToken } from './utils/authTokenHandler';
+import { authenticateUser } from './actions/auth'
 
 const configAuthToken = (dispatch) => {
-  const token = getAuthToken();
+  const token = getAuthToken();  
   if (token) {
-    authenticateUser(dispatch, token);
+    authenticateUser(dispatch)(token);
   }
 }
 

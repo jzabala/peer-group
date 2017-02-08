@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router';
-import Display from './Display';
+import { Link } from 'react-router-dom';
+import Auth from './auth/Auth';
+import NavItem from './NavItem';
 import './Header.css'
 
 const Header = (props) => (
@@ -10,36 +11,21 @@ const Header = (props) => (
     </Link>
 
     <ul className="navbar-nav mr-auto">
-      <Display authenticated={true}>
-        <li className="nav-item">
-          <Link className="nav-link" activeClassName="active" to="/new-path">
-            New Path
-          </Link>
-        </li>
-      </Display>
+      <Auth render={
+        ({ isAuth }) => isAuth ? <NavItem to="/new-path" children="New Path" /> : null
+      }/>
     </ul>
+
     <ul className="navbar-nav navbar-right">
-      <Display unAuthenticated={true}>
-        <li>
-          <Link className="nav-link" activeClassName="active" to="/login">
-            Login
-          </Link>
-        </li>
-      </Display>
-      <Display unAuthenticated={true}>
-        <li className="nav-item">
-          <Link className="nav-link" activeClassName="active" to="/signup">
-            Sign up
-          </Link>
-        </li>
-      </Display>
-      <Display authenticated={true}>
-        <li className="nav-item">
-          <Link className="nav-link" activeClassName="active" to="/logout">
-            Logout
-          </Link>
-        </li>
-      </Display>
+      <Auth render={
+        ({ isAuth }) => !isAuth ? <NavItem to="/login" children="Login" /> : null
+      }/>
+      <Auth render={
+        ({ isAuth }) => !isAuth ? <NavItem to="/signup" children="Sign up" /> : null
+      }/>
+      <Auth render={
+        ({ isAuth }) => isAuth ? <NavItem to="/logout" children="Logout" /> : null
+      }/>
     </ul>
   </nav>
 );

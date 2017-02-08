@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
-import { Match } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 import PathPage from './path/PathPage';
 import LoginPage from './auth/LoginPage';
 import SignupPage from './auth/SignupPage';
@@ -8,22 +8,39 @@ import Logout from './auth/Logout';
 import NewPathPage from './path/NewPathPage';
 import FlashMessageList from './common/FlashMessageList';
 import Header from './Header';
-import requireAuth from '../utils/requireAuth.js'
+import Auth from './auth/Auth'
 import './App.css';
 
 
 class App extends Component {
   render() {
+    const homeRedirect = <Redirect to="/" />;
     return (
       <div>
         <Header />
         <main className="container App_container">
           <FlashMessageList />
-          <Match exactly pattern="/" component={ PathPage } />
-          <Match pattern="/login" component={LoginPage} />
-          <Match pattern="/signup" component={SignupPage} />
-          <Match pattern="/logout" component={requireAuth(Logout)} />
-          <Match pattern="/new-path" component={requireAuth(NewPathPage)} />
+          <Route exact path="/" component={ PathPage } />
+          <Route path="/login" render={
+            () => <Auth render={
+              ({ isAuth }) => !isAuth ? <LoginPage /> : homeRedirect
+            }/>
+          }/>
+          <Route path="/signup" render={
+            () => <Auth render={
+              ({ isAuth }) => !isAuth ? <SignupPage /> : homeRedirect
+            }/>
+          }/>
+          <Route path="/new-path" render={
+            () => <Auth render={
+              ({ isAuth }) => isAuth ? <NewPathPage /> : <Redirect to="/login" />
+            }/>
+          }/>
+          <Route path="/logout" render={
+            () => <Auth render={
+              ({ isAuth }) => isAuth ? <Logout /> : homeRedirect
+            }/>
+          }/>
         </main>
       </div>
     );

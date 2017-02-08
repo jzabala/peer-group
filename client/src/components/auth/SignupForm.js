@@ -1,6 +1,7 @@
-import React, {  Component} from 'react';
-import {  connect} from 'react-redux';
-import {  Redirect} from 'react-router';
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
 import RequestButton from '../common/RequestButton';
 import  {signup, countryList} from '../../actions/auth';

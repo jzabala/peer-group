@@ -6,13 +6,9 @@ import R from 'ramda';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaGroup from '../common/TextAreaGroup';
 import RequestButton from '../common/RequestButton';
-import PathItem from './PathItem';
-import {
-  kebabCase
-} from '../../utils/functions';
-import {
-  validateNewPath
-} from '../../validators/pathValidator.js'
+import Milestone from './Milestone';
+import { kebabCase } from '../../utils/functions';
+import { validateNewPath } from '../../validators/pathValidator.js'
 import withHandlers from '../../utils/withHandlers';
 import {
   createPath
@@ -29,9 +25,11 @@ const initialStaet = {
     name: '',
     url: '',
     description: '',
-    items: [{
-      name: '',
-    }, ],
+    milestones: [
+      {
+        name: '',
+      },
+    ],
   },
   errors: {},
   changeUrl: true,
@@ -44,9 +42,9 @@ export class NewPathForm extends React.Component {
     this.state = initialStaet;
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUrlChagne = this.handleUrlChagne.bind(this);
-    this.handleAddItem = this.handleAddItem.bind(this);
-    this.handleRemoveItem = this.handleRemoveItem.bind(this);
-    this.handleItemsChange = this.handleItemsChange.bind(this);
+    this.handleAddMilestone = this.handleAddMilestone.bind(this);
+    this.handleRemoveMilestone = this.handleRemoveMilestone.bind(this);
+    this.handleMilestonesChange = this.handleMilestonesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetErrorsRequest = props.resetErrorsRequest.bind(this);
     this.handleSubmitError = props.handleSubmitError.bind(this);
@@ -71,53 +69,36 @@ export class NewPathForm extends React.Component {
       }
     });
   }
-  handleAddItem() {
+  handleAddMilestone() {
     const form = this.state.form;
 
     this.setState({
-      form: { ...form,
-        items: [...form.items, {
-          name: ''
-        }]
-      },
+      form: { ...form, milestones: [ ...form.milestones, { name: '' } ] },
     });
   }
-  handleRemoveItem(indexItem) {
+  handleRemoveMilestone(indexMilestone) {
     return (e) => {
-      const {
-        form,
-        errors
-      } = this.state;
-      const items = form.items.filter(
+      const { form, errors } = this.state;
+      const milestones = form.milestones.filter(
         // eslint-disable-next-line
-        (item, index) => index != indexItem
+        (milestone, index) => index != indexMilestone
       );
 
-      const newErrors = !errors.items ? errors :
+      const newErrors = !errors.milestones ? errors :
         // eslint-disable-next-line
-        errors.items.filter((item, index) => index != indexItem);
-
-      this.setState({
-        form: { ...form,
-          items
-        },
-        errors: newErrors
-      });
+        errors.milestones.filter((milestone, index) => index != indexMilestone);
+      this.setState({ form: { ...form, milestones }, errors: newErrors });
     }
   }
-  handleItemsChange(e) {
+  handleMilestonesChange(e) {
     const form = this.state.form;
-    const items = form.items.map(
+    const milestones = form.milestones.map(
       // eslint-disable-next-line
-      (item, index) => index == e.target.dataset.index ? { ...item,
-        name: e.target.value
-      } : item
+      (milestone, index) => index == e.target.dataset.index ?
+        { ...milestone, name: e.target.value } :
+        milestone
     );
-    this.setState({
-      form: { ...form,
-        items
-      }
-    });
+    this.setState({ form: { ...form,  milestones } });
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -194,48 +175,32 @@ export class NewPathForm extends React.Component {
         this.handleChange
       }
       />
-
-      <
-      fieldset className = "form-group text-left NewPathForm-items"
-      onChange = {
-        this.handleItemsChange
-      } >
-      <
-      h5 className = "text-center" > Items < /h5> {
-        this.state.form.items.map(
-          (item, index) =>
-          <
-          PathItem key = {
-            index
+        <fieldset className="form-group text-left NewPathForm-milestones"
+          onChange={ this.handleMilestonesChange }
+        >
+          <h5 className="text-center">Milestones</h5>
+          {
+            this.state.form.milestones.map(
+              (milestone, index) => <Milestone
+                key={ index }
+                index={ index }
+                value={milestone.name}
+                onDelete={ this.handleRemoveMilestone(index) }
+                placeholder="Name"
+                errors={ errors.milestones && errors.milestones[index] &&
+                  errors.milestones[index].name }
+              />
+            )
           }
-          index = {
-            index
-          }
-          value = {
-            item.name
-          }
-          onDelete = {
-            this.handleRemoveItem(index)
-          }
-          placeholder = "Name"
-          errors = {
-            errors.items && errors.items[index] &&
-            errors.items[index].name
-          }
-          />
-        )
-      } <
-      button type = "button"
-      className = "btn btn-secondary btn-sm"
-      onClick = {
-        this.handleAddItem
-      } >
-      Add item <
-      /button> <
-      /fieldset>
-
-      <
-      RequestButton className = "btn btn-primary"
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={ this.handleAddMilestone }
+          >
+            Add milestone
+          </button>
+        </fieldset>
+      <RequestButton className = "btn btn-primary"
       request = {
         this.state.isSubmit
       } >

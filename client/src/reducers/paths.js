@@ -1,4 +1,7 @@
-const paths = (state = {}, action) => {
+import { combineReducers } from 'redux';
+import milestones from './milestones';
+
+const byIds = (state = {}, action) => {
   if (action.paths) {
     return { ...state, ...action.paths.entities.paths };
   }
@@ -6,6 +9,11 @@ const paths = (state = {}, action) => {
   return state;
 }
 
-export const getAllPaths = (state) => Object.keys(state).map(id => state[id]);
+const paths = combineReducers({
+  byIds,
+  milestones,
+});
+
+export const getAllPaths = ({ byIds }) => Object.keys(byIds).map(id => byIds[id]);
 
 export default paths;

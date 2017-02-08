@@ -1,3 +1,5 @@
+import R from 'ramda';
+import jwtDecode from 'jwt-decode';
 import api from '../api';
 import * as fromAuthHandler from '../utils/authTokenHandler';
 import {  normalizeUser} from '../normalizers';
@@ -10,10 +12,18 @@ export const signup = user => api.post('/users', user).then(null,
   }) => Promise.reject(response.data.errors),
 );
 
-export const loginUser = (user) => ({
+const loginUser = (user) => ({
   type: 'LOGIN_USER',
   users: normalizeUser(user),
 });
+
+export const authenticateUser = dispatch => R.compose(
+    dispatch,
+    loginUser,
+    R.prop('user'),
+    jwtDecode,
+    fromAuthHandler.setAuthTokenRequest,
+  );
 
 export const login = user => dispatch => {
   return api.post('/authenticate', user).then(
@@ -21,7 +31,7 @@ export const login = user => dispatch => {
       data
     }) => {
       fromAuthHandler.storeAuthToken(data.token);
-      fromAuthHandler.authenticateUser(dispatch, data.token);
+      authenticateUser(dispatch)(data.token);
     },
     ({
       response

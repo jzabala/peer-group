@@ -3,7 +3,7 @@ const initialState = {
   userId: '',
 }
 
-const authenticate = (state = initialState, action) => {
+const auth = (state = initialState, action) => {
   switch(action.type) {
     case 'LOGIN_USER': {
       const userId = action.users.result;
@@ -26,4 +26,4 @@ export const isAuthenticated = (state) => state.isAuthenticated;
 
 export const getAuthenticatedUserId = (state) => state.userId;
 
-export default authenticate;
+export default auth;

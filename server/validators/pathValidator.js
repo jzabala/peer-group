@@ -4,20 +4,20 @@ import { then } from '../utils/promise';
 import Path from '../models/path';
 import { validateAsync, isNotEmpty } from '../utils/functions';
 
-const newItemsConstrains = {
+const newMilestoneConstrains = {
   name: {
     presence: true,
   },
 };
 
-validate.validators.itemsConstrains = (value, options) => {
+validate.validators.milestoneConstrains = (value, options) => {
   if (options && value) {
     const promises = R.compose(
       then(
         () => ({}),
         R.identity,
       ),
-      validateAsync(newItemsConstrains),
+      validateAsync(newMilestoneConstrains),
     );
     const validateRoute = R.map(promises);
     const empty = R.compose(R.isEmpty, R.filter(isNotEmpty));
@@ -54,9 +54,9 @@ export const validateNewPath = validateAsync({
   description: {
     presence: true,
   },
-  items: {
+  milestones: {
     presence: true,
-    itemsConstrains: true,
+    milestoneConstrains: true,
   },
   user: {
     presence: true,

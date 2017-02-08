@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { logout } from '../../actions/auth';
 import { getAuthenticatedUserId } from '../../reducers';
 
 class Logout extends Component {
   componentWillMount() {
-    const { logout, userId } = this.props;    
+    const { logout, userId } = this.props;
     logout(userId);
   }
   render() {
-    return (
-      <Redirect to="/" />
-    );
+    return null;
   }
 }
 

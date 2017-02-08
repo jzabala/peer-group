@@ -1,7 +1,4 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import R from 'ramda';
-import { loginUser } from '../actions/auth';
 
 const Authorization = 'x-access-token';
 const authToken = 'authToken';
@@ -25,13 +22,3 @@ export const setAuthTokenRequest = (token) => {
 export const deleteAuthTokenRequest = () => {
   delete axios.defaults.headers.common[Authorization];
 }
-
-export const authenticateUser = R.curry(
-  (dispatch, token) => R.compose(
-    dispatch,
-    loginUser,
-    R.prop('user'),
-    jwtDecode,
-    setAuthTokenRequest,
-  )(token)
-)

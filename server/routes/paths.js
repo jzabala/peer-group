@@ -17,6 +17,10 @@ router.post('/', authenticate, (req, res) => {
   );
 });
 
-router.get('/', (req, res) => handlers.defaultReturn(res, Path.find({})));
+router.get('/', (req, res) =>
+  handlers.defaultReturn(
+    res,
+    Path.find({}, 'name description url'),
+  ));
 
 export default router;

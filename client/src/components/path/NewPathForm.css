@@ -5,12 +5,12 @@
   margin: 0 auto;
 }
 
-.NewPathForm-items {
+.NewPathForm-milestones {
   background-color: #f7f7f7;
   padding: 16px 20px;
 }
 
-.NewPathForm-item-close {
+.NewPathForm-milestone-close {
   display: flex;
   justify-content: center;
   align-items: center;
