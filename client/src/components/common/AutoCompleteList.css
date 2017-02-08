@@ -1,0 +1,16 @@
+.AutoCompleteList_list-style{
+  background-color: white;
+  margin-top: -12.4%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  overflow-x: auto;
+  height: 15vh;
+}
+
+.AutoCompleteList_list-style li:hover{
+  background-color: rgba(103,194,212,0.4);
+  cursor: pointer;
+}

@@ -52,7 +52,7 @@ export const logout = (id) => dispatch => {
 }
 
 export const countryList = (name) => {
-  /* const key = 'AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E';
+  const key = 'AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E';
    const url_city = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&types=geocode&language=en&key=${key}`;
     http.get(url_city)
         .then((response)=>{
@@ -69,7 +69,7 @@ export const countryList = (name) => {
           else{ return "No match";}
 
         })
-        .catch(()=>{return "Error come up with the API";})*/
+        .catch(()=>{return "Error come up with the API";})
   return {world:[{
                place:{
                  id:1,

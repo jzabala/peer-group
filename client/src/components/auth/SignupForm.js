@@ -21,7 +21,7 @@ class SignupForm extends Component {
         password: '',
         confirmPassword: '',
         country: '',
-        countryList: '',
+        countryList: [],
         city: '',
       },
       errors: {},
@@ -60,15 +60,23 @@ class SignupForm extends Component {
     );
   }
   handleGetPlace(e){
-      /*const places = countryList();
+   var places = Object.create(null);
+if(e.target.value.length > 0){
+      places = countryList();
+    }
       this.setState({
-                     form:{...this.state.form, countryList : places}
-                   });*/
+                     form:{...this.state.form, countryList : places, country: e.target.value}
+                   });
+  }
+  handleClickCountry(country){
+    console.log(country);
+    const countryList = Object.create(null);
+    this.setState({
+      form:{...this.state.form, countryList: countryList, country: country}
+    });
   }
   render() {
-    const placesList = countryList();
-
-    return ( < div > { this.state.redirectTo ? < Redirect to = { this.state.redirectTo } /> : < form onSubmit = { this.handleSubmit } className = "SignupForm_form" >
+    return ( < div > { this.state.redirectTo ? < Redirect to={ this.state.redirectTo } /> : < form onSubmit={ this.handleSubmit } className="SignupForm_form" >
        < TextFieldGroup
         name = "email"
         placeholder = "Enter email"
@@ -112,8 +120,11 @@ class SignupForm extends Component {
         errors = {this.state.errors.country}
         value = {this.state.form.country}
         />
+{this.state.form.countryList.world ? <AutoCompleteList world={this.state.form.countryList.world} onClick={(e)=>this.handleClickCountry(e)}/> : null}
 
-      <AutoCompleteList world={placesList}/>
+
+
+
          <TextFieldGroup
         name = "city"
         placeholder = "Enter city"
