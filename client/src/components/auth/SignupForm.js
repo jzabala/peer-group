@@ -62,7 +62,7 @@ class SignupForm extends Component {
   handleGetPlace(e){
    var places = Object.create(null);
 if(e.target.value.length > 0){
-      places = countryList();
+      places = countryList(e.target.value);
     }
       this.setState({
                      form:{...this.state.form, countryList : places, country: e.target.value}

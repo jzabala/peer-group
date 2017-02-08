@@ -7,6 +7,29 @@ import axios from 'axios';
 
 const router = express.Router();
 
+router.get('/getCountryList', (req, res)=>{
+  const key = 'AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E';
+//console.log(req.params.url_city+"  Este sii");
+var url = req.param('url_city')+`&types=geocode&language=en&key=${key}`;
+
+console.log("Este good  "+url);
+  http.get(url)
+        .then((response)=>{
+          if(response.status === 'OK'){
+              const data = response.predictions[0];
+              var Places = { city:"", country:""};
+              var descriptionPlace = {places:[]};
+              for(let item in data){
+                //console.log(item.description);
+                descriptionPlace.places.push({city:item.description});
+              }
+              return  res.json(JSON.stringify(descriptionPlace));
+          }
+          else{ return "No match";}
+
+        })
+        .catch(()=>{return "Error come up with the API";})
+})
 router.post('/', (req, res) => {
   const user = { ...req.body
   };
