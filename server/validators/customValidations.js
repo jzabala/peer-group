@@ -1,11 +1,10 @@
 import { Types } from 'mongoose';
 import validate from 'validate.js';
 import Path from '../models/path';
-import UserPath from '../models/userPath';
 
 export const pathExits = (value, options) => {
   if (options) {
-    const message = options.message ? options.message : 'exists';
+    const message = options.message || 'exists';
     return new validate.Promise((resolve) => {
       Path.findOne({ url: value }).then(
         path => path ? resolve(message) : resolve(),
@@ -28,11 +27,11 @@ export const pathNotExists = (value, options) => {
 };
 
 export const milestoneNotExists = (value, options, key, attributes) => {
-  if (options) {
-    const message = options.message ? options.message : 'not exists';
+  if (options) {    
+    const message = options.message || 'not exists';
     const pathUrl = attributes.pathUrl;
     return new validate.Promise((resolve) => {
-      Path.findOne({ pathUrl, 'milestones._id': new Types.ObjectId(value.milestoneId) }).then(
+      Path.findOne({ url: pathUrl, 'milestones._id': new Types.ObjectId(value.milestoneId) }).then(
         path => path ? resolve() : resolve(message),
       );
     });
@@ -40,38 +39,32 @@ export const milestoneNotExists = (value, options, key, attributes) => {
   return null;
 };
 
-export const validStatus = (value, options) => {
+export const milestonePercentageNumber = (value, options) => {
   if (options) {
-    const message = options.message ? options.message : 'status not valid';
-    const status = value.status;
-    if (status === '' || status === 'stated' || status === 'finished') {
-      return null;
+    const message = options.message || 'percentage is not a integer';
+    if (!validate.isInteger(value.percentage)) {
+      return message;
     }
-    return message;
   }
   return null;
 };
 
-export const milestoneStatusExists = (value, options, key, attributes) => {
+export const milestonePercentageGreaterThanEqual = (value, options) => {
   if (options) {
-    const message = options.message || 'for status exists or already finished';
-    const pathUrl = attributes.pathUrl;
-    const username = attributes.username;
-    return new validate.Promise((resolve) => {
-      UserPath.findOne({
-        pathUrl,
-        username,
-        'milestones.milestoneId': new Types.ObjectId(value.milestoneId),
-        $and: [{
-          $or: [
-            { 'milestones.status': value.status },
-            { 'milestones.status': 'finished' },
-          ],
-        }],
-      }).then(
-        userPath => userPath ? resolve(message) : resolve(),
-      );
-    });
+    const message = options.message || `percentage is less than ${options.$gte}`;
+    if (value.percentage < options.$gte) {
+      return message;
+    }
+  }
+  return null;
+};
+
+export const milestonePercentageLessThanEqual = (value, options) => {
+  if (options) {
+    const message = options.message || `percentage is greater than ${options.$lte}`;
+    if (value.percentage > options.$lte) {
+      return message;
+    }
   }
   return null;
 };

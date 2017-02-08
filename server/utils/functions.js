@@ -19,13 +19,13 @@ export const parseToUserPath = (data, user) => ({
   milestones: [
     {
       milestoneId: data.milestone.milestoneId,
-      status: data.milestone.status,
+      percentage: data.milestone.percentage,
     },
   ],
   history: [
     {
       milestoneId: data.milestone.milestoneId,
-      status: data.milestone.status,
+      percentage: data.milestone.percentage,
     },
   ],
 });

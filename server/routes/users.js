@@ -45,7 +45,10 @@ router.post('/paths', authenticate, (req, res) => {
           }
           handlers.return200(
             res,
-            userPath.save(),
+            userPath.save().then(
+              userPathResult => userPathResult.milestones,
+              err => Promise.reject(err),
+            ),
           );
         },
         (error) => handlers.serverError(res, error),
@@ -54,5 +57,17 @@ router.post('/paths', authenticate, (req, res) => {
     errors => handlers.validationError(res, errors),
   );
 });
+
+router.get('/paths/:url', authenticate, (req, res) =>
+  UserPath.findOne({ username: req.user.username, pathUrl: req.params.url })
+    .then(
+      (userPath) => userPath ?
+        res.json(userPath.milestones) :
+        res.status(404).json(
+          { errors: { general: 'User path not found' } },
+        ),
+      (error) => handlers.serverError(res, error),
+      ),
+    );
 
 export default router;

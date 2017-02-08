@@ -7,3 +7,4 @@ export const fetchPaths = fromPaths.fetchPaths(api);
 export const fetchPath = fromPaths.fetchPath(api);
 
 export const saveUserPathStatus = fromUsers.saveUserPathStatus(api);
+export const fetchUserPath = fromUsers.fetchUserPath(api);

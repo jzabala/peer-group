@@ -36,6 +36,6 @@ export const fetchPath = api => pathUrl => dispatch => {
     ({ response }) => {
       dispatch({ type: 'FETCH_CURRENT_PATH_FAILURE' });
       return Promise.reject(response.data.errors);
-    }
+    },
   );
 }

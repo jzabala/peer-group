@@ -6,8 +6,8 @@ class Milestone extends Component {
     super(props);
 
     this.state = {
-      isPercentageChangeEnd: false,
-      fill: 0,
+      isPercentageChange: false,
+      fill: props.percentage,
       min: 0,
       max: 100,
     }
@@ -15,34 +15,39 @@ class Milestone extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.fill !== nextProps.percentage) {
+      this.setState({ fill: nextProps.percentage });
+    }
+  }
   handleMouseDown() {
-    this.setState({ isPercentageChangeEnd: true });
-    console.log('Init change');
+    this.setState({ isPercentageChange: true });
   }
   handleMouseUp() {
-    if(this.state.isPercentageChangeEnd) {
-      this.setState({ isPercentageChangeEnd: false });
-      console.log('End change');
+    if(this.state.isPercentageChange) {
+      this.setState({ isPercentageChange: false });
+      this.props.onPercentageChange({
+        milestoneId: this.props.id,
+        percentage: this.state.fill
+      });
     }
   }
   handleChange(e) {
-    const { min, max } = this.state;
-    const fill = ((e.target.value - min) / (max - min));
-    this.setState({ fill });
+    this.setState({ fill: parseInt(e.target.value, 10) });
   }
   render() {
     const fill = this.state.fill;
     const styles = {
       range: {
-        backgroundImage: `linear-gradient(to right, #0275d8 calc(${fill} * 100%), #eceeef calc(${fill} * 100%))`
+        backgroundImage: `linear-gradient(to right, #0275d8 ${fill}%, #eceeef ${fill}%)`
       }
     };
-    const { id, name, percentage, onPercentageChange } = this.props;
+    const { name } = this.props;
     return (
       <div>
         <div>
           <span>
-            { parseInt(fill * 100) }%
+            { fill }%
           </span>
 
           <span className="Milestone-name">
@@ -54,7 +59,7 @@ class Milestone extends Component {
             type="range"
             min={ this.state.min }
             max={ this.state.max }
-            defaultValue={0}
+            value={ this.state.fill }
             onMouseDown={ this.handleMouseDown }
             onMouseUp={ this.handleMouseUp }
             onChange={ this.handleChange }
@@ -73,5 +78,9 @@ Milestone.propTypes = {
   percentage: PropTypes.number.isRequired,
   onPercentageChange: PropTypes.func.isRequired,
 };
+
+Milestone.defaultValue = {
+  percentage: 0,
+}
 
 export default Milestone;

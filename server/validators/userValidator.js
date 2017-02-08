@@ -5,7 +5,11 @@ import * as custom from './customValidations';
 
 validate.validators.pathNotExists = custom.pathNotExists;
 validate.validators.milestoneNotExists = custom.milestoneNotExists;
-validate.validators.validStatus = custom.validStatus;
+validate.validators.milestonePercentageNumber = custom.milestonePercentageNumber;
+validate.validators.milestonePercentageGreaterThanEqual =
+  custom.milestonePercentageGreaterThanEqual;
+validate.validators.milestonePercentageLessThanEqual =
+  custom.milestonePercentageLessThanEqual;
 
 validate.validators.emailExists = (value, options) => {
   if (options) {
@@ -55,9 +59,7 @@ export const validateNewUser = validateAsync({
 export const validateUserPath = validateAsync({
   pathUrl: {
     presence: true,
-    pathNotExists: {
-      message: '^Path not exists',
-    },
+    pathNotExists: true,
   },
   username: {
     presence: true,
@@ -65,6 +67,12 @@ export const validateUserPath = validateAsync({
   milestone: {
     presence: true,
     milestoneNotExists: true,
-    validStatus: true,
+    milestonePercentageNumber: true,
+    milestonePercentageGreaterThanEqual: {
+      $gte: 0,
+    },
+    milestonePercentageLessThanEqual: {
+      $lte: 100,
+    },
   },
 });

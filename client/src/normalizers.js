@@ -17,7 +17,10 @@ const userMilestone = new schema.Entity(
   'userMilestones', {}, { idAttribute: 'milestoneId' }
 )
 
+const userMilestones = [userMilestone];
+
 export const normalizeUser = normalizer(user);
 export const normalizePath = normalizer(path);
 export const normalizePaths = normalizer(paths);
 export const normalizeUserMilestone = normalizer(userMilestone);
+export const normalizeUserMilestones = normalizer(userMilestones);

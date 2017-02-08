@@ -3,107 +3,15 @@
   font-weight: bold;
 }
 
-/*.Milestone-range {
+.Milestone-range {
   -webkit-appearance: none;
   margin: 10px 0;
   width: 100%;
-  border-radius: 15px;
 }
 .Milestone-range:focus {
   outline: none;
 }
 .Milestone-range::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 0px 0px 0px #000000;
-  background: #ECEEEF;
-  border-radius: 15px;
-  border: 0px solid #000000;
-}
-.Milestone-range::-webkit-slider-thumb {
-  box-shadow: 0px 0px 2px #000000;
-  border: 0px solid #000000;
-  height: 28px;
-  width: 28px;
-  border-radius: 50px;
-  background: #FFFFFF;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: 1px;
-}*/
-/*.Milestone-range:focus::-webkit-slider-runnable-track {
-  background: #ECEEEF;
-}*/
-/*.Milestone-range::-moz-range-track {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 0px 0px 0px #000000;
-  background: #ECEEEF;
-  border-radius: 15px;
-  border: 0px solid #000000;
-}
-.Milestone-range::-moz-range-thumb {
-  box-shadow: 0px 0px 2px #000000;
-  border: 0px solid #000000;
-  height: 28px;
-  width: 28px;
-  border-radius: 50px;
-  background: #FFFFFF;
-  cursor: pointer;
-}
-.Milestone-range::-ms-track {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-.Milestone-range::-ms-fill-lower {
-  background: #ECEEEF;
-  border: 0px solid #000000;
-  border-radius: 34px;
-  box-shadow: 0px 0px 0px #000000;
-}
-.Milestone-range::-ms-fill-upper {
-  background: #ECEEEF;
-  border: 0px solid #000000;
-  border-radius: 34px;
-  box-shadow: 0px 0px 0px #000000;
-}
-.Milestone-range::-ms-thumb {
-  box-shadow: 0px 0px 2px #000000;
-  border: 0px solid #000000;
-  height: 28px;
-  width: 28px;
-  border-radius: 50px;
-  background: #FFFFFF;
-  cursor: pointer;
-}*/
-
-/*.Milestone-range:focus::-ms-fill-lower {
-  background: #ECEEEF;
-}
-.Milestone-range:focus::-ms-fill-upper {
-  background: #ECEEEF;
-}*/
-
-
-
-input[type=range] {
-  -webkit-appearance: none;
-  margin: 10px 0;
-  width: 100%;
-}
-input[type=range]:focus {
-  outline: none;
-}
-input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 12px;
   cursor: pointer;
@@ -112,7 +20,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border-radius: 0px;
   border: 0px solid #000000;
 }
-input[type=range]::-webkit-slider-thumb {
+.Milestone-range::-webkit-slider-thumb {
   box-shadow: 0px 0px 1px #000000;
   border: 0px solid #000000;
   height: 20px;
@@ -123,7 +31,7 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -4px;
 }
-input[type=range]::-moz-range-track {
+.Milestone-range::-moz-range-track {
   width: 100%;
   height: 12px;
   cursor: pointer;
@@ -133,7 +41,7 @@ input[type=range]::-moz-range-track {
   border-radius: 0px;
   border: 0px solid #000000;
 }
-input[type=range]::-moz-range-thumb {
+.Milestone-range::-moz-range-thumb {
   box-shadow: 0px 0px 1px #000000;
   border: 0px solid #000000;
   height: 20px;
@@ -142,7 +50,7 @@ input[type=range]::-moz-range-thumb {
   background: #FFFFFF;
   cursor: pointer;
 }
-input[type=range]::-ms-track {
+.Milestone-range::-ms-track {
   width: 100%;
   height: 12px;
   cursor: pointer;
@@ -151,19 +59,19 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
-input[type=range]::-ms-fill-lower {
+.Milestone-range::-ms-fill-lower {
   background: #ECEEEF;
   border: 0px solid #000000;
   border-radius: 0px;
   box-shadow: 0px 0px 1px #000000;
 }
-input[type=range]::-ms-fill-upper {
+.Milestone-range::-ms-fill-upper {
   background: #ECEEEF;
   border: 0px solid #000000;
   border-radius: 0px;
   box-shadow: 0px 0px 1px #000000;
 }
-input[type=range]::-ms-thumb {
+.Milestone-range::-ms-thumb {
   box-shadow: 0px 0px 1px #000000;
   border: 0px solid #000000;
   height: 20px;

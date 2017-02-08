@@ -2,18 +2,18 @@ import mongoose, { Schema } from 'mongoose';
 
 const userMilestone = new Schema({
   milestoneId: Schema.Types.ObjectId,
-  status: String,
+  percentage: Number,
 });
 
 if (!userMilestone.options.toJSON) userMilestone.options.toJSON = {};
 userMilestone.options.toJSON.transform = (doc, ret) => ({
   milestoneId: ret.milestoneId,
-  status: ret.status,
+  percentage: ret.percentage,
 });
 
 const history = new Schema({
   milestoneId: Schema.Types.ObjectId,
-  status: String,
+  percentage: Number,
   createdAt: Date,
 });
 
@@ -27,7 +27,6 @@ history.pre('save', function createAt(next) {
 const userPath = new Schema({
   username: { type: String, ref: 'User' },
   pathUrl: { type: String, ref: 'Path' },
-  status: String,
   milestones: [userMilestone],
   history: [history],
 }, {
@@ -38,7 +37,6 @@ if (!userPath.options.toJSON) userPath.options.toJSON = {};
 userPath.options.toJSON.transform = (doc, ret) => ({
   username: ret.user,
   pathUrl: ret.path,
-  status: ret.status,
   milestones: ret.milestones,
 });
 

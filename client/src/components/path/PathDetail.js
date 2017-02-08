@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPath, saveUserPathStatus } from '../../actions';
+import { fetchPath, saveUserPathStatus, fetchUserPath } from '../../actions';
 import * as fromReducers from '../../reducers';
 import Milestone from './Milestone';
 import './PathDetail.css';
@@ -9,13 +9,14 @@ export class PathDetail extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handleMilestonePercentageChange = this.handleMilestonePercentageChange.bind(this);
   }
   componentDidMount() {
-    const { fetchPath, url } = this.props;
+    const { fetchPath, fetchUserPath, url } = this.props;
     fetchPath(url);
+    fetchUserPath(url);
   }
-  handleStatusChange(milestone) {
+  handleMilestonePercentageChange(milestone) {
     const { url, saveUserPathStatus } = this.props;
     const userPath = { pathUrl: url, milestone };
     saveUserPathStatus(userPath);
@@ -37,15 +38,25 @@ export class PathDetail extends React.Component {
         <div className="PathDetail-milestones">
           {
             milestones.map(
-              ({ id, name }) => (
-                <Milestone
-                  key={ id }
-                  name={ name }
-                  id={ id }
-                  status={ userMilestones[id] ? userMilestones[id].status : '' }                                    
-                  percentage={ 100 }
-                />
-              )
+              ({ id, name }) => {
+                let status = '';
+                let percentage = 0;
+                if (userMilestones[id]) {
+                  status = userMilestones[id].status;
+                  percentage = userMilestones[id].percentage;
+                }
+
+                return (
+                  <Milestone
+                    key={ id }
+                    name={ name }
+                    id={ id }
+                    status={ status }
+                    percentage={ percentage }
+                    onPercentageChange={ this.handleMilestonePercentageChange }
+                  />
+                );
+              }
             )
           }
         </div>
@@ -73,5 +84,5 @@ const mapStateToProps = (state, { match }) => {
 
 export default connect(
   mapStateToProps,
-  { fetchPath, saveUserPathStatus }
+  { fetchPath, saveUserPathStatus, fetchUserPath }
 )(PathDetail);
