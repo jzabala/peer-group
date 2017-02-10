@@ -9,26 +9,24 @@ const router = express.Router();
 
 router.get('/getCountryList', (req, res)=>{
   const key = 'AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E';
-//console.log(req.params.url_city+"  Este sii");
-var url = req.param('url_city')+`&types=geocode&language=en&key=${key}`;
-
-console.log("Este good  "+url);
-  http.get(url)
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.params.url_city}&types=geocode&language=en&key=${key}`;
+  axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=santo&types=geocode&language=en&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E')
         .then((response)=>{
-          if(response.status === 'OK'){
-              const data = response.predictions[0];
-              var Places = { city:"", country:""};
-              var descriptionPlace = {places:[]};
-              for(let item in data){
-                //console.log(item.description);
-                descriptionPlace.places.push({city:item.description});
-              }
-              return  res.json(JSON.stringify(descriptionPlace));
+          if(response.status == 200){
+              const data = response.data.predictions;
+             var descriptionPlaces = {places:[]};
+              for(let item = 0; item < data.length; item++){
+                   var city = data[item].structured_formatting.main_text;
+                   var country = data[item].structured_formatting.secondary_text;
+                  descriptionPlaces.places.push({city:city, country:country});
+                }
+                return  res.status(200).json({data:descriptionPlaces});
           }
-          else{ return "No match";}
+          else{ return res.status(404).json({data:"No data found"});
+        }
 
         })
-        .catch(()=>{return "Error come up with the API";})
+        .catch(()=>{return res.status(500).json({data:"Error en la API"});})
 })
 router.post('/', (req, res) => {
   const user = { ...req.body

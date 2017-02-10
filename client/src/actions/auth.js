@@ -4,8 +4,6 @@ import api from '../api';
 import * as fromAuthHandler from '../utils/authTokenHandler';
 import {normalizeUser} from '../normalizers';
 import React from 'react';
-import http from 'axios';
-import jsonp from 'jsonp';
 
 export const signup = user => api.post('/users', user).then(null,
   ({
@@ -48,11 +46,19 @@ export const logout = (id) => dispatch => {
 
 export const countryList = (name) => {
   //console.log(name);
-
-   const url_city = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}`;
-   var data = api.get(`/users/getCountryList?url_city=${url_city}`);
-
-
+   const response = api.get(`/users/getCountryList?url_city=${name}`);
+   var world = {world:[]}
+   var a = response.then((response_) =>{
+       const data = response_.data.data.places;
+       
+       for(let item = 0; item < data.length; item++){
+         debugger;
+             var city = data[item].city;
+             var country = data[item].country;
+             [item].push({id : item, country : country, city : city});
+       }
+   });
+   console.log(world);
   return {world:[{
                place:{
                  id:1,
