@@ -14,7 +14,7 @@ router.get('/getCountryList', (req, res)=>{
         .then((response)=>{
           if(response.status == 200){
               const data = response.data.predictions;
-             var descriptionPlaces = {places:[]};
+              var descriptionPlaces = {places:[]};
               for(let item = 0; item < data.length; item++){
                    var city = data[item].structured_formatting.main_text;
                    var country = data[item].structured_formatting.secondary_text;

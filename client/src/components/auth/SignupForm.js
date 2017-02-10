@@ -21,7 +21,7 @@ class SignupForm extends Component {
         password: '',
         confirmPassword: '',
         country: '',
-        countryList: [],
+        countryList:{},
         city: '',
       },
       errors: {},
@@ -37,7 +37,6 @@ class SignupForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.resetErrorsRequest();
-
     const validation = validateSignup(this.state.form);
     validation.then((data) => {
         signup(data).then(
@@ -69,7 +68,6 @@ if(e.target.value.length > 0){
                    });
   }
   handleClickCountry(country){
-    console.log(country);
     const countryList = Object.create(null);
     this.setState({
       form:{...this.state.form, countryList: countryList, country: country}
@@ -78,8 +76,8 @@ if(e.target.value.length > 0){
   render() {
     return ( < div > { this.state.redirectTo ? < Redirect to={ this.state.redirectTo } /> : < form onSubmit={ this.handleSubmit } className="SignupForm_form" >
        < TextFieldGroup
-        name = "email"
-        placeholder = "Enter email"
+        name="email"
+        placeholder="Enter email"
         value = { this.state.form.email
         }
         errors = {
@@ -91,8 +89,8 @@ if(e.target.value.length > 0){
         />
 
         < TextFieldGroup
-        name = "password"
-        type = "password"
+        name="password"
+        type="password"
         placeholder = "Password"
         onChange = {
           this.handleChange
@@ -120,7 +118,7 @@ if(e.target.value.length > 0){
         errors = {this.state.errors.country}
         value = {this.state.form.country}
         />
-{this.state.form.countryList.world ? <AutoCompleteList world={this.state.form.countryList.world} onClick={(e)=>this.handleClickCountry(e)}/> : null}
+{this.state.form.countryList.place ? <AutoCompleteList world={this.state.form.countryList.place} onClick={(e)=>this.handleClickCountry(e)}/> : null}
 
 
 

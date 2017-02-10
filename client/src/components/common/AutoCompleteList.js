@@ -4,14 +4,15 @@ import './AutoCompleteList.css';
 
 
 const AutoCompleteList = (props) => {
-const world = props.world;
-
+  console.log(props);
+var world = props.world;
 
   return(
          <ul className={classnames('AutoCompleteList_list-style')}>
          {
            world.map((item) =>{
-            return <li key={item.place.id} onClick={()=>props.onClick(item.place.country)}>{item.place.country}</li>;
+             console.log(item.id);
+            return <li key={item.id} onClick={()=>props.onClick(item.country)}>{item.country}</li>;
          })
        }
        </ul>);
