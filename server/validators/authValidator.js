@@ -1,9 +1,9 @@
 import { validateAsync } from '../utils/functions';
 
 export const validateAuth = validateAsync({
-  username: {
+  identifier: {
     presence: {
-      message: "^Username can't be black",
+      message: '^You have to enter a username or email',
     },
   },
   password: {

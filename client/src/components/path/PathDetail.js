@@ -1,37 +1,67 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
+import R from 'ramda';
 import { fetchPath, saveUserPathStatus, fetchUserPath } from '../../actions';
 import * as fromReducers from '../../reducers';
 import Milestone from './Milestone';
+import UsersInProgressModal from './UsersInProgressModal';
 import './PathDetail.css';
+
+const modalInitState = {
+  isOpen: false,
+  pathUrl: '',
+  milestoneId: '',
+  milestoneName: '',
+};
 
 export class PathDetail extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleMilestonePercentageChange = this.handleMilestonePercentageChange.bind(this);
+    this.state = {
+      modal: modalInitState,
+    }
   }
   componentDidMount() {
-    const { fetchPath, fetchUserPath, url } = this.props;
+    const { fetchPath, fetchUserPath, url, isAuthenticated } = this.props;
     fetchPath(url);
-    fetchUserPath(url);
+    if (isAuthenticated) {
+      fetchUserPath(url);
+    }
   }
-  handleMilestonePercentageChange(milestone) {
+  handleMilestonePercentageChange = (milestone) => {
     const { url, saveUserPathStatus } = this.props;
     const userPath = { pathUrl: url, milestone };
     saveUserPathStatus(userPath);
   }
+  isPathDone = userMilestones => R.reduceWhile(
+    (an, ac) => an,
+    (an, ac) => !!userMilestones[ac.id] && userMilestones[ac.id].percentage === 100,
+    true
+  );
+  toggleModal = modal => {
+    this.setState({ modal });
+  }
+  closeModal = () => {
+    this.toggleModal(modalInitState);
+  };
   render() {
-    const { path, milestones, userMilestones } = this.props;
-
+    const { path, milestones, userMilestones, isAuthenticated } = this.props;
     if(!path) {
       return <p>Path not available</p>
     }
-
-    const { name, description } = path;
+    const { name, description, url } = path;
+    const pathDone = this.isPathDone(userMilestones)(milestones);
     return (
-      <section>
-        <div className="text-center">
+      <section className={ classnames({ 'text-center': !isAuthenticated }) }>
+        <div className={ classnames('text-center',
+          { 'PathDetail-done-color': pathDone }) }
+        >
+          {
+            pathDone ?
+            <i className="icon-ok-circled PathDetail-header-icon"></i> :
+            <i className="icon-clock-alt PathDetail-header-icon"></i>
+          }
           <h3>{ name }</h3>
           <p>{ description }</p>
         </div>
@@ -39,27 +69,49 @@ export class PathDetail extends React.Component {
           {
             milestones.map(
               ({ id, name }) => {
-                let status = '';
                 let percentage = 0;
                 if (userMilestones[id]) {
-                  status = userMilestones[id].status;
                   percentage = userMilestones[id].percentage;
                 }
 
                 return (
-                  <Milestone
-                    key={ id }
-                    name={ name }
-                    id={ id }
-                    status={ status }
-                    percentage={ percentage }
-                    onPercentageChange={ this.handleMilestonePercentageChange }
-                  />
+                  <div key={ id }>
+                    <Milestone
+                      name={ name }
+                      id={ id }
+                      percentage={ percentage }
+                      showProgress={ isAuthenticated }
+                      onPercentageChange={ this.handleMilestonePercentageChange }
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-secondary btn-sm"
+                      onClick={ () => this.toggleModal(
+                        {
+                          isOpen: true,
+                          pathUrl: url,
+                          milestoneId: id,
+                          milestoneName: name
+                        })
+                      }
+                      >
+                      Users in progress
+                    </button>
+                    <hr />
+                  </div>
                 );
               }
             )
           }
         </div>
+
+        <UsersInProgressModal
+          isOpen={ this.state.modal.isOpen }
+          onClose={ this.closeModal }
+          pathUrl={ this.state.modal.pathUrl }
+          milestoneId={ this.state.modal.milestoneId }
+          milestoneName={ this.state.modal.milestoneName }
+        />
       </section>
     );
   }
@@ -74,11 +126,13 @@ const mapStateToProps = (state, { match }) => {
     milestones = fromReducers.getMilestones(state, path.milestones);
     userMilestones = fromReducers.getUserMilestones(state, path.milestones);
   }
+
   return {
     url,
     path,
     milestones,
-    userMilestones
+    userMilestones,
+    isAuthenticated: fromReducers.isAuthenticated(state),
   }
 };
 

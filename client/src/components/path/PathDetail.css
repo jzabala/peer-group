@@ -1,4 +1,12 @@
+.PathDetail-header-icon {
+  font-size: 3rem;
+}
+
+.PathDetail-done-color {
+  color: #0275d8;
+}
+
 .PathDetail-milestones {
   max-width: 600px;
-  margin: 30px auto 0 auto;
+  margin: 40px auto 0 auto;
 }

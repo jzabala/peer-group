@@ -1,5 +1,10 @@
+.Milestone-done-color {
+  color: #0275d8;
+}
+
 .Milestone-name {
   margin-left: 10px;
+  margin-right: 6px;
   font-weight: bold;
 }
 

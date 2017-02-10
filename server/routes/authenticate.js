@@ -10,8 +10,10 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   validateAuth(req.body).then(
-    ({ id, password }) => {
-      User.findOne({ id }).then(
+    ({ identifier, password }) => {
+      User.findOne(
+        { $or: [{ username: identifier }, { email: identifier }] },
+      ).then(
         (user) => {
           if (user) {
             if (bcrypt.compareSync(password, user.password)) {

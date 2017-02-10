@@ -1,0 +1,18 @@
+body.Modal-open {
+  overflow: hidden;
+}
+
+.Modal-modal {
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: auto;
+  opacity: 1;
+}
+
+.Model-appear {
+  opacity: 0.3;
+}
+
+.Model-appear.Model-appear-active {
+  opacity: 1;
+  transition: opacity 100ms ease-in;
+}

@@ -1,8 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
 import api from './routes';
-import './configdb';
+import config from './config';
+
+// Mongodb config
+mongoose.Promise = global.Promise;
+mongoose.connect(config.database);
 
 const app = express();
 app.use(bodyParser.json());

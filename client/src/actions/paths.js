@@ -39,3 +39,10 @@ export const fetchPath = api => pathUrl => dispatch => {
     },
   );
 }
+
+export const fetchUsersInProgress = api => (pathUrl, milestoneId) =>
+  api.get(`paths/${pathUrl}/milestones/${milestoneId}/users/in-progress`)
+    .then(
+      ({ data }) => data,
+      ({ response }) => Promise.reject(response.data.errors),
+    );

@@ -22,11 +22,7 @@ class App extends Component {
           <FlashMessageList />
           <Route exact path="/" component={ PathPage } />
           <Route exact path="/paths/:url" component={ PathDetail } />
-          <Route path="/login" render={
-            () => <Auth render={
-              ({ isAuth }) => !isAuth ? <LoginPage /> : <Redirect to="/" />
-            }/>
-          }/>
+          <Route path="/login" component={ LoginPage } />
           <Route path="/signup" render={
             () => <Auth render={
               ({ isAuth }) => !isAuth ? <SignupPage /> : <Redirect to="/" />
@@ -37,11 +33,7 @@ class App extends Component {
               ({ isAuth }) => isAuth ? <NewPathPage /> : <Redirect to="/login" />
             }/>
           }/>
-          <Route path="/logout" render={
-            () => <Auth render={
-              ({ isAuth }) => isAuth ? <Logout /> : <Redirect to="/" />
-            }/>
-          }/>
+          <Route path="/logout" component={ Logout }/>
         </main>
       </div>
     );

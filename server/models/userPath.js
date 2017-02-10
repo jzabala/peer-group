@@ -35,8 +35,8 @@ const userPath = new Schema({
 
 if (!userPath.options.toJSON) userPath.options.toJSON = {};
 userPath.options.toJSON.transform = (doc, ret) => ({
-  username: ret.user,
-  pathUrl: ret.path,
+  username: ret.username,
+  pathUrl: ret.pathUrl,
   milestones: ret.milestones,
 });
 

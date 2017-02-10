@@ -26,9 +26,9 @@ export const validateSignup = validateAsync({
 });
 
 export const validateLogin = validateAsync({
-  username: {
+  identifier: {
     presence: {
-      message: "^Username can't be black",
+      message: '^You have to enter a username or email',
     },
   },
   password: {

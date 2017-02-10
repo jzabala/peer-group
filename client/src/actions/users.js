@@ -1,6 +1,11 @@
 import { normalizeUserMilestone, normalizeUserMilestones } from '../normalizers';
+import { isAuthenticated } from '../reducers';
 
-export const saveUserPathStatus = api => userPath => dispatch => {
+export const saveUserPathStatus = api => userPath => (dispatch, getState) => {
+  if (!isAuthenticated(getState())) {
+    return;
+  }
+
   dispatch({
     type: 'SAVE_USER_PATH_STATUS_REQUEST',
     response: normalizeUserMilestone(userPath.milestone),
@@ -18,7 +23,11 @@ export const saveUserPathStatus = api => userPath => dispatch => {
   );
 }
 
-export const fetchUserPath = api => url => dispatch => {
+export const fetchUserPath = api => url => (dispatch, getState) => {
+  if (!isAuthenticated(getState())) {
+    return;
+  }
+
   dispatch({
     type: 'FETCH_USER_PATH_REQUEST'
   });
@@ -30,7 +39,9 @@ export const fetchUserPath = api => url => dispatch => {
     }),
     ({ response }) => {
       dispatch({ type: 'FETCH_USER_PATH_FAILURE' });
-      return Promise.reject(response.data.errors);
+      if (response.status !== 404) {
+        return Promise.reject(response.data.errors);  
+      }
     }
   );
 }

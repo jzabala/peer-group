@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 import './Milestone.css';
 
 class Milestone extends Component {
@@ -36,25 +37,29 @@ class Milestone extends Component {
     this.setState({ fill: parseInt(e.target.value, 10) });
   }
   render() {
-    const fill = this.state.fill;
+    const { name, showProgress } = this.props;
+    const { fill, max } = this.state;
+    const done = fill === max;
     const styles = {
       range: {
         backgroundImage: `linear-gradient(to right, #0275d8 ${fill}%, #eceeef ${fill}%)`
       }
     };
-    const { name } = this.props;
     return (
-      <div>
-        <div>
-          <span>
-            { fill }%
-          </span>
+      <div className={ classnames({ 'Milestone-done-color': done }) }
+      >
+        {
+          showProgress && <span>{ fill }%</span>
+        }
 
-          <span className="Milestone-name">
-            { name }
-          </span>
+        <span className="Milestone-name">
+          { name }
+        </span>
 
-          <input
+        { done && <i className="icon-ok-1"></i> }
+
+        {
+          showProgress && <input
             className="Milestone-range"
             type="range"
             min={ this.state.min }
@@ -65,8 +70,7 @@ class Milestone extends Component {
             onChange={ this.handleChange }
             style={ styles.range }
           />
-          <hr />
-        </div>
+        }
       </div>
     );
   }
@@ -76,6 +80,7 @@ Milestone.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   percentage: PropTypes.number.isRequired,
+  showProgress: PropTypes.bool.isRequired,
   onPercentageChange: PropTypes.func.isRequired,
 };
 

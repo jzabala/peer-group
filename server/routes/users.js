@@ -34,12 +34,13 @@ router.post('/paths', authenticate, (req, res) => {
         (dbUserPath) => {
           let userPath = dbUserPath;
           if (userPath) {
+            const milestone = requestData.milestone;
             const milestones = userPath.milestones.filter(
               // eslint-disable-next-line eqeqeq
-              m => m.milestoneId != requestData.milestone.milestoneId,
+              m => m.milestoneId != milestone.milestoneId,
             );
-            userPath.milestones = [...milestones, requestData.milestone];
-            userPath.history.push(requestData.milestone);
+            userPath.milestones = [...milestones, milestone];
+            userPath.history.push(milestone);
           } else {
             userPath = new UserPath(parseToUserPath(requestData, user));
           }
