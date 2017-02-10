@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
-import config from '../config.json';
+import config from '../config';
 import { serverError } from '../utils/handlers';
 import { validateAuth } from '../validators/authValidator';
 

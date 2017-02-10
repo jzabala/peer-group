@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
-import config from '../config.json';
+import config from '../config';
 import { serverError } from '../utils/handlers';
 
 export default (req, res, next) => {
