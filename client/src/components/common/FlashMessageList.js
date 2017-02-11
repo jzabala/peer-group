@@ -12,10 +12,11 @@ export class FlashMessageList extends React.Component {
   }
   handleDeleteFlashMessages() {
     const { flashMessages, removeFlashMessage, updateFlashMessage } = this.props;
-    flashMessages.forEach((message, index) => {
-      if (message.duration > 0 && !message.timeout) {        
-        setTimeout(() => removeFlashMessage(index), message.duration);
-        updateFlashMessage(index, { timeout: true });
+    flashMessages.forEach((message) => {
+      if (message.duration > 0 && !message.timeout) {
+        const id = message.id;
+        setTimeout(() => removeFlashMessage(id), message.duration);
+        updateFlashMessage({ id, timeout: true });
       }
     });
   }

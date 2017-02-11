@@ -1,15 +1,19 @@
+import shortid from 'shortid';
+
 export const addFlashMessage = message => ({
   type: 'ADD_FLASH_MESSAGE',
-  message,
+  message: {
+    id: shortid.generate(),
+    ...message,
+  },
 });
 
-export const removeFlashMessage = index => ({
+export const removeFlashMessage = id => ({
   type: 'REMOVE_FLASH_MESSAGE',
-  index,
+  id,
 });
 
-export const updateFlashMessage = (index, message) => ({
+export const updateFlashMessage = (message) => ({
   type: 'UPDATE_FLASH_MESSAGE',
-  index,
   message,
 });
