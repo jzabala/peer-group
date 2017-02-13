@@ -45,7 +45,7 @@ export const logout = (id) => dispatch => {
 }
 
 export const countryList = (name) => {
-  console.log(name);
-   const response = api.get(`/users/getCountryList?url_city=${name}`);
+
+   const response = api.get(`/users/getCountryList?url_city=${name}`);  
    return response;
 }

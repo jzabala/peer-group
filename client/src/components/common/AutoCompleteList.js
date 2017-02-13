@@ -9,7 +9,7 @@ export class AutoCompleteList extends React.Component{
   render(){
     var item = this.props.world.map((item, i) =>{
                 var full_place = item.city + " " + item.country;
-                return (<li key={i} onClick={()=>this.props.onClick(full_place)}>{item.city}, {item.country}</li>)
+                return (<li key={i} onClick={()=>this.props.onClick(full_place)}>{full_place}</li>)
               })
 
     return(

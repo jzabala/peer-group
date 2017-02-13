@@ -64,13 +64,12 @@ class SignupForm extends Component {
         places = countryList(e.target.value);
         const world = {place:[]};
         const place = e.target.value;
-
-              places.then((response_) =>{
+             places.then((response_) =>{
                       const data = response_.data.data.places.sort((a,b)=>{
-                               if(a.city > b.city){
+                               if(a.country < b.country){
                                  return 1;
                                 }
-                              else if(a.city < b.city){
+                              else if(a.country > b.country){
                                  return -1;
                                }
                             else{
