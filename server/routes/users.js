@@ -7,10 +7,12 @@ import axios from 'axios';
 
 const router = express.Router();
 
-router.get('/getCountryList', (req, res)=>{
+router.get('/getCountryList', (req, res)=>{    
   const key = 'AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E';
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.params.url_city}&types=geocode&language=en&key=${key}`;
-  axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=santo&types=geocode&language=en&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E')
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.query.url_city}&types=geocode&language=en&key=${key}`;
+  //'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=santo&types=geocode&language=en&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E'
+  console.log(url);
+  axios.get(url)
         .then((response)=>{
           if(response.status == 200){
               const data = response.data.predictions;
@@ -24,7 +26,6 @@ router.get('/getCountryList', (req, res)=>{
           }
           else{ return res.status(404).json({data:"No data found"});
         }
-
         })
         .catch(()=>{return res.status(500).json({data:"Error en la API"});})
 })
@@ -51,7 +52,7 @@ router.post('/', (req, res) => {
             const secound = date.getSeconds();
             const totalSecound = (((hour / 60) * 60) + (minute * 60) + secound);
             const timeZoneAPI = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${totalSecound}${apiKey}`;
-// Get time zone using the API of googleTimeZoneAPI
+            // Get time zone using the API of googleTimeZoneAPI
             axios.get(timeZoneAPI)
               .then(function(responseTimeZone) {
                 const timeZone = responseTimeZone.data.timeZoneName;

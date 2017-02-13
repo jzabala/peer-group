@@ -45,32 +45,7 @@ export const logout = (id) => dispatch => {
 }
 
 export const countryList = (name) => {
+  console.log(name);
    const response = api.get(`/users/getCountryList?url_city=${name}`);
-    const world = {place:[]};
-     response.then((response_) =>{
-         const data = response_.data.data.places;
-         for(let item = 0; item < data.length; item++){
-             var city = data[item].city;
-             var country = data[item].country;
-             world.place.push({id : item, country : country, city : city});
-         }
-   });   
-   return world;
-  /*return {world:[{
-               place:{
-                 id:1,
-                      country:"Republica Dominicana",
-                      city: "Santo Domingo"
-                    }},
-              {place:{
-                     id:2,
-                     country:"USA",
-                     city:"New York"
-                   }},
-              {place:{
-                id:3,
-                     country:"Colombia",
-                     city:"Bogota"
-                   }}
-        ]};*/
+   return response;
 }
