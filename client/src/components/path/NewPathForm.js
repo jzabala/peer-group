@@ -3,10 +3,11 @@ import {
   connect
 } from 'react-redux';
 import R from 'ramda';
+import classnames from 'classnames';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaGroup from '../common/TextAreaGroup';
 import RequestButton from '../common/RequestButton';
-import Milestone from './Milestone';
+import Milestone from './NewMilestone';
 import { kebabCase } from '../../utils/functions';
 import { validateNewPath } from '../../validators/pathValidator.js'
 import withHandlers from '../../utils/withHandlers';
@@ -113,7 +114,7 @@ export class NewPathForm extends React.Component {
             this.props.addFlashMessage({
               type: "success",
               strong: "Path added successfully!",
-              text: "You can add another.",
+              text: "You can add another one.",
               duration: 5000,
               timeout: false,
             });
@@ -125,29 +126,41 @@ export class NewPathForm extends React.Component {
     );
   }
   render() {
-    const {
-      form,
-      errors
-    } = this.state;
-    return ( <
-      form className = "NewPathForm-form"
-      onSubmit = {
-        this.handleSubmit
-      } >
-      <
-      TextFieldGroup name = "name"
-      placeholder = "Name"
-      value = {
-        form.name
-      }
-      errors = {
-        errors.name
-      }
-      onChange = {
-        this.handleNameChange
-      }
-      />
+    const { form, errors } = this.state;
+    return (
+      <form className="NewPathForm-form" onSubmit={ this.handleSubmit }>
+        <TextFieldGroup
+          name="name"
+          placeholder="Name"
+          value={ form.name }
+          errors={ errors.name }
+          onChange={ this.handleNameChange }
+        />
 
+        <div className={ classnames('form-group GeneralField-form-field', { 'has-danger': errors.url }) }>
+          <div className="NewPathForm-url">
+            <span className="NewPathForm-url-pathname">
+              { location.origin + "/paths/" }
+            </span>
+            <input
+              name="url"
+              type="text"
+              placeholder="Url"
+              value={ form.url }
+              onChange={ this.handleUrlChagne }
+              className={
+                classnames('form-control NewPathForm-url-input',
+                  { 'form-control-danger': errors.url }
+                )
+              }
+            />
+          </div>
+
+          { errors.url && errors.url.map(
+              (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
+            )
+          }
+        </div>
       <
       TextFieldGroup name = "url"
       placeholder = "Url"

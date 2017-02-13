@@ -17,6 +17,7 @@ class SignupForm extends Component {
 
     this.state = {
       form: {
+        username: '',
         email: '',
         password: '',
         confirmPassword: '',

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
 import { login } from '../../actions/auth';
+import { isAuthenticated } from '../../reducers';
 import { addFlashMessage } from '../../actions/flashMessages';
 import TextFieldGroup from '../common/TextFieldGroup';
 import RequestButton from '../common/RequestButton';
@@ -14,7 +16,7 @@ class LoginForm extends Component {
 
     this.state = {
       form: {
-        email: '',
+        identifier: '',
         password: '',
       },
       isSubmit: false,
@@ -31,7 +33,8 @@ class LoginForm extends Component {
 
     validateLogin(this.state.form).then(
       data => {
-        this.props.login(data).then(null,
+        this.props.login(data).then(
+          () => this.props.goBack(),
           errors => {
             this.handleSubmitError(errors);
             if(errors.general) {
@@ -50,14 +53,15 @@ class LoginForm extends Component {
     );
   }
   render() {
-    return (
+    return this.props.isAuthenticated ? <Redirect to="/" /> :
+    (
       <form onSubmit={ this.handleSubmit } className="LoginForm_form">
         <TextFieldGroup
-          name="email"
-          placeholder="Enter email"
-          value={ this.state.form.email }
+          name="identifier"
+          placeholder="Username or email"
+          value={ this.state.form.identifier }
           onChange={ this.handleChange }
-          errors={ this.state.errors.email }
+          errors={ this.state.errors.identifier }
         />
 
         <TextFieldGroup
@@ -79,7 +83,11 @@ class LoginForm extends Component {
   }
 }
 
-export default connect(
-  null,
+const mapStateToProps = (state, { match }) => ({
+  isAuthenticated: isAuthenticated(state),
+});
+
+export default withRouter(connect(
+  mapStateToProps,
   { login, addFlashMessage }
-)(withHandlers(LoginForm));
+)(withHandlers(LoginForm)));

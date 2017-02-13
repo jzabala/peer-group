@@ -1,14 +1,16 @@
 import validate from 'validate.js';
 import R from 'ramda';
 import { then } from '../utils/promise';
-import Path from '../models/path';
 import { validateAsync, isNotEmpty } from '../utils/functions';
+import { pathExits } from './customValidations';
 
 const newMilestoneConstrains = {
   name: {
     presence: true,
   },
 };
+
+validate.validators.idExists = pathExits;
 
 validate.validators.milestoneConstrains = (value, options) => {
   if (options && value) {
@@ -28,16 +30,6 @@ validate.validators.milestoneConstrains = (value, options) => {
   return null;
 };
 
-validate.validators.urlExits = (value, options) => {
-  if (options) {
-    return new validate.Promise((resolve) => {
-      Path.findOne({ url: value }).then(
-        path => path ? resolve('exists.') : resolve(),
-      );
-    });
-  }
-  return null;
-};
 
 export const validateNewPath = validateAsync({
   name: {
@@ -47,9 +39,9 @@ export const validateNewPath = validateAsync({
     presence: true,
     format: {
       pattern: /[a-z0-9-]+/,
-      message: 'can only contain a-z, 0-9 and -',
+      message: 'may only contain alphanumeric characters or hyphens',
     },
-    urlExits: true,
+    idExists: true,
   },
   description: {
     presence: true,
@@ -58,7 +50,7 @@ export const validateNewPath = validateAsync({
     presence: true,
     milestoneConstrains: true,
   },
-  user: {
+  username: {
     presence: true,
   },
 });

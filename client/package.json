@@ -1,5 +1,5 @@
 {
-  "name": "peer-group-client",
+  "name": "learning-path-client",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -10,9 +10,11 @@
     "bootstrap": "^4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "jwt-decode": "^2.1.0",
+    "lodash.merge": "^4.6.0",
     "normalizr": "^3.1.0",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "react-router-dom": "^4.0.0-beta.4",

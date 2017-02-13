@@ -7,7 +7,7 @@ import './Header.css'
 const Header = (props) => (
   <nav className="navbar navbar-toggleable-xl navbar-light bg-faded Header_navbar">
     <Link className="navbar-brand" to="/">
-      Peer Group
+      Learning Path
     </Link>
 
     <ul className="navbar-nav mr-auto">

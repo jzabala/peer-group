@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
-import config from '../config.json';
+import config from '../config';
 import { serverError } from '../utils/handlers';
 import { validateAuth } from '../validators/authValidator';
 
@@ -10,13 +10,15 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   validateAuth(req.body).then(
-    ({ email, password }) => {
-      User.findOne({ email }).then(
+    ({ identifier, password }) => {
+      User.findOne(
+        { $or: [{ username: identifier }, { email: identifier }] },
+      ).then(
         (user) => {
           if (user) {
             if (bcrypt.compareSync(password, user.password)) {
               const token = jwt.sign(
-                { user: { id: user.id, email: user.email } },
+                { user: { username: user.username } },
                 config.jwtSecret,
               );
               res.json({ token });

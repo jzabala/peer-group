@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import R from 'ramda';
 import { getAllPaths } from '../../reducers';
 import { fetchPaths } from '../../actions';
@@ -13,8 +13,9 @@ export class PathList extends React.Component {
     const content = R.isEmpty(this.props.paths) ?
       <p>The aren't paths </p> :
       this.props.paths.map(
-        path => <Path key={ path.id }
+        path => <Path key={ path.url }
           name={ path.name }
+          url={ path.url }
           description={ path.description }
         />
       );

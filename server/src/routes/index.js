@@ -10,7 +10,7 @@ router.use('/authenticate', auth);
 router.use('/paths', paths);
 
 router.get('/', (req, res) => {
-  res.json({ message: 'Welcome to this API :)' });
+  res.json({ message: 'Welcome to Learning Path API :)' });
 });
 
 export default router;

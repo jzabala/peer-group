@@ -1,0 +1,29 @@
+{
+  "name": "peer-group",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "n-run \"npm run build-client && npm run copy-client\" \"npm run build-server && npm run copy-server\"",
+    "build-client": "cd client && npm run build",
+    "build-server": "cd server && npm run build",
+    "copy-client": "n-copy --source client/build --destination build/static \"**\"",
+    "copy-server": "n-copy --source server/build --destination build \"**\"",
+    "clean": "n-run \"trash build\" \"trash client/build\" \"trash server/build\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jzabala/peer-group.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jzabala/peer-group/issues"
+  },
+  "homepage": "https://github.com/jzabala/peer-group#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "npm-build-tools": "^2.2.5"
+  }
+}

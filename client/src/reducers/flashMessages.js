@@ -4,11 +4,11 @@ const flashMessages = (state = [], action) => {
       return [...state, { ...action.message }];
     }
     case 'REMOVE_FLASH_MESSAGE': {
-      return state.filter((message, index) => index !== action.index);
+      return state.filter((message) => message.id !== action.id);
     }
     case 'UPDATE_FLASH_MESSAGE': {
-      return state.map((message, index) => {
-        if(index === action.index) {
+      return state.map((message) => {
+        if(message.id === action.message.id) {
           return { ...message, ...action.message };
         }
         return message;

@@ -1,8 +1,6 @@
 import validate from 'validate.js';
 import User from '../models/user';
-import {
-  validateAsync
-} from '../utils/functions';
+import { validateAsync } from '../utils/functions';
 
 validate.validators.emailExists = (value, options) => {
   if (options) {

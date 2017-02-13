@@ -1,8 +1,10 @@
 import { validateAsync } from '../utils/functions';
 
 export const validateAuth = validateAsync({
-  email: {
-    presence: true,
+  identifier: {
+    presence: {
+      message: '^You have to enter a username or email',
+    },
   },
   password: {
     presence: true,

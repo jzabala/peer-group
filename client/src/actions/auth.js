@@ -13,7 +13,7 @@ export const signup = user => api.post('/users', user).then(null,
 
 const loginUser = (user) => ({
   type: 'LOGIN_USER',
-  users: normalizeUser(user),
+  response: normalizeUser(user),
 });
 
 export const authenticateUser = dispatch => R.compose(
@@ -34,13 +34,13 @@ export const login = user => dispatch => {
   );
 }
 
-export const logout = (id) => dispatch => {
+export const logout = (username) => dispatch => {
   fromAuthHandler.removeAuthToken();
   fromAuthHandler.deleteAuthTokenRequest();
   dispatch({type: 'LOGOUT_USER'});
   dispatch({
     type: 'REMOVE_USER',
-    userId: id
+    userId: username
   });
 }
 

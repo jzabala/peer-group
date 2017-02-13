@@ -1,44 +1,91 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import './Milestone.css';
 
-const Milestone = (props) => {
-  const { errors } = props;
-  return (
-    <div className={ classnames('form-group', { 'has-danger': errors }) }>
-      <div className="Milestone-controls">
-        <input
-          data-index={ props.index }
-          type={ props.type }
-          value={ props.value }
-          placeholder={ props.placeholder }
-          className={
-            classnames('form-control', { 'form-control-danger': errors })
-          }
-        />
-        <button type="button" className="close Milestone-controls-close" onClick={ props.onDelete }>
-          <span>&times;</span>
-        </button>
-      </div>
-      { errors && errors.map(
-          (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
-        )
+class Milestone extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isPercentageChange: false,
+      fill: props.percentage,
+      min: 0,
+      max: 100,
+    }
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.fill !== nextProps.percentage) {
+      this.setState({ fill: nextProps.percentage });
+    }
+  }
+  handleMouseDown() {
+    this.setState({ isPercentageChange: true });
+  }
+  handleMouseUp() {
+    if(this.state.isPercentageChange) {
+      this.setState({ isPercentageChange: false });
+      this.props.onPercentageChange({
+        milestoneId: this.props.id,
+        percentage: this.state.fill
+      });
+    }
+  }
+  handleChange(e) {
+    this.setState({ fill: parseInt(e.target.value, 10) });
+  }
+  render() {
+    const { name, showProgress } = this.props;
+    const { fill, max } = this.state;
+    const done = fill === max;
+    const styles = {
+      range: {
+        backgroundImage: `linear-gradient(to right, #0275d8 ${fill}%, #eceeef ${fill}%)`
       }
-    </div>
-  );
+    };
+    return (
+      <div className={ classnames({ 'Milestone-done-color': done }) }
+      >
+        {
+          showProgress && <span>{ fill }%</span>
+        }
+
+        <span className="Milestone-name">
+          { name }
+        </span>
+
+        { done && <i className="icon-ok-1"></i> }
+
+        {
+          showProgress && <input
+            className="Milestone-range"
+            type="range"
+            min={ this.state.min }
+            max={ this.state.max }
+            value={ this.state.fill }
+            onMouseDown={ this.handleMouseDown }
+            onMouseUp={ this.handleMouseUp }
+            onChange={ this.handleChange }
+            style={ styles.range }
+          />
+        }
+      </div>
+    );
+  }
 }
 
 Milestone.propTypes = {
-  index: PropTypes.number.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  errors: PropTypes.array,
-}
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  percentage: PropTypes.number.isRequired,
+  showProgress: PropTypes.bool.isRequired,
+  onPercentageChange: PropTypes.func.isRequired,
+};
 
-Milestone.defaultProps = {
-  type: 'text',
+Milestone.defaultValue = {
+  percentage: 0,
 }
 
 export default Milestone;

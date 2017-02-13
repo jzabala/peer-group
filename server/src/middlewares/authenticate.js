@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
-import config from '../config.json';
+import config from '../config';
 import { serverError } from '../utils/handlers';
 
 export default (req, res, next) => {
@@ -11,7 +11,7 @@ export default (req, res, next) => {
       if (err) {
         res.status(401).json({ errors: { general: 'Faild to authenticate' } });
       } else {
-        User.findOne({ email: decoded.user.email }, '_id email').then(
+        User.findOne({ username: decoded.user.username }, 'username email').then(
           (user) => {
             if (user) {
               // eslint-disable-next-line no-param-reassign
