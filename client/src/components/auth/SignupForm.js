@@ -137,12 +137,7 @@ class SignupForm extends Component {
         errors = {this.state.errors.country}
         value = {this.state.form.country}
         />
-
-{this.state.form.countryList.place !== undefined ? <AutoCompleteList world={this.state.form.countryList.place} onClick={(e)=>this.handleClickCountry(e)}/> : null}
-
-
-
-
+        {this.state.form.countryList.place !== undefined ? <AutoCompleteList world={this.state.form.countryList.place} onClick={(e)=>this.handleClickCountry(e)}/> : null}
          <TextFieldGroup
         name = "city"
         placeholder = "Enter city"
