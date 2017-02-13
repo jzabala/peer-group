@@ -7,27 +7,7 @@ import axios from 'axios';
 
 const router = express.Router();
 
-router.get('/getCountryList', (req, res)=>{
-  const key = 'AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E';
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.query.url_city}&types=geocode&language=en&key=${key}`;
-  const  url_country = `https://restcountries.eu/rest/v1/name/{req.query.url_city}`;
-  //'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=santo&types=geocode&language=en&key=AIzaSyBcASq82k5do_ZviitsV64QybYzsa-9O-E'
-  axios.get(url)
-        .then((response)=>{          
-         if(response.status == 200){
-              const data = response.data.predictions;
-              var descriptionPlaces = {places:[]};
-              for(let item = 0; item < data.length; item++){
-                   var city = data[item].structured_formatting.main_text;
-                   var country = data[item].structured_formatting.secondary_text;
-                  descriptionPlaces.places.push({city:city, country:country});
-                }
-                return  res.status(200).json({data:descriptionPlaces});
-          }
-          else{ return res.status(404).json({data:"No data found"}); }
-        })
-        .catch(()=>{return res.status(500).json({data:"Error en la API"});})
-})
+
 router.post('/', (req, res) => {
   const user = { ...req.body
   };

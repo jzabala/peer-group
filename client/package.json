@@ -21,6 +21,7 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^1.0.0",
     "redux-thunk": "^2.2.0",
+    "shortid": "^2.2.6",
     "validate.js": "^0.11.1"
   },
   "scripts": {
@@ -29,5 +30,5 @@
     "test": "react-scripts te st --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8081"
+  "proxy": "http://localhost:8080"
 }
