@@ -24,7 +24,7 @@ router.get('/', (req, res) =>
   ));
 
 router.get('/:url', (req, res) =>
-  Path.findOne({ url: req.params.url }).then(
+  Path.find({ url: req.params.url }).then(
     (path) => path ?
       res.json(path) :
       res.status(404).json(

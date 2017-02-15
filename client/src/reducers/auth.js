@@ -23,12 +23,6 @@ const username = withLogout((state = '', action) => {
   }
 })('');
 
-const userPaths = (state = {}, action) => {
-  switch (action.type) {
-    default: return state;
-  }
-}
-
 const userMilestones = withLogout((state = {}, action) => {
   const response = action.response;
   if (response && response.entities.userMilestones) {
@@ -41,7 +35,6 @@ const userMilestones = withLogout((state = {}, action) => {
 const auth = combineReducers({
   isUserAuthenticated,
   username,
-  userPaths,
   userMilestones,
 });
 

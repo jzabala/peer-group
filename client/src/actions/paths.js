@@ -10,35 +10,23 @@ export const createPath = api => path => dispatch => (
   )
 );
 
-export const fetchPaths = api => () => dispatch => {
+export const fetchPaths = api => urlSegment => dispatch => {
+  let url = '/paths';
+  if (urlSegment) {
+    url += `/${urlSegment}`;
+  }
+
   dispatch({
     type: 'FETCH_PATHS_REQUEST'
   });
 
-  return api.get('/paths').then(
+  return api.get(url).then(
     ({ data }) => dispatch({
       type: 'FETCH_PATHS_SUCCESS',
       response: normalizePaths(data),
     })
   )
 };
-
-export const fetchPath = api => pathUrl => dispatch => {
-  dispatch({
-    type: 'FETCH_CURRENT_PATH_REQUEST'
-  });
-
-  return api.get(`/paths/${pathUrl}`).then(
-    ({ data }) => dispatch({
-      type: 'FETCH_CURRENT_PATH_SUCCESS',
-      response: normalizePath(data),
-    }),
-    ({ response }) => {
-      dispatch({ type: 'FETCH_CURRENT_PATH_FAILURE' });
-      return Promise.reject(response.data.errors);
-    },
-  );
-}
 
 export const fetchUsersInProgress = api => (pathUrl, milestoneId) =>
   api.get(`paths/${pathUrl}/milestones/${milestoneId}/users/in-progress`)

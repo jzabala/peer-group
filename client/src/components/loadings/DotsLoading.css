@@ -1,9 +1,9 @@
 .DotsLoading_spinner {
+  margin: 0px auto;
+  display: flex;
   width: 70px;
   text-align: center;
-  display: inline-flex;
   justify-content: space-around;
-  transform: translate(-50%, -50%);
 }
 
 .DotsLoading_spinner > div {

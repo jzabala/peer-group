@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import R from 'ramda';
 import { fetchUsersInProgress } from '../../actions';
 import Modal from '../common/Modal';
+import DotsLoading from '../loadings/DotsLoading';
 
 class UsersInProgressModal extends Component {
   constructor(props) {
@@ -34,9 +35,18 @@ class UsersInProgressModal extends Component {
   }
   render() {
     const { isOpen, onClose, milestoneName } = this.props;
-    const { errors, users } = this.state;
-    const content = !R.isEmpty(errors) ? errors.general :
-      users.map(({username}) => <li key={ username }>{ username }</li>);
+    const { errors, users, isLoading } = this.state;
+    let content;
+    if (R.empty(users) && isLoading) {
+      content = <DotsLoading
+        style={{ margin: '0px', }}
+        dotsStyle={{ width: '14px', height: '14px' }}
+      />;
+    } else {
+      content = !R.isEmpty(errors) ? errors.general :
+        users.map(({username}) => <li key={ username }>{ username }</li>);
+    }
+
     return (
       <Modal isOpen={ isOpen } onClose={ onClose }>
         <div className="modal-content">

@@ -1,21 +1,21 @@
 import React from 'react';
 import './DotsLoading.css';
 
-const DotsLoading = ({ style, styleDots }) => (
+const DotsLoading = ({ style, dotsStyle }) => (
   <div style={ style } className="DotsLoading_spinner">
-    <div style={ styleDots } className="bounce1"></div>
-    <div style={ styleDots } className="bounce2"></div>
-    <div style={ styleDots } className="bounce3"></div>
+    <div style={ dotsStyle } className="bounce1"></div>
+    <div style={ dotsStyle } className="bounce2"></div>
+    <div style={ dotsStyle } className="bounce3"></div>
   </div>
 );
 
 DotsLoading.propTypes = {
   style: React.PropTypes.object,
-  styleDots: React.PropTypes.object,
+  dotsStyle: React.PropTypes.object,
 }
 
 DotsLoading.defaultProps = {
-  styleDots: {},
+  dotsStyle: {},
   style: {},
 }
 export default DotsLoading;
