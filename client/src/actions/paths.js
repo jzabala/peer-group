@@ -1,4 +1,5 @@
 import { normalizePath, normalizePaths } from '../normalizers';
+import { whenError500 } from '../utils/handlers';
 
 export const createPath = api => path => dispatch => (
   api.post('/paths', path).then(
@@ -6,7 +7,11 @@ export const createPath = api => path => dispatch => (
       type: 'ADD_PATH',
       response: normalizePath(data),
     }),
-    ({ response }) => Promise.reject(response.data.errors),
+    ({ response }) => {
+      if (!whenError500(dispatch, response)) {
+       return Promise.reject(response.data.errors);
+      }
+    }
   )
 );
 
@@ -21,10 +26,18 @@ export const fetchPaths = api => urlSegment => dispatch => {
   });
 
   return api.get(url).then(
-    ({ data }) => dispatch({
+    ({ data }) =>
+    dispatch({
       type: 'FETCH_PATHS_SUCCESS',
       response: normalizePaths(data),
-    })
+    }),
+    ({ response }) => {
+      whenError500(dispatch, response);
+      dispatch({
+        type: 'FETCH_PATHS_FAILURE'
+      });
+      return Promise.reject(response);
+    }
   )
 };
 
