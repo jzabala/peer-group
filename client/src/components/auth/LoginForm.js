@@ -74,7 +74,7 @@ class LoginForm extends Component {
         />
         <RequestButton
           className="btn btn-primary LoginForm_submit"
-          request={ this.state.isSubmit }
+          disabled={ this.state.isSubmit }
         >
           Submit
         </RequestButton>

@@ -1,10 +1,14 @@
 import React, { PropTypes } from 'react';
-import './RequestButton.css';
+import CircleLoading from '../loadings/CircleLoading';
 
 const RequestButton = (props) => {
-  const { children, className, request, ...rest } = props;
+  const { children, className, disabled, ...rest } = props;
+  if (disabled) {
+    return <CircleLoading style={{ margin: "0 auto" }} className="RequestButton_btn"/>
+  }
+
   return (
-    <button {...rest} className={ `${className} RequestButton_resquest`} disabled={ request }>
+    <button {...rest} className={ className }>
       { children }
     </button>
   )
@@ -12,7 +16,7 @@ const RequestButton = (props) => {
 
 RequestButton.propTypes = {
   children: PropTypes.string.isRequired,
-  request: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   type: PropTypes.string,
 }
 

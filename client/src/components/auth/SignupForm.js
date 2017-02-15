@@ -93,7 +93,7 @@ class SignupForm extends Component {
 
           <RequestButton
             className="btn btn-primary SignupForm_submit"
-            request={ this.state.isSubmit }
+            disabled={ this.state.isSubmit }
           >
             Submit
           </RequestButton>
