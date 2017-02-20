@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import R from 'ramda';
+import gql from 'graphql-tag';
 import { getAllPaths, isFechingPaths } from '../../reducers';
 import { fetchPaths } from '../../actions';
 import Path from './Path';
 import DotsLoading from '../loadings/DotsLoading';
 
-export class PathList extends React.Component {
+class PathList extends React.Component {
   componentDidMount() {
-    this.props.fetchPaths();
+    this.props.fetchPaths(PathsWithoutMilestones); // eslint-disable-line no-use-before-define
   }
   render() {
     const { paths, isFeching } = this.props;
@@ -33,6 +34,21 @@ export class PathList extends React.Component {
   );
   }
 }
+
+PathList.propTypes = {
+  paths: PropTypes.array.isRequired,
+  isFeching: PropTypes.bool.isRequired,
+};
+
+const PathsWithoutMilestones = gql`
+  query PathsWithoutMilestones {
+    paths {
+      url
+      name
+      description
+    }
+  }
+`;
 
 export const mapStateToProps = (state) => ({
   paths: getAllPaths(state),

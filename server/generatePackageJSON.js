@@ -4,7 +4,7 @@ const path = require('path');
 const packageJSON = require('./package.json');
 
 const buildPackageJSON = {
-  name: packageJSON.name,
+  name: 'learning-path',
   dependencies: packageJSON.dependencies,
   scripts: {
     start: 'node index.js',

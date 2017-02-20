@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import R from 'ramda';
+import gql from 'graphql-tag';
 import { fetchPaths, saveUserPathStatus, fetchUserPath } from '../../actions';
 import { isNotEmpty } from '../../utils/functions';
 import * as fromReducers from '../../reducers';
@@ -27,7 +28,7 @@ export class PathDetail extends React.Component {
   }
   componentDidMount() {
     const { fetchPaths, fetchUserPath, url, isAuthenticated } = this.props;
-    fetchPaths(url);
+    fetchPaths(PathsWithMilestones, url); // eslint-disable-line no-use-before-define
     if (isAuthenticated) {
       fetchUserPath(url);
     }
@@ -98,7 +99,7 @@ export class PathDetail extends React.Component {
       }/>
     } else if (pathNotExists) {
       return <NotFound />
-    } else if (isFeching) {
+    } else if (isFeching && R.isEmpty(milestones)) {
       visibleMilestones = <DotsLoading style={
         { paddingTop: '30px' }
       }/>
@@ -137,6 +138,20 @@ export class PathDetail extends React.Component {
     );
   }
 }
+
+const PathsWithMilestones = gql`
+  query PathsWithMilestones($url: ID) {
+    paths(url: $url) {
+      url
+      name
+      description
+      milestones {
+        id
+        name
+      }
+    }
+  }
+`;
 
 const mapStateToProps = (state, { match }) => {
   const url = match.params.url;

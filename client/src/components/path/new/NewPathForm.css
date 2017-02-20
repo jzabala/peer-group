@@ -21,10 +21,6 @@
   align-items: center;
 }
 
-.NewPathForm-url-input {
-  padding-left: 2px;
-}
-
 .NewPathForm-url-pathname {
   display: none;
 }
@@ -32,5 +28,9 @@
 @media (min-width: 768px) {
   .NewPathForm-url-pathname {
     display: block;
+    white-space:nowrap;
+  }
+  .NewPathForm-url-input {
+    padding-left: 2px;
   }
 }
