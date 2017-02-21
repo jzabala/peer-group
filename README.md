@@ -1,6 +1,6 @@
 # Learning Path
 
-This app allows people to create learning paths, mark their progress and see how else is working through the same learning path.
+This app allows people to create learning paths, mark their progress and see who else is working through the same learning path.
 
 ## Dependencies
 
