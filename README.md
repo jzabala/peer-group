@@ -11,7 +11,7 @@ If you want to change this just go to server/src/config.js
 
 ## Installation
 
-Server:  
+### Server:  
 
 from a terminal in the root folder execute  
 
@@ -28,7 +28,7 @@ npm start
 
 the server will run on http://localhost:8080  
 
-Client:  
+### Client:  
 
 from a terminal in the root folder execute  
 
