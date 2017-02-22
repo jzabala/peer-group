@@ -36,3 +36,4 @@ export const getAllPaths = ({ byUrls }) => Object.keys(byUrls).map(url => byUrls
 export const getPath = (state, url) => state.byUrls[url];
 export const getMilestones = (state, ids) =>
   fromMilestones.getMilestones(state.milestones, ids);
+export const isFechingPaths = (state) => state.isFeching;

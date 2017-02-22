@@ -1,5 +1,5 @@
 {
-  "name": "peer-group",
+  "name": "learning-path",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "build-server": "cd server && npm run build",
     "copy-client": "n-copy --source client/build --destination build/static \"**\"",
     "copy-server": "n-copy --source server/build --destination build \"**\"",
-    "clean": "n-run \"trash build\" \"trash client/build\" \"trash server/build\""
+    "clean": "n-run \"trash client/build && trash server/build && trash build\""
   },
   "repository": {
     "type": "git",

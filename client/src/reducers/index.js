@@ -26,6 +26,9 @@ export const getPath = (state, url) =>
 export const getMilestones = (state, ids) =>
   fromPaths.getMilestones(state.paths, ids);
 
+export const isFechingPaths = (state) =>
+  fromPaths.isFechingPaths(state.paths);
+
 export const getUserMilestones = (state, ids) =>
   fromAuth.getUserMilestones(state.auth, ids);
 

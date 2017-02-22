@@ -6,7 +6,7 @@ import PathDetail from './path/PathDetail';
 import LoginPage from './auth/LoginPage';
 import SignupPage from './auth/SignupPage';
 import Logout from './auth/Logout';
-import NewPathPage from './path/NewPathPage';
+import NewPathPage from './path/new/NewPathPage';
 import FlashMessageList from './common/FlashMessageList';
 import Header from './Header';
 import NotFound from './NotFound';

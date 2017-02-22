@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import R from 'ramda';
 import classnames from 'classnames';
-import TextFieldGroup from '../common/TextFieldGroup';
-import TextAreaGroup from '../common/TextAreaGroup';
-import RequestButton from '../common/RequestButton';
+import TextFieldGroup from '../../common/TextFieldGroup';
+import TextAreaGroup from '../../common/TextAreaGroup';
+import RequestButton from '../../common/RequestButton';
 import Milestone from './NewMilestone';
-import { kebabCase } from '../../utils/functions';
-import { validateNewPath } from '../../validators/pathValidator.js'
-import withHandlers from '../../utils/withHandlers';
-import { createPath } from '../../actions';
-import { addFlashMessage } from '../../actions/flashMessages';
+import { kebabCase } from '../../../utils/functions';
+import { validateNewPath } from '../../../validators/pathValidator.js'
+import withHandlers from '../../../utils/withHandlers';
+import { createPath } from '../../../actions';
+import { addFlashMessage } from '../../../actions/flashMessages';
 import './NewPathForm.css';
 
 const url = R.compose(kebabCase, R.replace(/[^a-zA-Z0-9-\s_]/g, ''));
@@ -206,13 +206,14 @@ export class NewPathForm extends React.Component {
             Add milestone
           </button>
         </fieldset>
+
       <RequestButton className = "btn btn-primary"
-      request = {
-        this.state.isSubmit
+      disabled = { this.state.isSubmit
       } >
       Submit <
       /RequestButton> <
       /form>
+
     );
   }
 }

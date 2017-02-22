@@ -122,6 +122,7 @@ class SignupForm extends Component {
         }
         />
 
+
         <TextFieldGroup
         name = "confirmPassword"
         type = "password"
@@ -152,7 +153,7 @@ class SignupForm extends Component {
         /> <
         RequestButton
         className = "btn btn-primary SignupForm_submit"
-        request = {
+        disabled = {
           this.state.isSubmit
         } >
         Submit <
@@ -160,6 +161,7 @@ class SignupForm extends Component {
         form >
       } <
       /div>
+
     );
   }
 }

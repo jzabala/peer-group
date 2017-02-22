@@ -1,10 +1,8 @@
 import R from 'ramda';
 import { then } from './promise';
 
-export const serverError = (res, error) => {
-  // TODO: Log error
-  return res.status(500).json({ errors: { general: 'Something went wrong' } });
-};
+export const serverError = (res, error) =>
+  res.status(500).send('Something went wrong'); // TODO: Log error
 
 export const validationError = (res, errors) => res.status(400).json({ errors });
 

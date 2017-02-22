@@ -1,5 +1,6 @@
 import R from 'ramda';
 import validate from 'validate.js';
+import graphqlFields from 'graphql-fields';
 
 export const trace = R.curry((tag, x) => {
   console.log(tag, x);
@@ -11,6 +12,12 @@ export const validateAsync = R.curry(
 );
 
 export const isNotEmpty = x => !R.isEmpty(x);
+
+export const getProjection = obj =>
+  Object.keys(obj).join(' ');
+
+export const getProjectionFromGraphQL =
+  R.compose(getProjection, graphqlFields);
 
 export const parseToUserPath = (data, user) => ({
   pathUrl: data.pathUrl,

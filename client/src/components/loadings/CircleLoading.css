@@ -1,9 +1,8 @@
-.RequestButton_resquest:disabled {
+.CircleLoading-animation {
+  display: inline-block;
   font-size:0;
-  width:30px;
-  height:30px;
   margin-top:5px;
-  border-radius:15px;
+  border-radius:100%;
   padding:0;
   border:3px solid #00b2ff;
   border-bottom:3px solid rgba(255,255,255,0.0);
