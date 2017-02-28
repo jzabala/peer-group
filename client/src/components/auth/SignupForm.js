@@ -22,13 +22,14 @@ class SignupForm extends Component {
         password: '',
         confirmPassword: '',
         country: '',
-        countryList:{},
         city: '',
       },
-      errors: {},
-      isSubmit: false,
-      redirectTo: '',
-      cityCountry: ''
+      errors : {},
+      isSubmit : false,
+      redirectTo : '',
+      cityCountry : '',
+      timer : null,
+      countryList : {}
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = props.handleChange.bind(this);
@@ -36,13 +37,38 @@ class SignupForm extends Component {
     this.handleSubmitError = props.handleSubmitError.bind(this);
     this.resetErrorsRequest = props.resetErrorsRequest.bind(this);
   }
+  callCountryAPI(typePlace){
+    const places = countryList(typePlace);
+    const world = { place : [] };
+         places.then((response_) => {
+                  const data = response_.data.data.places.sort((a,b)=>{
+                           if(a.country < b.country){
+                             return 1;
+                            }
+                          else if(a.country > b.country){
+                             return -1;
+                           }
+                        else{
+                            return 0;
+                           }
+                      });
+           for(let item = 0; item < data.length; item++){
+                var city = data[item].city;
+                var country = data[item].country;
+                world.place.push({id : item, country : country, city : city});
+             }
+         this.setState({ ...this.state, countryList : world});
+   });
+  }
   handleSubmit(e) {
     e.preventDefault();
     this.resetErrorsRequest();
     const validation = validateSignup(this.state.form);
+    console.log(validation);
     validation.then((data) => {
         signup(data).then(
           () => {
+            console.log("ENtro");
             this.setState({
               redirectTo: '/login'
             });
@@ -62,67 +88,43 @@ class SignupForm extends Component {
   }
   handleGetPlace(e){
     var places = Object.create(null);
-      if(e.target.value.length > 0){
-        places = countryList(e.target.value);
-        const world = {place:[]};
-        const place = e.target.value;
-             places.then((response_) =>{
-                      const data = response_.data.data.places.sort((a,b)=>{
-                               if(a.country < b.country){
-                                 return 1;
-                                }
-                              else if(a.country > b.country){
-                                 return -1;
-                               }
-                            else{
-                                return 0;
-                               }
-                          });
-               for(let item = 0; item < data.length; item++){
-                    var city = data[item].city;
-                    var country = data[item].country;
-                    world.place.push({id : item, country : country, city : city});
-                 }
-             this.setState({
-                            form:{...this.state.form, countryList : world, country: place},cityCountry:place
-                          });
-       });
+    var typePlace = e.target.value;
+    this.setState({...this.state, cityCountry : typePlace});
+    if(typePlace.length > 0){
+        if(this.state.timer === null){
+          /*Try to make a small debounce at this part later create a help  fucntion for handle the debounce*/
+          this.callCountryAPI(typePlace);
+          this.setState({ timer : true });
+          window.setTimeout(()=>{this.setState({...this.state, timer : null })},300);
+        }
      }else{
-       this.setState({
-                      form:{...this.state.form, countryList : '', country: ''}
-                    });
+         this.setState({ form:{...this.state.form, country: ''}, countryList : null });
      }
   }
   handleClickCountry(country){
     const countryList = Object.create(null);
-    const regExpComa = /,/;
-    let splitCountry;
-    if(country.match(regExpComa))
-    {
-      splitCountry = country.split(',');
-    }
-    else{
-      splitCountry = country.split(' ',2);
-    }
-    console.log(splitCountry);
+    let splitCountry = country.split(',');
     try {
       this.setState({
-        form:{...this.state.form, countryList: countryList, city:splitCountry[0], country: splitCountry[1]}
-       });
-       let concatCityCountry = this.state.form.city +' ' + this.state.form.country;
-       console.log(concatCityCountry);
-       this.setState({
-         cityCountry: concatCityCountry
+        form:{...this.state.form, city:splitCountry[0], country: splitCountry[1]},
+        cityCountry: country, countryList: countryList
        });
     } catch (e) {
       this.setState({
-        form:{...this.state.form, countryList: countryList, city:splitCountry[0], country: 'NaN'}
+        form:{...this.state.form, city:splitCountry[0], country: 'NaN'},
+        cityCountry: splitCountry[0], countryList: countryList
        });
-       this.props.cityCountry = this.state.form.city +', ' + this.state.form.country;
     }
   }
   render() {
     return ( < div > { this.state.redirectTo ? < Redirect to={ this.state.redirectTo } /> : < form onSubmit={ this.handleSubmit } className="SignupForm_form" >
+      <TextFieldGroup
+             name="username"
+             placeholder="Username"
+             value={ this.state.form.username }
+             errors={ this.state.errors.username }
+             onChange={ this.handleChange }
+           />
        < TextFieldGroup
         name="email"
         placeholder="Enter email"
@@ -134,18 +136,9 @@ class SignupForm extends Component {
         name="password"
         type="password"
         placeholder = "Password"
-        onChange = {
-          this.handleChange
-        }
-        errors = {
-          this.state.errors.password
-        }
-        value = {
-          this.state.form.password
-        }
-        />
-
-
+        onChange = { this.handleChange }
+        errors = { this.state.errors.password }
+        value = { this.state.form.password } />
         <TextFieldGroup
         name = "confirmPassword"
         type = "password"
@@ -161,12 +154,10 @@ class SignupForm extends Component {
         errors = {this.state.errors.country}
         value = {this.state.cityCountry}
         />
-        {this.state.form.countryList.place !== undefined ? <AutoCompleteList world={this.state.form.countryList.place} onClick={(e)=>this.handleClickCountry(e)}/> : null}
+        {this.state.countryList !== null && this.state.countryList.place !== undefined ? <AutoCompleteList world={this.state.countryList.place} onClick={(e)=>this.handleClickCountry(e)}/> : null}
         <RequestButton
         className = "btn btn-primary SignupForm_submit"
-        disabled = {
-          this.state.isSubmit
-        } >
+        disabled = { this.state.isSubmit } >
         Submit <
         /RequestButton> < /
         form >
