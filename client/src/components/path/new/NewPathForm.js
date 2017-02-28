@@ -208,8 +208,7 @@ export class NewPathForm extends React.Component {
         </fieldset>
 
       <RequestButton className = "btn btn-primary"
-      disabled = { this.state.isSubmit
-      } >
+      disabled = { this.state.isSubmit } >
       Submit <
       /RequestButton> <
       /form>

@@ -28,6 +28,7 @@ class SignupForm extends Component {
       errors: {},
       isSubmit: false,
       redirectTo: '',
+      cityCountry: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = props.handleChange.bind(this);
@@ -83,7 +84,7 @@ class SignupForm extends Component {
                     world.place.push({id : item, country : country, city : city});
                  }
              this.setState({
-                            form:{...this.state.form, countryList : world, country: place}
+                            form:{...this.state.form, countryList : world, country: place},cityCountry:place
                           });
        });
      }else{
@@ -94,9 +95,31 @@ class SignupForm extends Component {
   }
   handleClickCountry(country){
     const countryList = Object.create(null);
-    this.setState({
-      form:{...this.state.form, countryList: countryList, country: country}
-    });
+    const regExpComa = /,/;
+    let splitCountry;
+    if(country.match(regExpComa))
+    {
+      splitCountry = country.split(',');
+    }
+    else{
+      splitCountry = country.split(' ',2);
+    }
+    console.log(splitCountry);
+    try {
+      this.setState({
+        form:{...this.state.form, countryList: countryList, city:splitCountry[0], country: splitCountry[1]}
+       });
+       let concatCityCountry = this.state.form.city +' ' + this.state.form.country;
+       console.log(concatCityCountry);
+       this.setState({
+         cityCountry: concatCityCountry
+       });
+    } catch (e) {
+      this.setState({
+        form:{...this.state.form, countryList: countryList, city:splitCountry[0], country: 'NaN'}
+       });
+       this.props.cityCountry = this.state.form.city +', ' + this.state.form.country;
+    }
   }
   render() {
     return ( < div > { this.state.redirectTo ? < Redirect to={ this.state.redirectTo } /> : < form onSubmit={ this.handleSubmit } className="SignupForm_form" >
@@ -133,25 +156,13 @@ class SignupForm extends Component {
         />
         <TextFieldGroup
         name = "country"
-        placeholder = "Enter country"
+        placeholder = "City, Country"
         onChange={this.handleGetPlace}
         errors = {this.state.errors.country}
-        value = {this.state.form.country}
+        value = {this.state.cityCountry}
         />
         {this.state.form.countryList.place !== undefined ? <AutoCompleteList world={this.state.form.countryList.place} onClick={(e)=>this.handleClickCountry(e)}/> : null}
-         <TextFieldGroup
-        name = "city"
-        placeholder = "Enter city"
-        type = "text"
-        onChange = {this.handleChange}
-        errors = {
-          this.state.errors.city
-        }
-        value = {
-          this.state.form.city
-        }
-        /> <
-        RequestButton
+        <RequestButton
         className = "btn btn-primary SignupForm_submit"
         disabled = {
           this.state.isSubmit
