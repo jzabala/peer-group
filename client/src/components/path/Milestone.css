@@ -3,9 +3,10 @@
 }
 
 .Milestone-name {
-  margin-left: 10px;
-  margin-right: 6px;
-  font-weight: bold;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: 500;
 }
 
 .Milestone-range {
@@ -84,4 +85,13 @@
   border-radius: 0px;
   background: #FFFFFF;
   cursor: pointer;
+}
+.Milestone-box {
+  display: flex;
+}
+.Milistone-box-name {
+  display: table;
+  border: 1px solid black;
+  height: 30vh;
+  width: 30%;
 }

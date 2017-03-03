@@ -10,15 +10,21 @@ const MAX_DESC = 51;
 const truncateDesc = utilFunc.truncate(MAX_DESC);
 
 const Path = ({ name, description, url }) => (
-  <div className="card Path_card">
-    <div className="card-block Path_card-block">
-      <h3 title={ name } className="card-title text-center">
-        { truncateTitle(name) }
-      </h3>
-      <p title={ description } className="card-text">
-        { description && description.trim() &&  truncateDesc(description) }
-      </p>
-      <Link to={ `/paths/${url}` } className="card-link">Go to path</Link>
+  <div className="row Path_card">
+      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 Path_card-block">
+        <h3 title={ name } className="">
+         <Link to={ `/paths/${url}` }>
+            { truncateTitle(name) }
+          </Link>
+        </h3>
+      </div>
+    <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+      <p className="Path_detail-paragraph">{ description && description.trim() &&  truncateDesc(description) }</p>
+      <div className="progress">
+        <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{width: 60+'%'}}>
+         60%
+        </div>
+      </div>
     </div>
 </div>
 );

@@ -1,11 +1,35 @@
 .Path_card {
-  width: 250px;
   margin: 10px;
+  border: 1px solid black;
+  box-shadow: 7px 7px 5px #888888;
 }
 
 .Path_card-block {
-  display: flex;
+  /*display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: baseline;*/
+  border: 1px solid black;
+  height: 20vh;
+  border: 1px solid black;
+  background-color: #a552a7;
+  /*card-block  card-block Path_card-block*/
+  /* Path_detail*/
+  /* justify-content-center*/
+}
+.Path_card-block h3 a {
+  color: white !important;
+  text-decoration: none!important;
+}
+.Path_detail {
+  width:70%;
   align-items: center;
+}
+.Path_detail-paragraph {
+  text-align: justify;
+  letter-spacing: 1px;
+  padding-top: 1.4%;
+  overflow: hidden;
+  word-wrap: break-word;
+  height: 11vh;
 }

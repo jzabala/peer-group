@@ -28,7 +28,7 @@ class PathList extends React.Component {
     }
 
     return (
-      <div className="row justify-content-center">
+      <div className="container">
         { content }
       </div>
   );

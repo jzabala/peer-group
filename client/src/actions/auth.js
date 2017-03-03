@@ -6,9 +6,7 @@ import {normalizeUser} from '../normalizers';
 import React from 'react';
 
 export const signup = user => api.post('/users', user).then(null,
-  ({
-    response
-  }) => Promise.reject(response.data.errors),
+  ({ response }) => Promise.reject(response.data.errors),
 );
 
 const loginUser = (user) => ({
@@ -45,6 +43,6 @@ export const logout = (username) => dispatch => {
 }
 
 export const countryList = (name) => {
-   const response = api.get(`/users/getCountryList?url_city=${name}`);   
+   const response = api.get(`/users/getCountryList?url_city=${name}`);
    return response;
 }

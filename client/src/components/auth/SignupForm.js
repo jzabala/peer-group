@@ -64,14 +64,11 @@ class SignupForm extends Component {
     e.preventDefault();
     this.resetErrorsRequest();
     const validation = validateSignup(this.state.form);
-    console.log(validation);
+    console.log(this.state.form);
     validation.then((data) => {
         signup(data).then(
-          () => {
-            console.log("ENtro");
-            this.setState({
-              redirectTo: '/login'
-            });
+          () => {            
+            this.setState({ redirectTo: '/login' });
             this.props.addFlashMessage({
               type: "success",
               strong: "Successful Signup!",
