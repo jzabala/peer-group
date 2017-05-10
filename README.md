@@ -2,6 +2,17 @@
 
 This app allows people to create learning paths, mark their progress and see who else is working through the same learning path.
 
+![ScreenShot](./demo/app.gif)
+
+## Stack
+
+- [React](https://facebook.github.io/react/)
+- [Redux](http://redux.js.org/)
+- [React Router](https://reacttraining.com/react-router/)
+- [Node](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Graphql](http://graphql.org/)
+
 ## Dependencies
 
 ### MongoDB
