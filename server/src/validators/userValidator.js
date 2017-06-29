@@ -54,6 +54,8 @@ export const validateNewUser = validateAsync({
     presence: true,
     equality: 'password',
   },
+  city : { presence : true },
+  country : { presence : true }
 });
 
 export const validateUserPath = validateAsync({

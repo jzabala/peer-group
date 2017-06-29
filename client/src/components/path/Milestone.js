@@ -48,16 +48,17 @@ class Milestone extends Component {
     return (
       <div className={ classnames({ 'Milestone-done-color': done }) }
       >
+      <div className="Milestone-box">
+        <div className="Milistone-box-name">
+          <p className="Milestone-name">
+            { name }
+           </p>
+        </div>
+     </div>
         {
           showProgress && <span>{ fill }%</span>
         }
-
-        <span className="Milestone-name">
-          { name }
-        </span>
-
         { done && <i className="icon-ok-1"></i> }
-
         {
           showProgress && <input
             className="Milestone-range"

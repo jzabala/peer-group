@@ -46,16 +46,22 @@ export class NewPathForm extends React.Component {
     this.handleChange = props.handleChange.bind(this);
   }
   handleNameChange(e) {
-    const form = { ...this.state.form, name: e.target.value };
-    if(this.state.changeUrl) {
+    const form = { ...this.state.form,
+      name: e.target.value
+    };
+    if (this.state.changeUrl) {
       form.url = url(e.target.value);
     }
-    this.setState({ form });
+    this.setState({
+      form
+    });
   }
   handleUrlChagne(e) {
     this.setState({
       changeUrl: false,
-      form: { ...this.state.form, url: url(e.target.value) }
+      form: { ...this.state.form,
+        url: url(e.target.value)
+      }
     });
   }
   handleAddMilestone() {
@@ -76,7 +82,6 @@ export class NewPathForm extends React.Component {
       const newErrors = !errors.milestones ? errors :
         // eslint-disable-next-line
         errors.milestones.filter((milestone, index) => index != indexMilestone);
-
       this.setState({ form: { ...form, milestones }, errors: newErrors });
     }
   }
@@ -144,21 +149,38 @@ export class NewPathForm extends React.Component {
               }
             />
           </div>
-
           { errors.url && errors.url.map(
               (x, i) => <div key={ i } className="form-control-feedback">{ x }</div>
             )
           }
         </div>
+      <
+      TextFieldGroup name = "url"
+      placeholder = "Url"
+      value = {
+        form.url
+      }
+      errors = {
+        errors.url
+      }
+      onChange = {
+        this.handleUrlChagne
+      }
+      />
 
-        <TextAreaGroup
-          name="description"
-          placeholder="Description"
-          value={ form.description }
-          errors={ errors.description }
-          onChange={ this.handleChange }
-        />
-
+      <
+      TextAreaGroup name = "description"
+      placeholder = "Description"
+      value = {
+        form.description
+      }
+      errors = {
+        errors.description
+      }
+      onChange = {
+        this.handleChange
+      }
+      />
         <fieldset className="form-group text-left NewPathForm-milestones"
           onChange={ this.handleMilestonesChange }
         >
@@ -185,18 +207,19 @@ export class NewPathForm extends React.Component {
           </button>
         </fieldset>
 
-        <RequestButton
-          className="btn btn-primary"
-          disabled={ this.state.isSubmit }
-        >
-          Submit
-        </RequestButton>
-      </form>
+      <RequestButton className = "btn btn-primary"
+      disabled = { this.state.isSubmit } >
+      Submit <
+      /RequestButton> <
+      /form>
+
     );
   }
 }
 
 export default connect(
-  null,
-  { createPath, addFlashMessage }
+  null, {
+    createPath,
+    addFlashMessage
+  }
 )(withHandlers(NewPathForm));
